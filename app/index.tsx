@@ -1,105 +1,167 @@
-import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, Modal } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Haptics from "expo-haptics";
+/**
+ * Strona główna aplikacji DriveHours - wyświetla postęp nauki jazdy
+ */
 
-import ProgressCircle from "../components/ProgressCircle";
-import TimePicker from "../components/TimePicker";
+import React, { useState, useCallback } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { useFocusEffect } from '@react-navigation/native';
 
-const REQUIRED_MINUTES = 30 * 60; // 30 godzin
+import ProgressCircle from '../components/ProgressCircle';
+import { SettingsButton } from '../components/SettingsButton';
+import { AddSessionModal } from '../components/AddSessionModal';
+import { useSettings } from '../components/SettingsDrawer';
+import { useDrivingSessions } from '../hooks';
+import { getColors } from '../utils/colors';
+import {
+    calculateTotalMinutes,
+    calculateProgress,
+    formatHours,
+    calculateRemainingHours,
+    getSelectedCategory,
+    createDrivingSession,
+} from '../utils/calculations';
 
-export default function IndexPage() {
+export default function HomePage() {
+    // Hooks
+    const settings = useSettings();
+    const { sessions, addSession } = useDrivingSessions();
+    const colors = getColors(settings.isDark);
+
+    console.log('🏠 HOME - Liczba sesji:', sessions.length);
+
+
+    // Stan lokalny
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
-    const [modal, setModal] = useState(false);
+    const [refreshKey, setRefreshKey] = useState(0);
 
-    const [addH, setAddH] = useState(0);
-    const [addM, setAddM] = useState(0);
+    // Wymuszenie odświeżenia gdy wracamy do ekranu
+    useFocusEffect(
+        useCallback(() => {
+            setRefreshKey(prev => prev + 1);
+        }, [sessions, settings.selectedCategoryId])
+    );
 
-    // Load from storage
-    useEffect(() => {
-        (async () => {
-            const saved = await AsyncStorage.getItem("minutes");
-            if (saved) setMinutes(Number(saved));
-        })();
-    }, []);
+    // Obliczenia
+    const selectedCategory = getSelectedCategory(
+        settings.categories,
+        settings.selectedCategoryId
+    );
+    const requiredMinutes = selectedCategory?.requiredMinutes ?? 30 * 60;
+    const maxHours = Math.ceil(requiredMinutes / 60); // Maksymalna liczba godzin dla kategorii
+    const totalMinutes = calculateTotalMinutes(sessions, settings.selectedCategoryId);
+    const progress = calculateProgress(totalMinutes, requiredMinutes);
+    const hoursDisplay = formatHours(totalMinutes);
+    const remainingHours = calculateRemainingHours(totalMinutes, requiredMinutes);
 
-    // Auto save
-    useEffect(() => {
-        AsyncStorage.setItem("minutes", String(minutes));
-    }, [minutes]);
+    // Obsługa dodawania sesji
+    const handleAddSession = async () => {
+        const totalTime = hours * 60 + minutes;
+        if (totalTime === 0) return;
 
-    const addTime = () => {
-        const total = addH * 60 + addM;
-        if (!total) return;
+        const newSession = createDrivingSession(
+            hours,
+            minutes,
+            settings.selectedCategoryId
+        );
 
-        setMinutes((prev) => prev + total);
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+        const success = await addSession(newSession);
 
-        setModal(false);
-        setAddH(0);
-        setAddM(0);
+        if (success) {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+            // Poczekaj chwilę aby React zaktualizował stan
+            await new Promise(resolve => setTimeout(resolve, 100));
+
+            setIsModalVisible(false);
+            setHours(0);
+            setMinutes(0);
+
+            // Wymuś odświeżenie po zamknięciu modalu
+            setTimeout(() => {
+                setRefreshKey(prev => prev + 1);
+            }, 100);
+        }
     };
-
-    const reset = () => {
-        setMinutes(0);
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-    };
-
-    const progress = Math.min(minutes / REQUIRED_MINUTES, 1);
-    const hoursDisplay = (minutes / 60).toFixed(1);
 
     return (
-        <View className="flex-1 items-center justify-center bg-white p-6">
+        <View
+            key={refreshKey}
+            style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: colors.background,
+                padding: 24
+            }}
+        >
+            {/* Przycisk ustawień */}
+            <SettingsButton onPress={settings.open} isDark={settings.isDark} />
 
-            <ProgressCircle progress={progress} label={`${hoursDisplay} h`} />
+            {/* Nazwa kategorii */}
+            <Text style={{
+                color: colors.text,
+                fontSize: 36,
+                fontWeight: 'bold',
+                marginBottom: 24,
+                marginTop: 4
+            }}>
+                Kategoria {selectedCategory?.name || 'B'}
+            </Text>
 
-            <TouchableOpacity
-                onPress={() => setModal(true)}
-                className="bg-blue-600 px-6 py-3 rounded-xl mt-10"
-            >
-                <Text className="text-lg text-white font-semibold">Dodaj jazdę</Text>
-            </TouchableOpacity>
+            {/* Nagłówek */}
+            <Text style={{
+                color: colors.textTertiary,
+                textTransform: 'uppercase',
+                letterSpacing: 2,
+                marginBottom: 20,
+                fontWeight: '500'
+            }}>
+                Twój Postęp
+            </Text>
 
-            <TouchableOpacity
-                onPress={reset}
-                className="bg-red-500 px-6 py-3 rounded-xl mt-4"
-            >
-                <Text className="text-lg text-white font-semibold">Reset</Text>
-            </TouchableOpacity>
+            {/* Wykres kołowy postępu */}
+            <ProgressCircle progress={progress} label={`${hoursDisplay}h`} isDark={settings.isDark} />
 
-            {/* Modal z pickerem */}
-            <Modal visible={modal} transparent animationType="slide">
-                <View className="flex-1 justify-center items-center bg-black/40">
-                    <View className="bg-white p-6 rounded-2xl w-80">
-                        <Text className="text-xl font-bold text-center mb-4">
-                            Dodaj czas jazdy
-                        </Text>
+            {/* Informacje i akcje */}
+            <View style={{ marginTop: 48, alignItems: 'center' }}>
+                <Text style={{ color: colors.textSecondary, marginBottom: 24, fontWeight: '500' }}>
+                    Do egzaminu: {remainingHours} h
+                </Text>
 
-                        <TimePicker
-                            hours={addH}
-                            minutes={addM}
-                            setHours={setAddH}
-                            setMinutes={setAddM}
-                        />
+                <TouchableOpacity
+                    onPress={() => setIsModalVisible(true)}
+                    style={{
+                        backgroundColor: colors.primary,
+                        paddingHorizontal: 48,
+                        paddingVertical: 16,
+                        borderRadius: 999,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 4 },
+                        shadowOpacity: 0.3,
+                        shadowRadius: 8,
+                        elevation: 8
+                    }}
+                    activeOpacity={0.8}
+                >
+                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Dodaj jazdę</Text>
+                </TouchableOpacity>
+            </View>
 
-                        <TouchableOpacity
-                            onPress={addTime}
-                            className="bg-green-600 px-4 py-3 rounded-xl mt-4"
-                        >
-                            <Text className="text-white text-center font-semibold text-lg">
-                                Zapisz
-                            </Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            className="mt-3"
-                            onPress={() => setModal(false)}
-                        >
-                            <Text className="text-center text-gray-600">Anuluj</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
+            {/* Modal dodawania sesji */}
+            <AddSessionModal
+                visible={isModalVisible}
+                hours={hours}
+                minutes={minutes}
+                onHoursChange={setHours}
+                onMinutesChange={setMinutes}
+                onSave={handleAddSession}
+                onCancel={() => setIsModalVisible(false)}
+                maxHours={maxHours}
+                isDark={settings.isDark}
+            />
         </View>
     );
 }
