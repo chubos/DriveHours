@@ -8,7 +8,6 @@ import { BlurView } from 'expo-blur';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import * as NavigationBar from 'expo-navigation-bar';
 
 import { TimePicker, SettingsButton, useSettings } from '@/components';
 import { useDrivingSessions } from '@/hooks';
@@ -84,35 +83,6 @@ export default function HistoryPage() {
         }
     }, [isEditModalVisible]);
 
-    // Set navigation bar color when modal opens/closes on Android
-    useEffect(() => {
-        if (Platform.OS !== 'android') return;
-        if (!isEditModalVisible) return;
-
-        const updateNavigationBar = async () => {
-            try {
-                if (NavigationBar?.setButtonStyleAsync) {
-                    await NavigationBar.setButtonStyleAsync(settings.isDark ? 'light' : 'dark');
-                }
-            } catch {
-                // Silently fail to prevent crashes
-            }
-        };
-
-        // Clear previous timeout
-        if (navBarUpdateTimeoutRef.current) {
-            clearTimeout(navBarUpdateTimeoutRef.current);
-        }
-
-        // Debounce timer to prevent too many rapid updates
-        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
-
-        return () => {
-            if (navBarUpdateTimeoutRef.current) {
-                clearTimeout(navBarUpdateTimeoutRef.current);
-            }
-        };
-    }, [isEditModalVisible, settings.isDark]);
 
     // Filter and sort sessions
     const filteredSessions = sessions
@@ -259,13 +229,13 @@ export default function HistoryPage() {
     );
 
     return (
-        <View style={{ flex: 1, backgroundColor: colors.background }}>
+        <View style={{ flex: 1, backgroundColor: colors.background, alignItems: 'center' }}>
             {/* Settings button - rendered with proper layering for touch events */}
             <View pointerEvents="box-none" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
                 <SettingsButton onPress={settings.open} isDark={settings.isDark} />
             </View>
 
-            <View style={{ flex: 1, padding: 24, paddingTop: 64 }}>
+            <View style={{ flex: 1, padding: 24, paddingTop: 64, maxWidth: 800, width: '100%' }}>
                 {/* Category name */}
                 <Text style={{ color: colors.textSecondary, fontSize: 18, fontWeight: '600', marginBottom: 8 }}>
                     {t('history.category')} {selectedCategory?.name || 'B'}
@@ -292,7 +262,11 @@ export default function HistoryPage() {
             </View>
 
             {/* Edit session modal */}
-            <Modal visible={isEditModalVisible} transparent animationType="fade">
+            <Modal
+                visible={isEditModalVisible}
+                transparent
+                animationType="fade"
+            >
                 <BlurView intensity={40} tint={settings.isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{
                         backgroundColor: colors.surface,

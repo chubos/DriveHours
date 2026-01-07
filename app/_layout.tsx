@@ -5,9 +5,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
-import { useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
-import * as NavigationBar from 'expo-navigation-bar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import "../global.css";
 import '../i18n/config';
@@ -19,36 +16,6 @@ function TabsLayout() {
     const { t } = useTranslation();
     const isDark = settings.isDark;
     const insets = useSafeAreaInsets();
-    const navBarUpdateTimeoutRef = useRef<number | null>(null);
-
-    // Set navigation bar color on Android
-    useEffect(() => {
-        if (Platform.OS !== 'android') return;
-
-        const setNavigationBarColor = async () => {
-            try {
-                if (NavigationBar?.setButtonStyleAsync) {
-                    await NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
-                }
-            } catch {
-                // Silently fail to prevent crashes
-            }
-        };
-
-        // Clear previous timeout
-        if (navBarUpdateTimeoutRef.current) {
-            clearTimeout(navBarUpdateTimeoutRef.current);
-        }
-
-        // Debounce timer to prevent too many rapid updates
-        navBarUpdateTimeoutRef.current = setTimeout(setNavigationBarColor, 150);
-
-        return () => {
-            if (navBarUpdateTimeoutRef.current) {
-                clearTimeout(navBarUpdateTimeoutRef.current);
-            }
-        };
-    }, [isDark]);
 
     return (
         <>

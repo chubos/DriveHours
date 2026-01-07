@@ -3,7 +3,8 @@
  */
 
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -27,6 +28,7 @@ export default function HomePage() {
     const { sessions, addSession } = useDrivingSessions();
     const colors = getColors(settings.isDark);
     const timeoutRefs = useRef<number[]>([]);
+    const insets = useSafeAreaInsets();
 
     // Local state
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -105,10 +107,7 @@ export default function HomePage() {
             key={refreshKey}
             style={{
                 flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
                 backgroundColor: colors.background,
-                padding: 24
             }}
         >
             {/* Settings button - rendered outside the main content to prevent blocking */}
@@ -116,55 +115,70 @@ export default function HomePage() {
                 <SettingsButton onPress={settings.open} isDark={settings.isDark} />
             </View>
 
-            {/* Category name */}
-            <Text style={{
-                color: colors.text,
-                fontSize: 36,
-                fontWeight: 'bold',
-                marginBottom: 24,
-                marginTop: 4
-            }}>
-                {t('home.category')} {selectedCategory?.name || 'B'}
-            </Text>
+            <ScrollView
+                contentContainerStyle={{
+                    flexGrow: 1,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 24,
+                    paddingTop: 64,
+                    paddingBottom: 70 + insets.bottom + 24
+                }}
+                showsVerticalScrollIndicator={false}
+            >
+                {/* Main content container with max width for large screens */}
+                <View style={{ maxWidth: 600, width: '100%', alignItems: 'center' }}>
+                    {/* Category name */}
+                    <Text style={{
+                        color: colors.text,
+                        fontSize: 36,
+                        fontWeight: 'bold',
+                        marginBottom: 24,
+                        marginTop: 4
+                    }}>
+                        {t('home.category')} {selectedCategory?.name || 'B'}
+                    </Text>
 
-            {/* Header */}
-            <Text style={{
-                color: colors.textTertiary,
-                textTransform: 'uppercase',
-                letterSpacing: 2,
-                marginBottom: 20,
-                fontWeight: '500'
-            }}>
-                {t('home.title')}
-            </Text>
+                    {/* Header */}
+                    <Text style={{
+                        color: colors.textTertiary,
+                        textTransform: 'uppercase',
+                        letterSpacing: 2,
+                        marginBottom: 20,
+                        fontWeight: '500'
+                    }}>
+                        {t('home.title')}
+                    </Text>
 
-            {/* Progress circle */}
-            <ProgressCircle progress={progress} label={`${hoursDisplay}h`} isDark={settings.isDark} />
+                    {/* Progress circle */}
+                    <ProgressCircle progress={progress} label={`${hoursDisplay}h`} isDark={settings.isDark} />
 
-            {/* Information and actions */}
-            <View style={{ marginTop: 48, alignItems: 'center' }}>
-                <Text style={{ color: colors.textSecondary, marginBottom: 24, fontWeight: '500' }}>
-                    {t('home.remaining')}: {remainingHours} h
-                </Text>
+                    {/* Information and actions */}
+                    <View style={{ marginTop: 48, alignItems: 'center' }}>
+                        <Text style={{ color: colors.textSecondary, marginBottom: 24, fontWeight: '500' }}>
+                            {t('home.remaining')}: {remainingHours} h
+                        </Text>
 
-                <TouchableOpacity
-                    onPress={() => setIsModalVisible(true)}
-                    style={{
-                        backgroundColor: colors.primary,
-                        paddingHorizontal: 48,
-                        paddingVertical: 16,
-                        borderRadius: 999,
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 4 },
-                        shadowOpacity: 0.3,
-                        shadowRadius: 8,
-                        elevation: 8
-                    }}
-                    activeOpacity={0.8}
-                >
-                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>{t('home.addSession')}</Text>
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            onPress={() => setIsModalVisible(true)}
+                            style={{
+                                backgroundColor: colors.primary,
+                                paddingHorizontal: 48,
+                                paddingVertical: 16,
+                                borderRadius: 999,
+                                shadowColor: '#000',
+                                shadowOffset: { width: 0, height: 4 },
+                                shadowOpacity: 0.3,
+                                shadowRadius: 8,
+                                elevation: 8
+                            }}
+                            activeOpacity={0.8}
+                        >
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>{t('home.addSession')}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
 
             {/* Add session modal */}
             <AddSessionModal

@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 
@@ -13,6 +13,9 @@ interface SettingsButtonProps {
 }
 
 export const SettingsButton: React.FC<SettingsButtonProps> = ({ onPress, isDark = false }) => {
+    const { width, height } = useWindowDimensions();
+    const isLandscape = width > height;
+
     const handlePress = () => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
         onPress();
@@ -22,7 +25,7 @@ export const SettingsButton: React.FC<SettingsButtonProps> = ({ onPress, isDark 
         <View
             style={{
                 position: 'absolute',
-                right: 20,
+                ...(isLandscape ? { right: 70 } : { right: 20 }),
                 top: 65,
                 zIndex: 9999,
                 elevation: 10,

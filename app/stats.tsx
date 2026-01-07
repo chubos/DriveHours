@@ -62,7 +62,7 @@ export default function StatsPage() {
         prediction === 'completed' ? t('stats.completed') :
         prediction;
 
-    const weeklyData = getWeeklyChartData(filteredSessions, t);
+    const weeklyData = getWeeklyChartData(filteredSessions, (key: string) => t(key as any));
 
     // Achievements data
     const achievements = [
@@ -93,8 +93,8 @@ export default function StatsPage() {
                 <SettingsButton onPress={settings.open} isDark={settings.isDark} />
             </View>
 
-            <ScrollView key={refreshKey}>
-                <View style={{ padding: 24, paddingTop: 64 }}>
+            <ScrollView key={refreshKey} contentContainerStyle={{ alignItems: 'center' }}>
+                <View style={{ padding: 24, paddingTop: 64, maxWidth: 800, width: '100%' }}>
                     {/* Category name */}
                     <Text style={{ color: colors.textSecondary, fontSize: 18, fontWeight: '600', marginBottom: 8 }}>
                         {t('stats.category')} {selectedCategory?.name || 'B'}

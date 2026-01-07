@@ -2,11 +2,10 @@
  * Modal for adding a new driving session
  */
 
-import React, { useEffect, useRef } from 'react';
-import { View, Text, TouchableOpacity, Modal, Platform } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useTranslation } from 'react-i18next';
-import * as NavigationBar from 'expo-navigation-bar';
 import TimePicker from './TimePicker';
 import { getColors } from '@/utils';
 
@@ -35,40 +34,13 @@ export const AddSessionModal: React.FC<AddSessionModalProps> = ({
 }) => {
     const { t } = useTranslation();
     const colors = getColors(isDark);
-    const navBarUpdateTimeoutRef = useRef<number | null>(null);
-
-    // Set navigation bar color when modal opens/closes on Android
-    useEffect(() => {
-        if (Platform.OS !== 'android') return;
-        if (!visible) return;
-
-        const updateNavigationBar = async () => {
-            try {
-                if (NavigationBar?.setButtonStyleAsync) {
-                    await NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
-                }
-            } catch {
-                // Silently fail to prevent crashes
-            }
-        };
-
-        // Clear previous timeout
-        if (navBarUpdateTimeoutRef.current) {
-            clearTimeout(navBarUpdateTimeoutRef.current);
-        }
-
-        // Debounce timer to prevent too many rapid updates
-        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
-
-        return () => {
-            if (navBarUpdateTimeoutRef.current) {
-                clearTimeout(navBarUpdateTimeoutRef.current);
-            }
-        };
-    }, [visible, isDark]);
 
     return (
-        <Modal visible={visible} transparent animationType="slide">
+        <Modal
+            visible={visible}
+            transparent
+            animationType="slide"
+        >
             <BlurView intensity={20} tint={isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
                 <View style={{
                     backgroundColor: colors.surface,

@@ -1,11 +1,11 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Modal, PanResponder, Pressable, Text, TextInput, TouchableOpacity, View, Alert, useColorScheme, Platform } from 'react-native';
+import { Animated, Dimensions, Modal, PanResponder, Pressable, Text, TextInput, TouchableOpacity, View, Alert, useColorScheme, ScrollView, Linking } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
-import * as NavigationBar from 'expo-navigation-bar';
 import { Category, SettingsContextValue, ThemeMode } from '@/types';
 import { STORAGE_KEYS, DEFAULT_CATEGORIES, UI_DIMENSIONS, GESTURE_CONFIG } from '@/constants';
 import { getColors } from '@/utils';
@@ -62,54 +62,57 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
 
     useEffect(() => {
         // Throttle AsyncStorage writes
-        if (saveTimeoutRef.current.categories) {
-            clearTimeout(saveTimeoutRef.current.categories);
+        const currentTimeout = saveTimeoutRef.current.categories;
+        if (currentTimeout) {
+            clearTimeout(currentTimeout);
         }
 
-        saveTimeoutRef.current.categories = setTimeout(() => {
+        const newTimeout = setTimeout(() => {
             AsyncStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(categories)).catch(() => {});
         }, 300);
 
+        saveTimeoutRef.current.categories = newTimeout;
+
         return () => {
-            if (saveTimeoutRef.current.categories) {
-                clearTimeout(saveTimeoutRef.current.categories);
-            }
+            clearTimeout(newTimeout);
         };
     }, [categories]);
 
     useEffect(() => {
         if (selectedCategoryId) {
             // Throttle AsyncStorage writes
-            if (saveTimeoutRef.current.selectedCategory) {
-                clearTimeout(saveTimeoutRef.current.selectedCategory);
+            const currentTimeout = saveTimeoutRef.current.selectedCategory;
+            if (currentTimeout) {
+                clearTimeout(currentTimeout);
             }
 
-            saveTimeoutRef.current.selectedCategory = setTimeout(() => {
+            const newTimeout = setTimeout(() => {
                 AsyncStorage.setItem(STORAGE_KEYS.SELECTED_CATEGORY, selectedCategoryId).catch(() => {});
             }, 300);
 
+            saveTimeoutRef.current.selectedCategory = newTimeout;
+
             return () => {
-                if (saveTimeoutRef.current.selectedCategory) {
-                    clearTimeout(saveTimeoutRef.current.selectedCategory);
-                }
+                clearTimeout(newTimeout);
             };
         }
     }, [selectedCategoryId]);
 
     useEffect(() => {
         // Throttle AsyncStorage writes
-        if (saveTimeoutRef.current.theme) {
-            clearTimeout(saveTimeoutRef.current.theme);
+        const currentTimeout = saveTimeoutRef.current.theme;
+        if (currentTimeout) {
+            clearTimeout(currentTimeout);
         }
 
-        saveTimeoutRef.current.theme = setTimeout(() => {
+        const newTimeout = setTimeout(() => {
             AsyncStorage.setItem(STORAGE_KEYS.THEME_MODE, themeMode).catch(() => {});
         }, 300);
 
+        saveTimeoutRef.current.theme = newTimeout;
+
         return () => {
-            if (saveTimeoutRef.current.theme) {
-                clearTimeout(saveTimeoutRef.current.theme);
-            }
+            clearTimeout(newTimeout);
         };
     }, [themeMode]);
 
@@ -190,6 +193,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     const animationRef = useRef<Animated.CompositeAnimation | null>(null);
     const { categories, selectedCategoryId, setSelectedCategoryId, addCategory, updateCategory, deleteCategory, themeMode, setThemeMode, isDark } = useSettingsSafe();
     const colors = getColors(isDark);
+    const insets = useSafeAreaInsets();
 
     // Controls Modal visibility (delayed to allow close animation)
     const [showModal, setShowModal] = useState(false);
@@ -204,36 +208,8 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     const [addNameLocal, setAddNameLocal] = useState('');
     const [addHoursLocal, setAddHoursLocal] = useState('30');
 
-    const navBarUpdateTimeoutRef = useRef<number | null>(null);
+    const [privacyModalVisible, setPrivacyModalVisible] = useState(false);
 
-    // Consolidated navigation bar updates with debouncing to prevent crashes
-    useEffect(() => {
-        if (Platform.OS !== 'android') return;
-
-        const updateNavigationBar = async () => {
-            try {
-                if (NavigationBar?.setButtonStyleAsync) {
-                    await NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
-                }
-            } catch {
-                // Silently fail to prevent crashes
-            }
-        };
-
-        // Clear previous timeout
-        if (navBarUpdateTimeoutRef.current) {
-            clearTimeout(navBarUpdateTimeoutRef.current);
-        }
-
-        // Debounce timer to prevent too many rapid updates
-        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
-
-        return () => {
-            if (navBarUpdateTimeoutRef.current) {
-                clearTimeout(navBarUpdateTimeoutRef.current);
-            }
-        };
-    }, [isDark]); // Only depend on isDark, not modal states
 
     useEffect(() => {
         if (isOpen) {
@@ -427,7 +403,13 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
 
 
     return (
-        <Modal transparent visible={showModal} animationType="none" onRequestClose={onClose}>
+        <Modal
+            transparent
+            visible={showModal}
+            animationType="none"
+            onRequestClose={onClose}
+            supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+        >
             <Animated.View
                 style={{
                     flex: 1,
@@ -456,12 +438,12 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                 }}
                 {...pan.panHandlers}
             >
-                <View style={{ padding: 16, paddingTop: 56, borderBottomWidth: 1, borderColor: colors.border }}>
+                <View style={{ padding: 16, paddingLeft: 16 + insets.left, paddingTop: 56, borderBottomWidth: 1, borderColor: colors.border }}>
                     <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text }}>{t('settings.title')}</Text>
                     <Text style={{ color: colors.textSecondary, marginTop: 4 }}>{t('settings.categories')}</Text>
                 </View>
 
-                <View style={{ padding: 12, flex: 1 }}>
+                <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 12, paddingLeft: 12 + insets.left, paddingBottom: 70 + insets.bottom + 24 }}>
                     {/* Theme section */}
                     <View style={{ marginBottom: 20, paddingBottom: 16, borderBottomWidth: 1, borderColor: colors.border }}>
                         <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textSecondary, marginBottom: 12 }}>{t('settings.appearance').toUpperCase()}</Text>
@@ -585,11 +567,36 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         <Text style={{ color: '#fff', fontSize: 24, fontWeight: '700' }}>+</Text>
                         <Text style={{ color: '#fff', fontWeight: '700', fontSize: 16 }}>{t('settings.addCategory')}</Text>
                     </TouchableOpacity>
-                </View>
+
+                    {/* Privacy Policy button */}
+                    <TouchableOpacity
+                        onPress={() => setPrivacyModalVisible(true)}
+                        style={{
+                            marginTop: 24,
+                            padding: 12,
+                            borderRadius: 12,
+                            borderWidth: 1,
+                            borderColor: colors.border,
+                            backgroundColor: colors.background,
+                            alignItems: 'center',
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            gap: 8
+                        }}
+                    >
+                        <Ionicons name="document-text-outline" size={20} color={colors.textSecondary} />
+                        <Text style={{ color: colors.textSecondary, fontWeight: '600', fontSize: 13 }}>{t('settings.privacyPolicy')}</Text>
+                    </TouchableOpacity>
+                </ScrollView>
             </Animated.View>
 
             {/* Add category modal */}
-            <Modal transparent visible={addModalVisible} animationType="fade">
+            <Modal
+                transparent
+                visible={addModalVisible}
+                animationType="fade"
+                supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+            >
                 <Pressable
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
                     onPress={() => setAddModalVisible(false)}
@@ -666,7 +673,12 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             </Modal>
 
             {/* Edit category modal */}
-            <Modal transparent visible={editModalVisible} animationType="fade">
+            <Modal
+                transparent
+                visible={editModalVisible}
+                animationType="fade"
+                supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+            >
                 <Pressable
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
                     onPress={() => setEditModalVisible(false)}
@@ -738,6 +750,121 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         >
                             <Text style={{ color: '#fff', fontWeight: '700' }}>{t('history.save')}</Text>
                         </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Privacy Policy modal */}
+            <Modal
+                transparent
+                visible={privacyModalVisible}
+                animationType="fade"
+                supportedOrientations={['portrait', 'landscape', 'landscape-left', 'landscape-right']}
+            >
+                <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{
+                        width: '90%',
+                        maxHeight: '80%',
+                        backgroundColor: colors.surface,
+                        borderRadius: 16,
+                        padding: 20,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: 4 },
+                        shadowOpacity: 0.3,
+                        shadowRadius: 8,
+                        elevation: 8
+                    }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                            <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text }}>{t('settings.privacyPolicy')}</Text>
+                            <TouchableOpacity onPress={() => setPrivacyModalVisible(false)}>
+                                <Ionicons name="close-circle" size={28} color={colors.textSecondary} />
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView showsVerticalScrollIndicator={true}>
+                            <Text style={{ color: colors.text, fontSize: 16, fontWeight: '700', marginBottom: 12 }}>
+                                {t('settings.privacyTitle')}
+                            </Text>
+                            <Text style={{ color: colors.text, fontSize: 14, marginBottom: 8 }}>
+                                {t('settings.privacyIntro')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 12, marginBottom: 4 }}>
+                                {t('settings.privacySection1Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection1Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection2Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection2Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection3Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection3Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection4Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection4Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection5Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection5Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection6Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection6Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection7Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacySection7Text')}
+                            </Text>
+
+                            <Text style={{ color: colors.text, fontSize: 14, fontWeight: '600', marginTop: 8, marginBottom: 4 }}>
+                                {t('settings.privacySection8Title')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 4 }}>
+                                {t('settings.privacySection8Text')}
+                            </Text>
+                            <Text style={{ color: colors.textSecondary, fontSize: 13, marginBottom: 8 }}>
+                                {t('settings.privacyCompany')}{'\n'}
+                                Email: hexagonstudio@wp.pl
+                            </Text>
+
+                            <TouchableOpacity
+                                onPress={() => Linking.openURL('mailto:hexagonstudio@wp.pl')}
+                                style={{
+                                    marginTop: 16,
+                                    backgroundColor: '#3b82f6',
+                                    padding: 14,
+                                    borderRadius: 12,
+                                    alignItems: 'center',
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    gap: 8
+                                }}
+                            >
+                                <Ionicons name="mail-outline" size={20} color="#fff" />
+                                <Text style={{ color: '#fff', fontWeight: '700', fontSize: 15 }}>{t('settings.contact')}</Text>
+                            </TouchableOpacity>
+                        </ScrollView>
                     </View>
                 </View>
             </Modal>
