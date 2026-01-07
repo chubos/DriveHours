@@ -1,12 +1,14 @@
 /**
- * Modal do dodawania nowej sesji jazdy
+ * Modal for adding a new driving session
  */
 
-import React from 'react';
-import { View, Text, TouchableOpacity, Modal } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, Modal, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
+import { useTranslation } from 'react-i18next';
+import * as NavigationBar from 'expo-navigation-bar';
 import TimePicker from './TimePicker';
-import { getColors } from '../utils/colors';
+import { getColors } from '@/utils';
 
 interface AddSessionModalProps {
     visible: boolean;
@@ -31,7 +33,39 @@ export const AddSessionModal: React.FC<AddSessionModalProps> = ({
     maxHours,
     isDark = false,
 }) => {
+    const { t } = useTranslation();
     const colors = getColors(isDark);
+    const navBarUpdateTimeoutRef = useRef<number | null>(null);
+
+    // Set navigation bar color when modal opens/closes on Android
+    useEffect(() => {
+        if (Platform.OS !== 'android') return;
+        if (!visible) return;
+
+        const updateNavigationBar = async () => {
+            try {
+                if (NavigationBar?.setButtonStyleAsync) {
+                    await NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
+                }
+            } catch {
+                // Silently fail to prevent crashes
+            }
+        };
+
+        // Clear previous timeout
+        if (navBarUpdateTimeoutRef.current) {
+            clearTimeout(navBarUpdateTimeoutRef.current);
+        }
+
+        // Debounce timer to prevent too many rapid updates
+        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
+
+        return () => {
+            if (navBarUpdateTimeoutRef.current) {
+                clearTimeout(navBarUpdateTimeoutRef.current);
+            }
+        };
+    }, [visible, isDark]);
 
     return (
         <Modal visible={visible} transparent animationType="slide">
@@ -58,7 +92,7 @@ export const AddSessionModal: React.FC<AddSessionModalProps> = ({
                         marginBottom: 32,
                         color: colors.text
                     }}>
-                        Ile dzisiaj?
+                        {t('modal.addSession')}
                     </Text>
                     <TimePicker
                         hours={hours}
@@ -78,15 +112,14 @@ export const AddSessionModal: React.FC<AddSessionModalProps> = ({
                         }}
                     >
                         <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 18 }}>
-                            Zapisz
+                            {t('modal.add')}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={onCancel} style={{ marginTop: 16 }}>
-                        <Text style={{ textAlign: 'center', color: colors.textTertiary }}>Anuluj</Text>
+                    <TouchableOpacity onPress={onCancel} style={{ marginTop: 16, marginBottom: 12 }}>
+                        <Text style={{ textAlign: 'center', color: colors.textTertiary }}>{t('modal.cancel')}</Text>
                     </TouchableOpacity>
                 </View>
             </BlurView>
         </Modal>
     );
 };
-

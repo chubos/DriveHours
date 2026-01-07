@@ -1,10 +1,11 @@
 /**
- * Komponent wykresu tygodniowego intensywności jazdy
+ * Weekly activity chart component
  */
 
 import React from 'react';
 import { View, Text } from 'react-native';
-import { getColors } from '../utils/colors';
+import { useTranslation } from 'react-i18next';
+import { getColors } from '@/utils';
 
 interface WeeklyChartData {
     label: string;
@@ -18,6 +19,7 @@ interface WeeklyChartProps {
 }
 
 export const WeeklyChart: React.FC<WeeklyChartProps> = ({ data, isDark = false }) => {
+    const { t } = useTranslation();
     const colors = getColors(isDark);
 
     return (
@@ -40,7 +42,7 @@ export const WeeklyChart: React.FC<WeeklyChartProps> = ({ data, isDark = false }
                 marginBottom: 16,
                 letterSpacing: 1.5
             }}>
-                Intensywność (minuty/dzień)
+                {t('stats.weeklyActivity')}
             </Text>
             <View
                 style={{
@@ -74,4 +76,3 @@ export const WeeklyChart: React.FC<WeeklyChartProps> = ({ data, isDark = false }
         </View>
     );
 };
-

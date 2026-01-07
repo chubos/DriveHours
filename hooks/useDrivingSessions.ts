@@ -1,8 +1,8 @@
 /**
- * Kontekst do zarządzania sesjami jazdy
+ * Context for managing driving sessions
  */
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, ReactNode, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DrivingSession } from '../types';
 import { STORAGE_KEYS } from '../constants';
@@ -18,8 +18,10 @@ const DrivingSessionsContext = createContext<{
 export const DrivingSessionsProvider = ({ children }: { children: ReactNode }) => {
     const [sessions, setSessions] = useState<DrivingSession[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const saveTimeoutRef = useRef<number | null>(null);
+    const isSavingRef = useRef(false);
 
-    // Ładowanie sesji z AsyncStorage
+    // Load sessions from AsyncStorage
     useEffect(() => {
         const loadSessions = async () => {
             try {
@@ -27,16 +29,16 @@ export const DrivingSessionsProvider = ({ children }: { children: ReactNode }) =
                 if (saved) {
                     const loadedSessions: DrivingSession[] = JSON.parse(saved);
 
-                    // Migracja starych danych - dodanie timestamp jeśli nie istnieje
+                    // Migrate old data: add timestamp if missing
                     const migratedSessions = loadedSessions.map(session => {
                         if (!session.timestamp) {
-                            // Spróbuj odzyskać timestamp z id (jeśli był timestamp) lub stwórz z daty
+                            // Try to recover timestamp from id (if it was a timestamp) or create it from the date
                             const timestampFromId = parseInt(session.id);
                             const timestamp = !isNaN(timestampFromId) && timestampFromId > 1000000000000
                                 ? timestampFromId
                                 : new Date(session.date || Date.now()).getTime();
 
-                            // Używamy lokalnej daty zamiast UTC
+                            // Use local date (not UTC)
                             let dateString = session.date;
                             if (!dateString) {
                                 const d = new Date(timestamp);
@@ -57,7 +59,7 @@ export const DrivingSessionsProvider = ({ children }: { children: ReactNode }) =
 
                     setSessions(migratedSessions);
 
-                    // Zapisz zmigrowane dane
+                    // Persist migrated data
                     if (JSON.stringify(loadedSessions) !== JSON.stringify(migratedSessions)) {
                         await AsyncStorage.setItem(
                             STORAGE_KEYS.DRIVING_SESSIONS,
@@ -65,8 +67,8 @@ export const DrivingSessionsProvider = ({ children }: { children: ReactNode }) =
                         );
                     }
                 }
-            } catch (error) {
-                console.error('Błąd ładowania sesji:', error);
+            } catch {
+                // Silent error handling
             } finally {
                 setIsLoading(false);
             }
@@ -75,60 +77,79 @@ export const DrivingSessionsProvider = ({ children }: { children: ReactNode }) =
         loadSessions();
     }, []);
 
-    // Dodanie nowej sesji
-    const addSession = async (session: DrivingSession) => {
-        try {
-            console.log('🟢 ADD SESSION - przed:', sessions.length);
-            const updatedSessions = [session, ...sessions];
+    // Safe save function with throttling to prevent crashes
+    const safeSave = async (updatedSessions: DrivingSession[]) => {
+        // Clear any pending save
+        if (saveTimeoutRef.current) {
+            clearTimeout(saveTimeoutRef.current);
+        }
 
-            setSessions(updatedSessions);
-            console.log('🟢 ADD SESSION - po:', updatedSessions.length, 'Nowa sesja:', session);
+        // If already saving, queue this save
+        if (isSavingRef.current) {
+            return new Promise<boolean>((resolve) => {
+                saveTimeoutRef.current = setTimeout(async () => {
+                    try {
+                        isSavingRef.current = true;
+                        await AsyncStorage.setItem(
+                            STORAGE_KEYS.DRIVING_SESSIONS,
+                            JSON.stringify(updatedSessions)
+                        );
+                        isSavingRef.current = false;
+                        resolve(true);
+                    } catch {
+                        isSavingRef.current = false;
+                        resolve(false);
+                    }
+                }, 100);
+            });
+        }
+
+        // Save immediately
+        try {
+            isSavingRef.current = true;
             await AsyncStorage.setItem(
                 STORAGE_KEYS.DRIVING_SESSIONS,
                 JSON.stringify(updatedSessions)
             );
-
+            isSavingRef.current = false;
             return true;
-        } catch (error) {
-            console.error('Błąd dodawania sesji:', error);
+        } catch {
+            isSavingRef.current = false;
             return false;
         }
     };
 
-    // Aktualizacja sesji
+    // Add a new session
+    const addSession = async (session: DrivingSession) => {
+        try {
+            const updatedSessions = [session, ...sessions];
+            setSessions(updatedSessions);
+            return await safeSave(updatedSessions);
+        } catch {
+            return false;
+        }
+    };
+
+    // Update a session
     const updateSession = async (id: string, updates: Partial<DrivingSession>) => {
         try {
-            console.log('🔵 UPDATE SESSION - ID:', id, 'Updates:', updates);
             const updatedSessions = sessions.map(s =>
                 s.id === id ? { ...s, ...updates } : s
             );
-
             setSessions(updatedSessions);
-            console.log('🔵 UPDATE SESSION - zaktualizowano');
-            await AsyncStorage.setItem(
-                STORAGE_KEYS.DRIVING_SESSIONS,
-                JSON.stringify(updatedSessions)
-            );
-
-            return true;
-        } catch (error) {
-            console.error('Błąd aktualizacji sesji:', error);
+            return await safeSave(updatedSessions);
+        } catch {
             return false;
         }
     };
 
-    // Usunięcie sesji
+    // Delete a session
     const deleteSession = async (id: string) => {
         try {
             const updatedSessions = sessions.filter(s => s.id !== id);
             setSessions(updatedSessions);
-            await AsyncStorage.setItem(
-                STORAGE_KEYS.DRIVING_SESSIONS,
-                JSON.stringify(updatedSessions)
-            );
-            return true;
-        } catch (error) {
-            console.error('Błąd usuwania sesji:', error);
+            return await safeSave(updatedSessions);
+        } catch {
             return false;
         }
     };

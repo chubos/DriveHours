@@ -1,0 +1,84 @@
+{
+  "home": {
+    "title": "Postęp nauki jazdy",
+    "completed": "ukończono",
+    "remaining": "pozostało",
+    "addSession": "Dodaj jazdę",
+    "category": "Kategoria"
+  },
+  "stats": {
+    "title": "Analityka",
+    "category": "Kategoria",
+    "weeklyActivity": "Aktywność tygodniowa",
+    "totalSessions": "Liczba jazd",
+    "averageDuration": "Średni czas",
+    "daysLeft": "Dni do końca",
+    "achievements": "Osiągnięcia",
+    "firstHour": "Pierwsza godzina",
+    "halfway": "Półmetek",
+    "master": "Mistrz",
+    "minutes": "min",
+    "collectingData": "Zbieranie danych...",
+    "completed": "Ukończono!"
+  },
+  "history": {
+    "title": "Historia jazd",
+    "category": "Kategoria",
+    "noSessions": "Brak jazd",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "editSession": "Edycja jazdy",
+    "date": "Data",
+    "duration": "Czas trwania",
+    "hours": "Godziny",
+    "minutes": "Minuty",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "deleteConfirm": "Usunąć tę jazdę?",
+    "confirmDelete": "Czy na pewno chcesz usunąć tę sesję?"
+  },
+  "modal": {
+    "addSession": "Dodaj jazdę",
+    "hours": "Godziny",
+    "minutes": "Minuty",
+    "add": "Dodaj",
+    "cancel": "Anuluj",
+    "selectDate": "Wybierz datę"
+  },
+  "settings": {
+    "title": "Ustawienia",
+    "appearance": "Wygląd",
+    "light": "Jasny",
+    "dark": "Ciemny",
+    "system": "Systemowy",
+    "categories": "Kategorie prawa jazdy",
+    "selectCategory": "Kategorie",
+    "close": "Zamknij",
+    "addCategory": "Dodaj kategorię",
+    "newCategory": "Nowa kategoria",
+    "editCategory": "Edytuj kategorię",
+    "categoryName": "Nazwa kategorii",
+    "requiredHours": "Wymagane godziny",
+    "cannotDelete": "Nie można usunąć",
+    "mustHaveOne": "Musisz mieć przynajmniej jedną kategorię.",
+    "deleteCategory": "Usuń kategorię",
+    "deleteCategoryConfirm": "Czy na pewno chcesz usunąć kategorię \"{{name}}\"? Ta operacja usunie tylko kategorię, nie usuwa sesji."
+  },
+  "tabs": {
+    "home": "Start",
+    "stats": "Statystyki",
+    "history": "Historia"
+  },
+  "days": {
+    "short": {
+      "sun": "Nd",
+      "mon": "Pn",
+      "tue": "Wt",
+      "wed": "Śr",
+      "thu": "Czw",
+      "fri": "Pt",
+      "sat": "Sb"
+    }
+  }
+}
+

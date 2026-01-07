@@ -1,31 +1,32 @@
 /**
- * Strona historii jazd - wyświetla listę sesji jazdy z możliwością edycji
+ * Driving sessions history screen – displays a list of sessions with edit support
  */
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Modal, Alert, Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import * as NavigationBar from 'expo-navigation-bar';
 
-import TimePicker from '../components/TimePicker';
-import { SettingsButton } from '../components/SettingsButton';
-import { useSettings } from '../components/SettingsDrawer';
-import { useDrivingSessions } from '../hooks';
-import { DrivingSession } from '../types';
-import { formatHours, formatDate, dateStringToTimestamp, getSelectedCategory } from '../utils/calculations';
-import { getColors } from '../utils/colors';
+import { TimePicker, SettingsButton, useSettings } from '@/components';
+import { useDrivingSessions } from '@/hooks';
+import { DrivingSession } from '@/types';
+import { formatHours, formatDate, dateStringToTimestamp, getSelectedCategory, getColors } from '@/utils';
 
 
 export default function HistoryPage() {
     // Hooks
+    const { t } = useTranslation();
     const settings = useSettings();
     const { sessions, updateSession, deleteSession } = useDrivingSessions();
     const colors = getColors(settings.isDark);
+    const isPickerOpenRef = useRef(false);
+    const dateChangeTimeoutRef = useRef<number | null>(null);
+    const navBarUpdateTimeoutRef = useRef<number | null>(null);
 
-    console.log('📋 HISTORY - Liczba sesji:', sessions.length);
-
-    // Stan lokalny
+    // Local state
     const [isEditModalVisible, setIsEditModalVisible] = useState(false);
     const [selectedSession, setSelectedSession] = useState<DrivingSession | null>(null);
     const [editDate, setEditDate] = useState('');
@@ -36,21 +37,30 @@ export default function HistoryPage() {
     const [refreshCounter, setRefreshCounter] = useState(0);
     const [isSaving, setIsSaving] = useState(false);
 
-    // Oblicz maxHours dla wybranej kategorii
+    // Compute maxHours for the selected category
     const selectedCategory = getSelectedCategory(
         settings.categories,
         settings.selectedCategoryId
     );
     const maxHours = Math.ceil((selectedCategory?.requiredMinutes ?? 30 * 60) / 60);
 
-    // Wymuszenie odświeżenia gdy wracamy do ekranu
+    // Force refresh when coming back to this screen
     useFocusEffect(
         useCallback(() => {
             setRefreshCounter(prev => prev + 1);
-        }, [sessions, settings.selectedCategoryId])
+            return () => {
+                // Clean up timeouts
+                if (dateChangeTimeoutRef.current) {
+                    clearTimeout(dateChangeTimeoutRef.current);
+                }
+                if (navBarUpdateTimeoutRef.current) {
+                    clearTimeout(navBarUpdateTimeoutRef.current);
+                }
+            };
+        }, [])
     );
 
-    // Zamknij modal gdy sesja jest zaktualizowana
+    // Close the modal once the session is updated
     useEffect(() => {
         if (isSaving && selectedSession) {
             const expectedDuration = editHours * 60 + editMinutes;
@@ -66,45 +76,103 @@ export default function HistoryPage() {
         }
     }, [sessions, isSaving, selectedSession, editHours, editMinutes]);
 
-    // Filtrowanie i sortowanie sesji
+    // Ensure the picker is closed when modal closes
+    useEffect(() => {
+        if (!isEditModalVisible) {
+            setShowDatePicker(false);
+            isPickerOpenRef.current = false;
+        }
+    }, [isEditModalVisible]);
+
+    // Set navigation bar color when modal opens/closes on Android
+    useEffect(() => {
+        if (Platform.OS !== 'android') return;
+        if (!isEditModalVisible) return;
+
+        const updateNavigationBar = async () => {
+            try {
+                if (NavigationBar?.setButtonStyleAsync) {
+                    await NavigationBar.setButtonStyleAsync(settings.isDark ? 'light' : 'dark');
+                }
+            } catch {
+                // Silently fail to prevent crashes
+            }
+        };
+
+        // Clear previous timeout
+        if (navBarUpdateTimeoutRef.current) {
+            clearTimeout(navBarUpdateTimeoutRef.current);
+        }
+
+        // Debounce timer to prevent too many rapid updates
+        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
+
+        return () => {
+            if (navBarUpdateTimeoutRef.current) {
+                clearTimeout(navBarUpdateTimeoutRef.current);
+            }
+        };
+    }, [isEditModalVisible, settings.isDark]);
+
+    // Filter and sort sessions
     const filteredSessions = sessions
         .filter(s => s.categoryId === settings.selectedCategoryId)
         .sort((a, b) => b.timestamp - a.timestamp);
 
-    // Obsługa otwierania edycji
+    // Open edit modal
     const handleOpenEdit = (session: DrivingSession) => {
+        setShowDatePicker(false); // Explicitly close picker before opening modal
+        isPickerOpenRef.current = false; // Reset ref
         setSelectedSession(session);
         setEditDate(session.date);
         setTempDate(new Date(session.timestamp));
         setEditHours(Math.floor(session.durationMinutes / 60));
         setEditMinutes(session.durationMinutes % 60);
         setIsEditModalVisible(true);
-        setShowDatePicker(false); // Nie pokazuj pickera od razu
     };
 
-    // Obsługa zmiany daty
+    // Handle date change
     const onDateChange = (event: any, selectedDate?: Date) => {
-        // Na Androidzie gdy użytkownik anuluje, zamknij picker
-        if (Platform.OS === 'android' && event.type === 'dismissed') {
-            setShowDatePicker(false);
-            return;
+        // Clear any pending date change timeout
+        if (dateChangeTimeoutRef.current) {
+            clearTimeout(dateChangeTimeoutRef.current);
         }
 
-        // Aktualizuj datę bez zamykania pickera
+        // On Android: always close picker after interaction
+        if (Platform.OS === 'android') {
+            // If a user canceled, don't update the date
+            if (event.type === 'dismissed') {
+                setShowDatePicker(false);
+                isPickerOpenRef.current = false;
+                return;
+            }
+
+            // Close picker immediately
+            setShowDatePicker(false);
+
+            // Reset ref with a small delay to prevent immediate reopening
+            dateChangeTimeoutRef.current = setTimeout(() => {
+                isPickerOpenRef.current = false;
+            }, 300);
+        }
+
+        // Update the date with debouncing
         if (selectedDate) {
-            setTempDate(selectedDate);
+            dateChangeTimeoutRef.current = setTimeout(() => {
+                setTempDate(selectedDate);
 
-            // Używamy lokalnej daty bez konwersji UTC aby uniknąć problemu z timezone
-            const year = selectedDate.getFullYear();
-            const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-            const day = String(selectedDate.getDate()).padStart(2, '0');
-            const dateString = `${year}-${month}-${day}`;
+                // Use local date (no UTC conversion) to avoid timezone issues
+                const year = selectedDate.getFullYear();
+                const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+                const day = String(selectedDate.getDate()).padStart(2, '0');
+                const dateString = `${year}-${month}-${day}`;
 
-            setEditDate(dateString);
+                setEditDate(dateString);
+            }, 50);
         }
     };
 
-    // Obsługa zapisywania edycji
+    // Save edits
     const handleSaveEdit = async () => {
         if (!selectedSession) return;
 
@@ -121,26 +189,36 @@ export default function HistoryPage() {
 
         if (!success) {
             setIsSaving(false);
-            Alert.alert('Błąd', 'Nie udało się zapisać zmian');
+            Alert.alert('Cant save changes. Please try again later.');
         }
-        // Jeśli success=true, useEffect zamknie modal gdy dane będą zaktualizowane
+        // If success=true, the useEffect will close the modal once data is updated
     };
 
-    // Obsługa usuwania sesji
+    // Delete session
     const handleDeleteSession = () => {
         if (!selectedSession) return;
 
         Alert.alert(
-            'Usuń sesję',
-            'Czy na pewno chcesz usunąć tę sesję?',
+            t('history.delete'),
+            t('history.confirmDelete'),
             [
-                { text: 'Anuluj', style: 'cancel' },
+                { text: t('history.cancel'), style: 'cancel' },
                 {
-                    text: 'Usuń',
+                    text: t('history.delete'),
                     style: 'destructive',
                     onPress: async () => {
+                        // Clean up all pending timeouts
+                        if (dateChangeTimeoutRef.current) {
+                            clearTimeout(dateChangeTimeoutRef.current);
+                        }
+                        if (navBarUpdateTimeoutRef.current) {
+                            clearTimeout(navBarUpdateTimeoutRef.current);
+                        }
+
                         await deleteSession(selectedSession.id);
                         setIsEditModalVisible(false);
+                        setShowDatePicker(false);
+                        isPickerOpenRef.current = false;
                         setSelectedSession(null);
                     },
                 },
@@ -148,7 +226,7 @@ export default function HistoryPage() {
         );
     };
 
-    // Renderowanie pojedynczej sesji
+    // Render a single session
     const renderSession = ({ item }: { item: DrivingSession }) => (
         <TouchableOpacity
             onPress={() => handleOpenEdit(item)}
@@ -168,11 +246,11 @@ export default function HistoryPage() {
             }}
         >
             <View>
-                <Text style={{ color: colors.textTertiary, fontSize: 12, textTransform: 'uppercase', fontWeight: 'bold' }}>Data</Text>
+                <Text style={{ color: colors.textTertiary, fontSize: 12, textTransform: 'uppercase', fontWeight: 'bold' }}>{t('history.date')}</Text>
                 <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>{formatDate(item.timestamp)}</Text>
             </View>
             <View style={{ alignItems: 'flex-end' }}>
-                <Text style={{ color: colors.textTertiary, fontSize: 12, textTransform: 'uppercase', fontWeight: 'bold' }}>Czas</Text>
+                <Text style={{ color: colors.textTertiary, fontSize: 12, textTransform: 'uppercase', fontWeight: 'bold' }}>{t('history.duration')}</Text>
                 <Text style={{ fontSize: 20, fontWeight: '900', color: colors.primary }}>
                     {formatHours(item.durationMinutes)} h
                 </Text>
@@ -182,22 +260,24 @@ export default function HistoryPage() {
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.background }}>
-            {/* Przycisk ustawień */}
-            <SettingsButton onPress={settings.open} isDark={settings.isDark} />
+            {/* Settings button - rendered with proper layering for touch events */}
+            <View pointerEvents="box-none" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
+                <SettingsButton onPress={settings.open} isDark={settings.isDark} />
+            </View>
 
             <View style={{ flex: 1, padding: 24, paddingTop: 64 }}>
-                {/* Nazwa kategorii */}
+                {/* Category name */}
                 <Text style={{ color: colors.textSecondary, fontSize: 18, fontWeight: '600', marginBottom: 8 }}>
-                    Kategoria {selectedCategory?.name || 'B'}
+                    {t('history.category')} {selectedCategory?.name || 'B'}
                 </Text>
 
-                {/* Nagłówek */}
-                <Text style={{ fontSize: 30, fontWeight: '900', marginBottom: 24, color: colors.text }}>Historia</Text>
+                {/* Header */}
+                <Text style={{ fontSize: 30, fontWeight: '900', marginBottom: 24, color: colors.text }}>{t('history.title')}</Text>
 
-                {/* Lista sesji lub komunikat o braku danych */}
+                {/* Sessions list or empty state */}
                 {filteredSessions.length === 0 ? (
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ color: colors.textTertiary, fontSize: 18 }}>Brak historii jazd</Text>
+                        <Text style={{ color: colors.textTertiary, fontSize: 18 }}>{t('history.noSessions')}</Text>
                     </View>
                 ) : (
                     <FlatList
@@ -211,7 +291,7 @@ export default function HistoryPage() {
                 )}
             </View>
 
-            {/* Modal edycji sesji */}
+            {/* Edit session modal */}
             <Modal visible={isEditModalVisible} transparent animationType="fade">
                 <BlurView intensity={40} tint={settings.isDark ? 'dark' : 'light'} style={{ flex: 1, justifyContent: 'flex-end' }}>
                     <View style={{
@@ -222,36 +302,65 @@ export default function HistoryPage() {
                         paddingBottom: 48
                     }}>
                         <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 24, color: colors.text }}>
-                            Edytuj sesję
+                            {t('history.editSession')}
                         </Text>
 
-                        {/* Przycisk wyboru daty */}
+                        {/* Date selection button */}
                         <TouchableOpacity
-                            onPress={() => setShowDatePicker(!showDatePicker)}
+                            onPress={() => {
+                                // Prevent multiple picker openings on Android
+                                if (Platform.OS === 'android') {
+                                    if (isPickerOpenRef.current || showDatePicker) {
+                                        return;
+                                    }
+                                    // Set the ref immediately to prevent rapid clicks
+                                    isPickerOpenRef.current = true;
+
+                                    // Delay showing picker slightly to ensure the state is stable
+                                    setTimeout(() => {
+                                        setShowDatePicker(true);
+                                    }, 50);
+                                } else {
+                                    // iOS: just toggle
+                                    setShowDatePicker(prev => !prev);
+                                }
+                            }}
+                            disabled={showDatePicker && Platform.OS === 'android'}
                             style={{
                                 backgroundColor: colors.background,
                                 padding: 16,
                                 borderRadius: 16,
                                 marginBottom: 16,
                                 borderWidth: 1,
-                                borderColor: colors.border
+                                borderColor: colors.border,
+                                opacity: (showDatePicker && Platform.OS === 'android') ? 0.5 : 1
                             }}
                         >
                             <Text style={{ fontSize: 12, color: colors.textTertiary, textTransform: 'uppercase', fontWeight: 'bold', marginBottom: 4 }}>
-                                Data
+                                {t('history.date')}
                             </Text>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', color: colors.text }}>
                                 {formatDate(tempDate.getTime())}
                             </Text>
                         </TouchableOpacity>
 
-                        {/* DateTimePicker - pokazuje się po kliknięciu */}
-                        {showDatePicker && (
+                        {/* DateTimePicker - shows after click */}
+                        {showDatePicker && Platform.OS === 'android' && (
+                            <DateTimePicker
+                                value={tempDate}
+                                mode="date"
+                                display="default"
+                                onChange={onDateChange}
+                                maximumDate={new Date()}
+                                themeVariant={settings.isDark ? 'dark' : 'light'}
+                            />
+                        )}
+                        {showDatePicker && Platform.OS === 'ios' && (
                             <View style={{ marginBottom: 24 }}>
                                 <DateTimePicker
                                     value={tempDate}
                                     mode="date"
-                                    display={Platform.OS === 'ios' ? 'spinner' : 'default'}
+                                    display="spinner"
                                     onChange={onDateChange}
                                     maximumDate={new Date()}
                                     locale="pl-PL"
@@ -261,7 +370,7 @@ export default function HistoryPage() {
                             </View>
                         )}
 
-                        {/* Picker czasu */}
+                        {/* Time picker */}
                         <TimePicker
                             hours={editHours}
                             minutes={editMinutes}
@@ -271,7 +380,7 @@ export default function HistoryPage() {
                             isDark={settings.isDark}
                         />
 
-                        {/* Przycisk zapisz */}
+                        {/* Save button */}
                         <TouchableOpacity
                             onPress={handleSaveEdit}
                             style={{
@@ -286,26 +395,36 @@ export default function HistoryPage() {
                             }}
                         >
                             <Text style={{ color: '#fff', textAlign: 'center', fontWeight: 'bold', fontSize: 18 }}>
-                                Zapisz
+                                {t('history.save')}
                             </Text>
                         </TouchableOpacity>
 
-                        {/* Przycisk usuń */}
+                        {/* Delete button */}
                         <TouchableOpacity onPress={handleDeleteSession} style={{ marginTop: 16 }}>
                             <Text style={{ textAlign: 'center', color: colors.danger, fontWeight: 'bold' }}>
-                                Usuń wpis
+                                {t('history.delete')}
                             </Text>
                         </TouchableOpacity>
 
-                        {/* Przycisk anuluj */}
+                        {/* Cancel button */}
                         <TouchableOpacity
                             onPress={() => {
+                                // Clean up all pending timeouts
+                                if (dateChangeTimeoutRef.current) {
+                                    clearTimeout(dateChangeTimeoutRef.current);
+                                }
+                                if (navBarUpdateTimeoutRef.current) {
+                                    clearTimeout(navBarUpdateTimeoutRef.current);
+                                }
+
+                                // Reset all states
                                 setIsEditModalVisible(false);
                                 setShowDatePicker(false);
+                                isPickerOpenRef.current = false;
                             }}
                             style={{ marginTop: 32 }}
                         >
-                            <Text style={{ textAlign: 'center', color: colors.textTertiary }}>Anuluj</Text>
+                            <Text style={{ textAlign: 'center', color: colors.textTertiary }}>{t('history.cancel')}</Text>
                         </TouchableOpacity>
                     </View>
                 </BlurView>

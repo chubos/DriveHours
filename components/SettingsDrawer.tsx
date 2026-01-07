@@ -1,12 +1,14 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Modal, PanResponder, Pressable, Text, TextInput, TouchableOpacity, View, Alert, useColorScheme } from 'react-native';
+import { Animated, Dimensions, Modal, PanResponder, Pressable, Text, TextInput, TouchableOpacity, View, Alert, useColorScheme, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
-import { Category, SettingsContextValue, ThemeMode } from '../types';
-import { STORAGE_KEYS, DEFAULT_CATEGORIES, UI_DIMENSIONS, GESTURE_CONFIG } from '../constants';
-import { getColors } from '../utils/colors';
+import { useTranslation } from 'react-i18next';
+import * as NavigationBar from 'expo-navigation-bar';
+import { Category, SettingsContextValue, ThemeMode } from '@/types';
+import { STORAGE_KEYS, DEFAULT_CATEGORIES, UI_DIMENSIONS, GESTURE_CONFIG } from '@/constants';
+import { getColors } from '@/utils';
 
 const SettingsContext = createContext<SettingsContextValue | undefined>(undefined);
 
@@ -17,8 +19,13 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     const [selectedCategoryId, setSelectedCategoryIdState] = useState<string | null>(null);
     const [themeMode, setThemeModeState] = useState<ThemeMode>('system');
     const systemColorScheme = useColorScheme();
+    const saveTimeoutRef = useRef<{
+        categories?: number;
+        selectedCategory?: number;
+        theme?: number;
+    }>({});
 
-    // Oblicz czy używamy dark mode
+    // Whether we're currently using dark mode
     const isDark = themeMode === 'dark' || (themeMode === 'system' && systemColorScheme === 'dark');
 
     useEffect(() => {
@@ -28,7 +35,7 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
                 if (raw) {
                     setCategories(JSON.parse(raw));
                 } else {
-                    // Domyślne kategorie
+                    // Default categories
                     setCategories(DEFAULT_CATEGORIES);
                     await AsyncStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(DEFAULT_CATEGORIES));
                 }
@@ -37,32 +44,73 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
                 if (sel) setSelectedCategoryIdState(sel);
                 else if (!sel) {
                     setSelectedCategoryIdState('B');
-                    // open settings drawer so user can change default on first run
+                    // open settings drawer so user can change default on the first run
                     setIsOpen(true);
                 }
 
-                // Załaduj motyw
+                // Load theme
                 const savedTheme = await AsyncStorage.getItem(STORAGE_KEYS.THEME_MODE);
                 if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system')) {
                     setThemeModeState(savedTheme as ThemeMode);
                 }
-            } catch (e) {
-                console.error('Failed to load categories', e);
+            } catch {
+                // Silent error handling
             }
         };
-        load();
+        void load();
     }, []);
 
     useEffect(() => {
-        AsyncStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(categories)).catch(e => console.error(e));
+        // Throttle AsyncStorage writes
+        if (saveTimeoutRef.current.categories) {
+            clearTimeout(saveTimeoutRef.current.categories);
+        }
+
+        saveTimeoutRef.current.categories = setTimeout(() => {
+            AsyncStorage.setItem(STORAGE_KEYS.CATEGORIES, JSON.stringify(categories)).catch(() => {});
+        }, 300);
+
+        return () => {
+            if (saveTimeoutRef.current.categories) {
+                clearTimeout(saveTimeoutRef.current.categories);
+            }
+        };
     }, [categories]);
 
     useEffect(() => {
-        if (selectedCategoryId) AsyncStorage.setItem(STORAGE_KEYS.SELECTED_CATEGORY, selectedCategoryId).catch(e => console.error(e));
+        if (selectedCategoryId) {
+            // Throttle AsyncStorage writes
+            if (saveTimeoutRef.current.selectedCategory) {
+                clearTimeout(saveTimeoutRef.current.selectedCategory);
+            }
+
+            saveTimeoutRef.current.selectedCategory = setTimeout(() => {
+                AsyncStorage.setItem(STORAGE_KEYS.SELECTED_CATEGORY, selectedCategoryId).catch(() => {});
+            }, 300);
+
+            return () => {
+                if (saveTimeoutRef.current.selectedCategory) {
+                    clearTimeout(saveTimeoutRef.current.selectedCategory);
+                }
+            };
+        }
     }, [selectedCategoryId]);
 
     useEffect(() => {
-        AsyncStorage.setItem(STORAGE_KEYS.THEME_MODE, themeMode).catch(e => console.error(e));
+        // Throttle AsyncStorage writes
+        if (saveTimeoutRef.current.theme) {
+            clearTimeout(saveTimeoutRef.current.theme);
+        }
+
+        saveTimeoutRef.current.theme = setTimeout(() => {
+            AsyncStorage.setItem(STORAGE_KEYS.THEME_MODE, themeMode).catch(() => {});
+        }, 300);
+
+        return () => {
+            if (saveTimeoutRef.current.theme) {
+                clearTimeout(saveTimeoutRef.current.theme);
+            }
+        };
     }, [themeMode]);
 
     const addCategory = (c: Omit<Category, 'id'>) => {
@@ -76,17 +124,35 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
     };
 
     const deleteCategory = (id: string) => {
-        setCategories(prev => prev.filter(p => p.id !== id));
-        if (selectedCategoryId === id) setSelectedCategoryIdState(categories[0]?.id ?? null);
+        setCategories(prev => {
+            const filtered = prev.filter(p => p.id !== id);
+
+            // If we're deleting the selected category, select the first remaining one
+            if (selectedCategoryId === id && filtered.length > 0) {
+                setSelectedCategoryIdState(filtered[0].id);
+            }
+
+            return filtered;
+        });
     };
 
     const setSelectedCategoryId = (id: string) => setSelectedCategoryIdState(id);
 
-    const setThemeMode = (mode: ThemeMode) => setThemeModeState(mode);
+    const setThemeMode = (mode: ThemeMode) => {
+        setThemeModeState(mode);
+    };
+
+    const open = () => {
+        setIsOpen(true);
+    };
+
+    const close = () => {
+        setIsOpen(false);
+    };
 
     const value: SettingsContextValue = {
-        open: () => setIsOpen(true),
-        close: () => setIsOpen(false),
+        open,
+        close,
         isOpen,
         categories,
         selectedCategoryId,
@@ -115,15 +181,17 @@ export const useSettings = () => {
 
 // Drawer component
 function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+    const { t } = useTranslation();
     const screenW = Dimensions.get('window').width;
     const drawerW = Math.min(UI_DIMENSIONS.DRAWER_MAX_WIDTH, Math.round(screenW * UI_DIMENSIONS.DRAWER_WIDTH_PERCENT));
     const translateX = useRef(new Animated.Value(-drawerW)).current;
     const overlayOpacity = useRef(new Animated.Value(0)).current;
     const scale = useRef(new Animated.Value(0.95)).current;
+    const animationRef = useRef<Animated.CompositeAnimation | null>(null);
     const { categories, selectedCategoryId, setSelectedCategoryId, addCategory, updateCategory, deleteCategory, themeMode, setThemeMode, isDark } = useSettingsSafe();
     const colors = getColors(isDark);
 
-    // Stan kontrolujący widoczność Modal - opóźniony dla animacji
+    // Controls Modal visibility (delayed to allow close animation)
     const [showModal, setShowModal] = useState(false);
 
     // Modals
@@ -136,18 +204,54 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     const [addNameLocal, setAddNameLocal] = useState('');
     const [addHoursLocal, setAddHoursLocal] = useState('30');
 
+    const navBarUpdateTimeoutRef = useRef<number | null>(null);
+
+    // Consolidated navigation bar updates with debouncing to prevent crashes
+    useEffect(() => {
+        if (Platform.OS !== 'android') return;
+
+        const updateNavigationBar = async () => {
+            try {
+                if (NavigationBar?.setButtonStyleAsync) {
+                    await NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
+                }
+            } catch {
+                // Silently fail to prevent crashes
+            }
+        };
+
+        // Clear previous timeout
+        if (navBarUpdateTimeoutRef.current) {
+            clearTimeout(navBarUpdateTimeoutRef.current);
+        }
+
+        // Debounce timer to prevent too many rapid updates
+        navBarUpdateTimeoutRef.current = setTimeout(updateNavigationBar, 150);
+
+        return () => {
+            if (navBarUpdateTimeoutRef.current) {
+                clearTimeout(navBarUpdateTimeoutRef.current);
+            }
+        };
+    }, [isDark]); // Only depend on isDark, not modal states
+
     useEffect(() => {
         if (isOpen) {
-            // Pokazuj Modal natychmiast
+            // Stop any existing animation
+            if (animationRef.current) {
+                animationRef.current.stop();
+            }
+
+            // Show Modal immediately
             setShowModal(true);
 
-            // Reset początkowych wartości przed animacją
+            // Reset initial values before opening animation
             translateX.setValue(-drawerW);
             overlayOpacity.setValue(0);
             scale.setValue(0.95);
 
-            // Płynna animacja otwierania - spring dla naturalnego ruchu
-            Animated.parallel([
+            // Smooth opening animation - spring for a natural feel
+            animationRef.current = Animated.parallel([
                 Animated.spring(translateX, {
                     toValue: 0,
                     tension: 65,
@@ -165,10 +269,17 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     friction: 11,
                     useNativeDriver: true
                 })
-            ]).start();
-        } else {
-            // Płynna animacja zamykania - timing dla kontrolowanego ruchu
-            Animated.parallel([
+            ]);
+            animationRef.current.start();
+        } else if (showModal) {
+            // Stop any existing animation
+            if (animationRef.current) {
+                animationRef.current.stop();
+            }
+
+            // Only animate close if modal is currently shown
+            // Smooth closing animation - timing for controlled motion
+            animationRef.current = Animated.parallel([
                 Animated.timing(translateX, {
                     toValue: -drawerW,
                     duration: 250,
@@ -184,22 +295,33 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     duration: 250,
                     useNativeDriver: true
                 })
-            ]).start(() => {
-                // Ukryj Modal dopiero po zakończeniu animacji
+            ]);
+            animationRef.current.start(() => {
+                // Hide Modal only after the animation finishes
                 setShowModal(false);
+                animationRef.current = null;
             });
         }
-    }, [isOpen, drawerW, translateX, overlayOpacity, scale]);
 
-    // PanResponder to drag to close - tylko przeciąganie w lewo zamyka
+        return () => {
+            // Cleanup: stop animation on unmounting
+            if (animationRef.current) {
+                animationRef.current.stop();
+                animationRef.current = null;
+            }
+        };
+        // translateX, overlayOpacity, scale, and showModal are refs/state used in the effect
+    }, [isOpen, drawerW, translateX, overlayOpacity, scale, showModal]);
+
+    // PanResponder for drag-to-close - only dragging left closes
     const pan = useRef(PanResponder.create({
         onStartShouldSetPanResponder: () => false,
         onMoveShouldSetPanResponder: (_, gesture) => {
-            // Tylko gdy przeciągamy w lewo (gesture.dx < 0) i wystarczająco mocno
+            // Only when dragging left (gesture.dx < 0) and not too vertical
             return gesture.dx < -10 && Math.abs(gesture.dy) < 50;
         },
         onPanResponderMove: (_, gesture) => {
-            // Tylko ujemne wartości (przeciąganie w lewo)
+            // Only negative values (dragging left)
             if (gesture.dx < 0) {
                 const newX = Math.max(gesture.dx, -drawerW);
                 translateX.setValue(newX);
@@ -207,9 +329,14 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
             }
         },
         onPanResponderRelease: (_, gesture) => {
+            // Stop any existing animation
+            if (animationRef.current) {
+                animationRef.current.stop();
+            }
+
             if (gesture.dx < GESTURE_CONFIG.DISMISS_THRESHOLD || gesture.vx < -0.5) {
-                // Zamknij drawer - płynna animacja
-                Animated.parallel([
+                // Close drawer - smooth animation
+                animationRef.current = Animated.parallel([
                     Animated.timing(translateX, {
                         toValue: -drawerW,
                         duration: 250,
@@ -225,14 +352,16 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         duration: 250,
                         useNativeDriver: true
                     })
-                ]).start(() => {
-                    // Wywołaj onClose dopiero po zakończeniu animacji
+                ]);
+                animationRef.current.start(() => {
+                    // Call onClose only after the animation finishes
                     onClose();
                     setShowModal(false);
+                    animationRef.current = null;
                 });
             } else {
-                // Wróć do pozycji otwartej - spring dla odbicia
-                Animated.parallel([
+                // Bounce back to the open position - spring animation
+                animationRef.current = Animated.parallel([
                     Animated.spring(translateX, {
                         toValue: 0,
                         tension: 65,
@@ -250,7 +379,10 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         friction: 11,
                         useNativeDriver: true
                     })
-                ]).start();
+                ]);
+                animationRef.current.start(() => {
+                    animationRef.current = null;
+                });
             }
         }
     })).current;
@@ -264,7 +396,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     const handleAddCategory = () => {
         const h = Math.max(0, Number(addHoursLocal) || 0);
         addCategory({
-            name: addNameLocal || `Kategoria ${categories.length + 1}`,
+            name: addNameLocal || `${t('home.category')} ${categories.length + 1}`,
             requiredMinutes: h * 60
         });
         setAddModalVisible(false);
@@ -287,11 +419,12 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
         setEditTarget(null);
     };
 
-    // Interpolacja dla płynnego fade overlay
+    // Interpolation for smooth overlay fade
     const overlayBackground = overlayOpacity.interpolate({
         inputRange: [0, 1],
         outputRange: ['rgba(0,0,0,0)', 'rgba(0,0,0,0.5)']
     });
+
 
     return (
         <Modal transparent visible={showModal} animationType="none" onRequestClose={onClose}>
@@ -324,14 +457,14 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                 {...pan.panHandlers}
             >
                 <View style={{ padding: 16, paddingTop: 56, borderBottomWidth: 1, borderColor: colors.border }}>
-                    <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text }}>Ustawienia</Text>
-                    <Text style={{ color: colors.textSecondary, marginTop: 4 }}>Kategorie prawa jazdy</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text }}>{t('settings.title')}</Text>
+                    <Text style={{ color: colors.textSecondary, marginTop: 4 }}>{t('settings.categories')}</Text>
                 </View>
 
                 <View style={{ padding: 12, flex: 1 }}>
-                    {/* Sekcja motywu */}
+                    {/* Theme section */}
                     <View style={{ marginBottom: 20, paddingBottom: 16, borderBottomWidth: 1, borderColor: colors.border }}>
-                        <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textSecondary, marginBottom: 12 }}>MOTYW</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textSecondary, marginBottom: 12 }}>{t('settings.appearance').toUpperCase()}</Text>
                         <View style={{ flexDirection: 'row', gap: 8 }}>
                             <TouchableOpacity
                                 onPress={() => setThemeMode('light')}
@@ -351,7 +484,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                                     color={themeMode === 'light' ? '#3b82f6' : colors.textSecondary}
                                     style={{ marginBottom: 4 }}
                                 />
-                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'light' ? '#3b82f6' : colors.textSecondary }}>Jasny</Text>
+                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'light' ? '#3b82f6' : colors.textSecondary }}>{t('settings.light')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => setThemeMode('dark')}
@@ -371,7 +504,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                                     color={themeMode === 'dark' ? '#3b82f6' : colors.textSecondary}
                                     style={{ marginBottom: 4 }}
                                 />
-                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'dark' ? '#3b82f6' : colors.textSecondary }}>Ciemny</Text>
+                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'dark' ? '#3b82f6' : colors.textSecondary }}>{t('settings.dark')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
                                 onPress={() => setThemeMode('system')}
@@ -391,13 +524,13 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                                     color={themeMode === 'system' ? '#3b82f6' : colors.textSecondary}
                                     style={{ marginBottom: 4 }}
                                 />
-                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'system' ? '#3b82f6' : colors.textSecondary }}>System</Text>
+                                <Text style={{ fontSize: 11, fontWeight: '700', color: themeMode === 'system' ? '#3b82f6' : colors.textSecondary }}>{t('settings.system')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
 
-                    {/* Sekcja kategorii */}
-                    <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textSecondary, marginBottom: 12 }}>KATEGORIE</Text>
+                    {/* Categories section */}
+                    <Text style={{ fontSize: 14, fontWeight: '700', color: colors.textSecondary, marginBottom: 12 }}>{t('settings.selectCategory').toUpperCase()}</Text>
                     {categories.map((cat: Category) => (
                         <View key={cat.id} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 10 }}>
                             <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={() => setSelectedCategoryId(cat.id)}>
@@ -409,30 +542,30 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                             </TouchableOpacity>
                             <View style={{ flexDirection: 'row', gap: 8 }}>
                                 <TouchableOpacity onPress={() => openEditModal(cat)}>
-                                    <Text style={{ color: '#2563eb', marginRight: 12 }}>Edytuj</Text>
+                                    <Text style={{ color: '#2563eb', marginRight: 12 }}>{t('history.edit')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                    // confirm before deleting category
+                                    // confirm before deleting a category
                                     if (categories.length <= 1) {
-                                        Alert.alert('Nie można usunąć', 'Musisz mieć przynajmniej jedną kategorię.');
+                                        Alert.alert(t('settings.cannotDelete'), t('settings.mustHaveOne'));
                                         return;
                                     }
                                     Alert.alert(
-                                        'Usuń kategorię',
-                                        `Czy na pewno chcesz usunąć kategorię "${cat.name}"? Ta operacja usunie tylko kategorię, nie usuwa sesji.`,
+                                        t('settings.deleteCategory'),
+                                        t('settings.deleteCategoryConfirm', { name: cat.name }),
                                         [
-                                            { text: 'Anuluj', style: 'cancel' },
-                                            { text: 'Usuń', style: 'destructive', onPress: () => deleteCategory(cat.id) }
+                                            { text: t('history.cancel'), style: 'cancel' },
+                                            { text: t('history.delete'), style: 'destructive', onPress: () => deleteCategory(cat.id) }
                                         ]
                                     );
                                 }}>
-                                    <Text style={{ color: '#ef4444' }}>Usuń</Text>
+                                    <Text style={{ color: '#ef4444' }}>{t('history.delete')}</Text>
                                 </TouchableOpacity>
                              </View>
                          </View>
                      ))}
 
-                    {/* Przycisk dodania nowej kategorii */}
+                    {/* Add a category button */}
                     <TouchableOpacity
                         onPress={openAddModal}
                         style={{
@@ -450,12 +583,12 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         }}
                     >
                         <Text style={{ color: '#fff', fontSize: 24, fontWeight: '700' }}>+</Text>
-                        <Text style={{ color: '#fff', fontWeight: '700', fontSize: 16 }}>Dodaj kategorię</Text>
+                        <Text style={{ color: '#fff', fontWeight: '700', fontSize: 16 }}>{t('settings.addCategory')}</Text>
                     </TouchableOpacity>
                 </View>
             </Animated.View>
 
-            {/* Modal dodawania kategorii */}
+            {/* Add category modal */}
             <Modal transparent visible={addModalVisible} animationType="fade">
                 <Pressable
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
@@ -466,7 +599,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     left: 20,
                     right: 20,
                     top: '35%',
-                    backgroundColor: '#fff',
+                    backgroundColor: colors.surface,
                     borderRadius: 16,
                     padding: 20,
                     shadowColor: '#000',
@@ -475,30 +608,40 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     shadowRadius: 8,
                     elevation: 8
                 }}>
-                    <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 16 }}>Nowa kategoria</Text>
-                    <Text style={{ color: '#666', marginBottom: 4, fontWeight: '600' }}>Nazwa kategorii</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 16, color: colors.text }}>{t('settings.newCategory')}</Text>
+                    <Text style={{ color: colors.textSecondary, marginBottom: 4, fontWeight: '600' }}>{t('settings.categoryName')}</Text>
                     <TextInput
                         value={addNameLocal}
                         onChangeText={setAddNameLocal}
-                        placeholder="np. Kategoria B"
+                        placeholder={t('settings.categoryName')}
+                        placeholderTextColor={colors.textTertiary}
+                        selectionColor={colors.primary}
+                        cursorColor={colors.primary}
                         style={{
                             borderWidth: 1,
-                            borderColor: '#e5e7eb',
+                            borderColor: colors.border,
+                            backgroundColor: colors.background,
+                            color: colors.text,
                             padding: 12,
                             borderRadius: 10,
                             marginBottom: 12,
                             fontSize: 16
                         }}
                     />
-                    <Text style={{ color: '#666', marginBottom: 4, fontWeight: '600' }}>Wymagane godziny</Text>
+                    <Text style={{ color: colors.textSecondary, marginBottom: 4, fontWeight: '600' }}>{t('settings.requiredHours')}</Text>
                     <TextInput
                         value={addHoursLocal}
                         onChangeText={setAddHoursLocal}
                         placeholder="30"
+                        placeholderTextColor={colors.textTertiary}
                         keyboardType="numeric"
+                        selectionColor={colors.primary}
+                        cursorColor={colors.primary}
                         style={{
                             borderWidth: 1,
-                            borderColor: '#e5e7eb',
+                            borderColor: colors.border,
+                            backgroundColor: colors.background,
+                            color: colors.text,
                             padding: 12,
                             borderRadius: 10,
                             marginBottom: 16,
@@ -510,19 +653,19 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                             onPress={() => setAddModalVisible(false)}
                             style={{ padding: 12, paddingHorizontal: 20 }}
                         >
-                            <Text style={{ color: '#6b7280', fontWeight: '600' }}>Anuluj</Text>
+                            <Text style={{ color: colors.textSecondary, fontWeight: '600' }}>{t('history.cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleAddCategory}
                             style={{ backgroundColor: '#3b82f6', padding: 12, paddingHorizontal: 24, borderRadius: 10 }}
                         >
-                            <Text style={{ color: '#fff', fontWeight: '700' }}>Dodaj</Text>
+                            <Text style={{ color: '#fff', fontWeight: '700' }}>{t('modal.add')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
 
-            {/* Modal edycji kategorii */}
+            {/* Edit category modal */}
             <Modal transparent visible={editModalVisible} animationType="fade">
                 <Pressable
                     style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center' }}
@@ -533,7 +676,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     left: 20,
                     right: 20,
                     top: '35%',
-                    backgroundColor: '#fff',
+                    backgroundColor: colors.surface,
                     borderRadius: 16,
                     padding: 20,
                     shadowColor: '#000',
@@ -542,30 +685,40 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     shadowRadius: 8,
                     elevation: 8
                 }}>
-                    <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 16 }}>Edytuj kategorię</Text>
-                    <Text style={{ color: '#666', marginBottom: 4, fontWeight: '600' }}>Nazwa kategorii</Text>
+                    <Text style={{ fontSize: 20, fontWeight: '800', marginBottom: 16, color: colors.text }}>{t('settings.editCategory')}</Text>
+                    <Text style={{ color: colors.textSecondary, marginBottom: 4, fontWeight: '600' }}>{t('settings.categoryName')}</Text>
                     <TextInput
                         value={editNameLocal}
                         onChangeText={setEditNameLocal}
-                        placeholder="Nazwa"
+                        placeholder={t('settings.categoryName')}
+                        placeholderTextColor={colors.textTertiary}
+                        selectionColor={colors.primary}
+                        cursorColor={colors.primary}
                         style={{
                             borderWidth: 1,
-                            borderColor: '#e5e7eb',
+                            borderColor: colors.border,
+                            backgroundColor: colors.background,
+                            color: colors.text,
                             padding: 12,
                             borderRadius: 10,
                             marginBottom: 12,
                             fontSize: 16
                         }}
                     />
-                    <Text style={{ color: '#666', marginBottom: 4, fontWeight: '600' }}>Wymagane godziny</Text>
+                    <Text style={{ color: colors.textSecondary, marginBottom: 4, fontWeight: '600' }}>{t('settings.requiredHours')}</Text>
                     <TextInput
                         value={editHoursLocal}
                         onChangeText={setEditHoursLocal}
-                        placeholder="Godziny"
+                        placeholder={t('settings.requiredHours')}
+                        placeholderTextColor={colors.textTertiary}
                         keyboardType="numeric"
+                        selectionColor={colors.primary}
+                        cursorColor={colors.primary}
                         style={{
                             borderWidth: 1,
-                            borderColor: '#e5e7eb',
+                            borderColor: colors.border,
+                            backgroundColor: colors.background,
+                            color: colors.text,
                             padding: 12,
                             borderRadius: 10,
                             marginBottom: 16,
@@ -577,13 +730,13 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                             onPress={() => { setEditModalVisible(false); setEditTarget(null); }}
                             style={{ padding: 12, paddingHorizontal: 20 }}
                         >
-                            <Text style={{ color: '#6b7280', fontWeight: '600' }}>Anuluj</Text>
+                            <Text style={{ color: colors.textSecondary, fontWeight: '600' }}>{t('history.cancel')}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={handleSaveEdit}
                             style={{ backgroundColor: '#3b82f6', padding: 12, paddingHorizontal: 24, borderRadius: 10 }}
                         >
-                            <Text style={{ color: '#fff', fontWeight: '700' }}>Zapisz</Text>
+                            <Text style={{ color: '#fff', fontWeight: '700' }}>{t('history.save')}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -592,7 +745,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     );
 }
 
-// Helper: safe access to SettingsContext from within drawer (context is provided above)
+// Helper: safe access to SettingsContext from within the drawer (context is provided above)
 function useSettingsSafe() {
     const ctx = useContext(SettingsContext);
     if (!ctx) {
@@ -610,4 +763,3 @@ function useSettingsSafe() {
     }
     return ctx;
 }
-

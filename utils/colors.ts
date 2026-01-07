@@ -1,5 +1,5 @@
 /**
- * Kolory motywu ciemnego i jasnego
+ * Light and dark theme colors
  */
 
 export const colors = {
@@ -40,4 +40,3 @@ export type ColorScheme = typeof colors.light;
 export const getColors = (isDark: boolean): ColorScheme => {
     return isDark ? colors.dark : colors.light;
 };
-

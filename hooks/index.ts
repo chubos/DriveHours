@@ -1,6 +1,5 @@
 /**
- * Eksport wszystkich hooków dla łatwiejszego importowania
+ * Export all hooks for easier importing
  */
 
 export * from './useDrivingSessions';
-

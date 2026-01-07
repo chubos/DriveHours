@@ -1,5 +1,5 @@
 /**
- * Funkcje pomocnicze do obliczeń związanych z sesjami jazdy
+ * Helper functions for driving-session related calculations
  */
 
 import { DrivingSession, Category } from '../types';
@@ -18,40 +18,41 @@ export const calculateTotalMinutes = (
 };
 
 /**
- * Oblicza progres (0-1) w stosunku do wymaganych godzin
+ * Calculates progress (0-1) relative to required minutes
  */
 export const calculateProgress = (
     totalMinutes: number,
     requiredMinutes: number
 ): number => {
+    if (requiredMinutes <= 0) return 0;
     return Math.min(totalMinutes / requiredMinutes, 1);
 };
 
 /**
- * Konwertuje minuty na format "X.X h"
+ * Converts minutes to the "X.X h" format
  */
 export const formatHours = (minutes: number): string => {
     return (minutes / 60).toFixed(1);
 };
 
 /**
- * Formatuje timestamp na lokalny format daty
+ * Formats a timestamp to local date format
  */
 export const formatDate = (timestamp: number): string => {
     return new Date(timestamp).toLocaleDateString('pl-PL');
 };
 
 /**
- * Konwertuje datę YYYY-MM-DD na timestamp
+ * Converts a YYYY-MM-DD date string to a timestamp
  */
 export const dateStringToTimestamp = (dateString: string): number => {
-    // Używamy lokalnej daty zamiast UTC aby uniknąć problemu z timezone
+    // Use local date (not UTC) to avoid timezone issues
     const [year, month, day] = dateString.split('-').map(Number);
     return new Date(year, month - 1, day).getTime();
 };
 
 /**
- * Oblicza pozostałe godziny do ukończenia
+ * Calculates remaining hours until completion
  */
 export const calculateRemainingHours = (
     totalMinutes: number,
@@ -62,7 +63,7 @@ export const calculateRemainingHours = (
 };
 
 /**
- * Pobiera wybraną kategorię z listy kategorii
+ * Returns the selected category from the categories list
  */
 export const getSelectedCategory = (
     categories: Category[],
@@ -73,7 +74,7 @@ export const getSelectedCategory = (
 };
 
 /**
- * Tworzy nową sesję jazdy
+ * Creates a new driving session
  */
 export const createDrivingSession = (
     hours: number,
@@ -99,15 +100,16 @@ export const createDrivingSession = (
 };
 
 /**
- * Oblicza prognozę ukończenia na podstawie dotychczasowego tempa
+ * Calculates completion prediction based on current pace
+ * Returns null when there isn't enough data, 'completed' when finished, or a date string
  */
 export const calculatePrediction = (
     sessions: DrivingSession[],
     totalMinutes: number,
     requiredMinutes: number
-): string => {
-    if (sessions.length < 2) return "Zbieranie danych...";
-    if (totalMinutes >= requiredMinutes) return "Ukończono!";
+): string | null => {
+    if (sessions.length < 2) return null;
+    if (totalMinutes >= requiredMinutes) return 'completed';
 
     const sorted = [...sessions].sort((a, b) => a.timestamp - b.timestamp);
     const firstDate = sorted[0].timestamp;
@@ -116,26 +118,41 @@ export const calculatePrediction = (
 
     const effectiveDays = daysElapsed < 1 ? 1 : daysElapsed;
     const minPerDay = totalMinutes / effectiveDays;
-    const remainingMin = requiredMinutes - totalMinutes;
 
-    const daysLeft = Math.ceil(remainingMin / (minPerDay || 1));
+    // Prevent division by zero or unrealistic predictions
+    if (minPerDay <= 0) return null;
+
+    const remainingMin = requiredMinutes - totalMinutes;
+    const daysLeft = Math.ceil(remainingMin / minPerDay);
+
+    // Prevent unrealistic predictions (more than 3 years)
+    if (daysLeft > 1095) return null;
+
     const finishDate = new Date();
     finishDate.setDate(finishDate.getDate() + daysLeft);
 
-    return finishDate.toLocaleDateString('pl-PL');
+    return finishDate.toLocaleDateString();
 };
 
 /**
- * Pobiera dane tygodniowe do wykresu - ostatnie 7 dni
+ * Returns weekly chart data for the last 7 days
  */
-export const getWeeklyChartData = (sessions: DrivingSession[]) => {
-    const days = ['Nd', 'Pn', 'Wt', 'Śr', 'Czw', 'Pt', 'Sb'];
+export const getWeeklyChartData = (sessions: DrivingSession[], t?: (key: string) => string) => {
+    const days = t ? [
+        t('days.short.sun'),
+        t('days.short.mon'),
+        t('days.short.tue'),
+        t('days.short.wed'),
+        t('days.short.thu'),
+        t('days.short.fri'),
+        t('days.short.sat')
+    ] : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-    // Przygotuj tablicę dla ostatnich 7 dni
+    // Prepare an array for the last 7 days
     const last7Days: { label: string; value: number; date: string }[] = [];
     const today = new Date();
 
-    // Iterujemy od 0 do 6 aby mieć dni od najstarszego do najnowszego (dzisiaj ostatni)
+    // Iterate from 6 to 0 so the days go from oldest to newest (today last)
     for (let i = 6; i >= 0; i--) {
         const date = new Date(today);
         date.setDate(today.getDate() - i);
@@ -143,7 +160,7 @@ export const getWeeklyChartData = (sessions: DrivingSession[]) => {
 
         const dayOfWeek = date.getDay();
 
-        // Używamy lokalnej daty zamiast UTC
+        // Use local date (not UTC)
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -156,22 +173,29 @@ export const getWeeklyChartData = (sessions: DrivingSession[]) => {
         });
     }
 
-    // Sumuj minuty dla każdego dnia
+    // Sum minutes for each day
     sessions.forEach(s => {
-        const sessionDate = s.date; // Format YYYY-MM-DD
+        const sessionDate = s.date; // Format: YYYY-MM-DD
         const dayData = last7Days.find(d => d.date === sessionDate);
         if (dayData) {
             dayData.value += s.durationMinutes;
         }
     });
 
-    // Oblicz wysokości słupków
+    // Calculate bar heights
     const values = last7Days.map(d => d.value);
-    const maxVal = Math.max(...values, 60);
+
+    // Safely calculate max value
+    let maxVal = 60; // Default minimum
+    if (values.length > 0) {
+        const arrayMax = Math.max(...values);
+        maxVal = Math.max(arrayMax, 60);
+    }
+
     const chartHeightPx = 128;
 
     return last7Days.map(day => {
-        const heightPercent = (day.value / maxVal) * 100;
+        const heightPercent = maxVal > 0 ? (day.value / maxVal) * 100 : 0;
         const heightPx = Math.max((heightPercent / 100) * chartHeightPx, 4);
         return {
             label: day.label,

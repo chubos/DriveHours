@@ -1,11 +1,11 @@
 /**
- * Typy wspólne dla całej aplikacji DriveHours
+ * Shared types for the DriveHours app
  */
 
 export interface DrivingSession {
     id: string;
-    date: string; // Format: YYYY-MM-DD dla kalendarza
-    timestamp: number; // Unix timestamp w milisekundach
+    date: string; // Format: YYYY-MM-DD (for calendar/date picker)
+    timestamp: number; // Unix timestamp in milliseconds
     durationMinutes: number;
     categoryId?: string;
 }
@@ -32,4 +32,3 @@ export interface SettingsContextValue {
     setThemeMode: (mode: ThemeMode) => void;
     isDark: boolean;
 }
-

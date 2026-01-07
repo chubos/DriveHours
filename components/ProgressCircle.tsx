@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import Svg, { Circle, Defs, LinearGradient, Stop } from "react-native-svg";
+import { useTranslation } from 'react-i18next';
 
 interface Props {
     progress: number;
@@ -9,7 +10,8 @@ interface Props {
 }
 
 export default function ProgressCircle({ progress, label, isDark = false }: Props) {
-    const size = 260; // Nieco większe
+    const { t } = useTranslation();
+    const size = 260; // Slightly bigger
     const strokeWidth = 18;
     const radius = (size - strokeWidth) / 2;
     const circumference = radius * 2 * Math.PI;
@@ -46,14 +48,12 @@ export default function ProgressCircle({ progress, label, isDark = false }: Prop
                     strokeDasharray={circumference}
                     strokeDashoffset={strokeDashoffset}
                     strokeLinecap="round"
-                    rotation="-90"
-                    originX={size / 2}
-                    originY={size / 2}
+                    transform={`rotate(-90 ${size / 2} ${size / 2})`}
                 />
             </Svg>
             <View style={{ position: 'absolute', alignItems: 'center' }}>
                 <Text style={{ fontSize: 48, fontWeight: '900', color: textColor }}>{label}</Text>
-                <Text style={{ color: subTextColor, fontWeight: 'bold', textTransform: 'uppercase', fontSize: 12, letterSpacing: -0.5 }}>ukończono</Text>
+                <Text style={{ color: subTextColor, fontWeight: 'bold', textTransform: 'uppercase', fontSize: 12, letterSpacing: -0.5 }}>{t('home.completed')}</Text>
             </View>
         </View>
     );

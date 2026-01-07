@@ -1,5 +1,5 @@
 /**
- * Stałe konfiguracyjne dla całej aplikacji
+ * App-wide configuration constants
  */
 
 // AsyncStorage keys
@@ -10,18 +10,18 @@ export const STORAGE_KEYS = {
     THEME_MODE: 'theme_mode',
 } as const;
 
-// Domyślne kategorie prawa jazdy
+// Default driving license categories
 export const DEFAULT_CATEGORIES = [
     { id: 'B', name: 'B', requiredMinutes: 30 * 60 },
 ];
 
-// Parametry animacji
+// Animation parameters
 export const ANIMATION_DURATION = {
     DRAWER: 250,
     GESTURE: 200,
 } as const;
 
-// Parametry gestów
+// Gesture parameters
 export const GESTURE_CONFIG = {
     EDGE_DETECTION_WIDTH: 50,
     SWIPE_THRESHOLD: 80,
@@ -29,14 +29,14 @@ export const GESTURE_CONFIG = {
     DISMISS_THRESHOLD: -50,
 } as const;
 
-// Wymiary UI
+// UI dimensions
 export const UI_DIMENSIONS = {
     DRAWER_MAX_WIDTH: 360,
     DRAWER_WIDTH_PERCENT: 0.9,
     TAB_BAR_HEIGHT: 90,
 } as const;
 
-// Kolory
+// Colors
 export const COLORS = {
     PRIMARY: '#3b82f6',
     SECONDARY: '#2dd4bf',
@@ -48,4 +48,3 @@ export const COLORS = {
     SURFACE: '#ffffff',
     BORDER: '#e5e7eb',
 } as const;
-

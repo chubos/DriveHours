@@ -1,5 +1,5 @@
 /**
- * Komponent przycisku ustawień
+ * Settings button component
  */
 
 import React from 'react';
@@ -14,16 +14,26 @@ interface SettingsButtonProps {
 
 export const SettingsButton: React.FC<SettingsButtonProps> = ({ onPress, isDark = false }) => {
     const handlePress = () => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
         onPress();
     };
 
     return (
-        <View style={{ position: 'absolute', right: 20, top: 65, zIndex: 1000 }}>
+        <View
+            style={{
+                position: 'absolute',
+                right: 20,
+                top: 65,
+                zIndex: 9999,
+                elevation: 10,
+            }}
+            pointerEvents="box-none"
+        >
             <TouchableOpacity
                 onPress={handlePress}
                 activeOpacity={0.7}
-                accessibilityLabel="Otwórz ustawienia"
+                accessibilityLabel="Open settings"
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
                 style={{
                     width: 44,
                     height: 44,
@@ -35,7 +45,7 @@ export const SettingsButton: React.FC<SettingsButtonProps> = ({ onPress, isDark 
                     shadowOffset: { width: 0, height: 2 },
                     shadowOpacity: isDark ? 0.3 : 0.1,
                     shadowRadius: 8,
-                    elevation: 4,
+                    elevation: 8,
                     borderWidth: isDark ? 1 : 0,
                     borderColor: isDark ? 'rgba(75, 85, 99, 0.5)' : 'transparent',
                 }}

@@ -1,0 +1,84 @@
+{
+  "home": {
+    "title": "Driving Progress",
+    "completed": "completed",
+    "remaining": "remaining",
+    "addSession": "Add Session",
+    "category": "Category"
+  },
+  "stats": {
+    "title": "Analytics",
+    "category": "Category",
+    "weeklyActivity": "Weekly Activity",
+    "totalSessions": "Total Sessions",
+    "averageDuration": "Average Duration",
+    "daysLeft": "Days Left",
+    "achievements": "Achievements",
+    "firstHour": "First Hour",
+    "halfway": "Halfway",
+    "master": "Master",
+    "minutes": "min",
+    "collectingData": "Collecting data...",
+    "completed": "Completed!"
+  },
+  "history": {
+    "title": "Driving History",
+    "category": "Category",
+    "noSessions": "No driving sessions yet",
+    "edit": "Edit",
+    "delete": "Delete",
+    "editSession": "Edit Session",
+    "date": "Date",
+    "duration": "Duration",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "save": "Save",
+    "cancel": "Cancel",
+    "deleteConfirm": "Delete this driving session?",
+    "confirmDelete": "Are you sure you want to delete this session?"
+  },
+  "modal": {
+    "addSession": "Add Session",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "add": "Add",
+    "cancel": "Cancel",
+    "selectDate": "Select Date"
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "categories": "Driving license categories",
+    "selectCategory": "Categories",
+    "close": "Close",
+    "addCategory": "Add Category",
+    "newCategory": "New Category",
+    "editCategory": "Edit Category",
+    "categoryName": "Category Name",
+    "requiredHours": "Required Hours",
+    "cannotDelete": "Cannot Delete",
+    "mustHaveOne": "You must have at least one category.",
+    "deleteCategory": "Delete Category",
+    "deleteCategoryConfirm": "Are you sure you want to delete category \"{{name}}\"? This will remove only the category, not the sessions."
+  },
+  "tabs": {
+    "home": "Home",
+    "stats": "Statistics",
+    "history": "History"
+  },
+  "days": {
+    "short": {
+      "sun": "Sun",
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat"
+    }
+  }
+}
+

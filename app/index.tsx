@@ -1,62 +1,67 @@
 /**
- * Strona główna aplikacji DriveHours - wyświetla postęp nauki jazdy
+ * Main page of DriveHours app - displays driving progress
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
-import ProgressCircle from '../components/ProgressCircle';
-import { SettingsButton } from '../components/SettingsButton';
-import { AddSessionModal } from '../components/AddSessionModal';
-import { useSettings } from '../components/SettingsDrawer';
-import { useDrivingSessions } from '../hooks';
-import { getColors } from '../utils/colors';
+import { ProgressCircle, SettingsButton, AddSessionModal, useSettings } from '@/components';
+import { useDrivingSessions } from '@/hooks';
 import {
+    getColors,
     calculateTotalMinutes,
     calculateProgress,
     formatHours,
     calculateRemainingHours,
     getSelectedCategory,
     createDrivingSession,
-} from '../utils/calculations';
+} from '@/utils';
 
 export default function HomePage() {
     // Hooks
+    const { t } = useTranslation();
     const settings = useSettings();
     const { sessions, addSession } = useDrivingSessions();
     const colors = getColors(settings.isDark);
+    const timeoutRefs = useRef<number[]>([]);
 
-    console.log('🏠 HOME - Liczba sesji:', sessions.length);
-
-
-    // Stan lokalny
+    // Local state
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [hours, setHours] = useState(0);
     const [minutes, setMinutes] = useState(0);
     const [refreshKey, setRefreshKey] = useState(0);
 
-    // Wymuszenie odświeżenia gdy wracamy do ekranu
+    // Cleanup timeouts on unmount
+    useEffect(() => {
+        return () => {
+            timeoutRefs.current.forEach(id => clearTimeout(id));
+            timeoutRefs.current = [];
+        };
+    }, []);
+
+    // Force refresh when returning to the screen
     useFocusEffect(
         useCallback(() => {
             setRefreshKey(prev => prev + 1);
-        }, [sessions, settings.selectedCategoryId])
+        }, [])
     );
 
-    // Obliczenia
+    // Calculations
     const selectedCategory = getSelectedCategory(
         settings.categories,
         settings.selectedCategoryId
     );
     const requiredMinutes = selectedCategory?.requiredMinutes ?? 30 * 60;
-    const maxHours = Math.ceil(requiredMinutes / 60); // Maksymalna liczba godzin dla kategorii
+    const maxHours = Math.ceil(requiredMinutes / 60); // Maximum hours for category
     const totalMinutes = calculateTotalMinutes(sessions, settings.selectedCategoryId);
     const progress = calculateProgress(totalMinutes, requiredMinutes);
     const hoursDisplay = formatHours(totalMinutes);
     const remainingHours = calculateRemainingHours(totalMinutes, requiredMinutes);
 
-    // Obsługa dodawania sesji
+    // Handle adding session
     const handleAddSession = async () => {
         const totalTime = hours * 60 + minutes;
         if (totalTime === 0) return;
@@ -70,19 +75,28 @@ export default function HomePage() {
         const success = await addSession(newSession);
 
         if (success) {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
 
-            // Poczekaj chwilę aby React zaktualizował stan
-            await new Promise(resolve => setTimeout(resolve, 100));
+            // Wait a moment for React to update the state
+            const timeout1 = setTimeout(() => {
+                setIsModalVisible(false);
+                setHours(0);
+                setMinutes(0);
 
-            setIsModalVisible(false);
-            setHours(0);
-            setMinutes(0);
+                // Force refresh after closing modal
+                const timeout2 = setTimeout(() => {
+                    setRefreshKey(prev => prev + 1);
 
-            // Wymuś odświeżenie po zamknięciu modalu
-            setTimeout(() => {
-                setRefreshKey(prev => prev + 1);
+                    // Remove timeouts from tracking after they execute
+                    timeoutRefs.current = timeoutRefs.current.filter(
+                        id => id !== timeout1 && id !== timeout2
+                    );
+                }, 100);
+
+                timeoutRefs.current.push(timeout2);
             }, 100);
+
+            timeoutRefs.current.push(timeout1);
         }
     };
 
@@ -97,10 +111,12 @@ export default function HomePage() {
                 padding: 24
             }}
         >
-            {/* Przycisk ustawień */}
-            <SettingsButton onPress={settings.open} isDark={settings.isDark} />
+            {/* Settings button - rendered outside the main content to prevent blocking */}
+            <View pointerEvents="box-none" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}>
+                <SettingsButton onPress={settings.open} isDark={settings.isDark} />
+            </View>
 
-            {/* Nazwa kategorii */}
+            {/* Category name */}
             <Text style={{
                 color: colors.text,
                 fontSize: 36,
@@ -108,10 +124,10 @@ export default function HomePage() {
                 marginBottom: 24,
                 marginTop: 4
             }}>
-                Kategoria {selectedCategory?.name || 'B'}
+                {t('home.category')} {selectedCategory?.name || 'B'}
             </Text>
 
-            {/* Nagłówek */}
+            {/* Header */}
             <Text style={{
                 color: colors.textTertiary,
                 textTransform: 'uppercase',
@@ -119,16 +135,16 @@ export default function HomePage() {
                 marginBottom: 20,
                 fontWeight: '500'
             }}>
-                Twój Postęp
+                {t('home.title')}
             </Text>
 
-            {/* Wykres kołowy postępu */}
+            {/* Progress circle */}
             <ProgressCircle progress={progress} label={`${hoursDisplay}h`} isDark={settings.isDark} />
 
-            {/* Informacje i akcje */}
+            {/* Information and actions */}
             <View style={{ marginTop: 48, alignItems: 'center' }}>
                 <Text style={{ color: colors.textSecondary, marginBottom: 24, fontWeight: '500' }}>
-                    Do egzaminu: {remainingHours} h
+                    {t('home.remaining')}: {remainingHours} h
                 </Text>
 
                 <TouchableOpacity
@@ -146,11 +162,11 @@ export default function HomePage() {
                     }}
                     activeOpacity={0.8}
                 >
-                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>Dodaj jazdę</Text>
+                    <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 18 }}>{t('home.addSession')}</Text>
                 </TouchableOpacity>
             </View>
 
-            {/* Modal dodawania sesji */}
+            {/* Add session modal */}
             <AddSessionModal
                 visible={isModalVisible}
                 hours={hours}

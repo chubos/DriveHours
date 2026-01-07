@@ -1,11 +1,11 @@
 /**
- * Komponent wyświetlający osiągnięcia użytkownika
+ * Component that displays a user achievement badge
  */
 
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { getColors } from '../utils/colors';
+import { getColors } from '@/utils';
 
 interface BadgeProps {
     active: boolean;
@@ -57,4 +57,3 @@ export const Badge: React.FC<BadgeProps> = ({ active, label, iconName, color, is
         </View>
     );
 };
-
