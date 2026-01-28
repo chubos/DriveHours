@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "ความคืบหน้าการขับขี่",
+    "completed": "เสร็จสมบูรณ์",
+    "remaining": "คงเหลือ",
+    "addSession": "เพิ่มเซสชัน",
+    "category": "หมวดหมู่"
+  },
+  "stats": {
+    "title": "การวิเคราะห์",
+    "category": "หมวดหมู่",
+    "weeklyActivity": "กิจกรรมรายสัปดาห์",
+    "totalSessions": "เซสชันทั้งหมด",
+    "averageDuration": "ระยะเวลาเฉลี่ย",
+    "daysLeft": "วันที่เหลือ",
+    "achievements": "ความสำเร็จ",
+    "firstHour": "ชั่วโมงแรก",
+    "halfway": "ครึ่งทาง",
+    "master": "ผู้เชี่ยวชาญ",
+    "minutes": "นาที",
+    "collectingData": "กำลังรวบรวมข้อมูล...",
+    "completed": "เสร็จสมบูรณ์!"
+  },
+  "history": {
+    "title": "ประวัติการขับขี่",
+    "category": "หมวดหมู่",
+    "noSessions": "ยังไม่มีเซสชันการขับขี่",
+    "edit": "แก้ไข",
+    "delete": "ลบ",
+    "editSession": "แก้ไขเซสชัน",
+    "date": "วันที่",
+    "duration": "ระยะเวลา",
+    "hours": "ชั่วโมง",
+    "minutes": "นาที",
+    "save": "บันทึก",
+    "cancel": "ยกเลิก",
+    "deleteConfirm": "ลบเซสชันการขับขี่นี้?",
+    "confirmDelete": "คุณแน่ใจหรือไม่ว่าต้องการลบเซสชันนี้?"
+  },
+  "modal": {
+    "addSession": "เพิ่มเซสชัน",
+    "hours": "ชั่วโมง",
+    "minutes": "นาที",
+    "add": "เพิ่ม",
+    "cancel": "ยกเลิก",
+    "selectDate": "เลือกวันที่"
+  },
+  "settings": {
+    "title": "การตั้งค่า",
+    "appearance": "รูปลักษณ์",
+    "light": "สว่าง",
+    "dark": "มืด",
+    "system": "ระบบ",
+    "categories": "หมวดหมู่ใบขับขี่",
+    "selectCategory": "หมวดหมู่",
+    "close": "ปิด",
+    "addCategory": "เพิ่มหมวดหมู่",
+    "newCategory": "หมวดหมู่ใหม่",
+    "editCategory": "แก้ไขหมวดหมู่",
+    "categoryName": "ชื่อหมวดหมู่",
+    "requiredHours": "ชั่วโมงที่ต้องการ",
+    "cannotDelete": "ไม่สามารถลบได้",
+    "mustHaveOne": "คุณต้องมีอย่างน้อยหนึ่งหมวดหมู่",
+    "deleteCategory": "ลบหมวดหมู่",
+    "deleteCategoryConfirm": "คุณแน่ใจหรือไม่ว่าต้องการลบหมวดหมู่ \"{{name}}\"? การดำเนินการนี้จะลบเฉพาะหมวดหมู่ ไม่ใช่เซสชัน",
+    "privacyPolicy": "นโยบายความเป็นส่วนตัวและข้อกำหนดการให้บริการ",
+    "contact": "ติดต่อเรา",
+    "privacyTitle": "นโยบายความเป็นส่วนตัว",
+    "privacyIntro": "Hexagon Studio เคารพความเป็นส่วนตัวของผู้ใช้แอปพลิเคชันมือถือ",
+    "privacySection1Title": "1. การเก็บรวบรวมข้อมูล",
+    "privacySection1Text": "Hexagon Studio ไม่เก็บรวบรวม จัดเก็บ หรือประมวลผลข้อมูลส่วนบุคคลจากผู้ใช้แอปพลิเคชัน",
+    "privacySection2Title": "2. การจัดเก็บข้อมูลในเครื่อง",
+    "privacySection2Text": "ข้อมูลใดๆ ที่สร้างขึ้นภายในแอปพลิเคชัน (เช่น เนื้อหาที่ผู้ใช้สร้างขึ้นหรือความคืบหน้า) จะถูกจัดเก็บในเครื่องของผู้ใช้และไม่ถูกส่งไปยังเซิร์ฟเวอร์ภายนอก",
+    "privacySection3Title": "3. สิทธิ์การเข้าถึง",
+    "privacySection3Text": "แอปพลิเคชัน Hexagon Studio ขอเฉพาะสิทธิ์ที่จำเป็นสำหรับฟังก์ชันหลักของแอป",
+    "privacySection4Title": "4. การแบ่งปันข้อมูล",
+    "privacySection4Text": "Hexagon Studio ไม่ขาย เช่า หรือแบ่งปันข้อมูลผู้ใช้กับบุคคลที่สาม",
+    "privacySection5Title": "5. บริการของบุคคลที่สาม",
+    "privacySection5Text": "ในขณะนี้ แอปพลิเคชัน Hexagon Studio ไม่ใช้บริการของบุคคลที่สามที่เก็บรวบรวมข้อมูลผู้ใช้",
+    "privacySection6Title": "6. ความปลอดภัย",
+    "privacySection6Text": "Hexagon Studio ใช้มาตรการที่เหมาะสมเพื่อให้แน่ใจว่าแอปพลิเคชันไม่ส่งข้อมูลผู้ใช้ผ่านอินเทอร์เน็ต",
+    "privacySection7Title": "7. การเปลี่ยนแปลงนโยบายนี้",
+    "privacySection7Text": "นโยบายความเป็นส่วนตัวนี้อาจได้รับการอัปเดตหากฟังก์ชันของแอปพลิเคชัน Hexagon Studio เปลี่ยนแปลง การอัปเดตใดๆ จะปรากฏบนหน้านี้",
+    "privacySection8Title": "8. ติดต่อ",
+    "privacySection8Text": "หากคุณมีคำถามเกี่ยวกับนโยบายความเป็นส่วนตัวนี้ โปรดติดต่อ:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "หน้าแรก",
+    "stats": "สtatistรถิติ",
+    "history": "ประวัติ"
+  },
+  "days": {
+    "short": {
+      "sun": "อา",
+      "mon": "จ",
+      "tue": "อ",
+      "wed": "พ",
+      "thu": "พฤ",
+      "fri": "ศ",
+      "sat": "ส"
+    }
+  }
+}
+

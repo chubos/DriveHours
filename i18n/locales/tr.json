@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Sürüş İlerlemesi",
+    "completed": "tamamlandı",
+    "remaining": "kalan",
+    "addSession": "Seans Ekle",
+    "category": "Kategori"
+  },
+  "stats": {
+    "title": "Analiz",
+    "category": "Kategori",
+    "weeklyActivity": "Haftalık Aktivite",
+    "totalSessions": "Toplam Seanslar",
+    "averageDuration": "Ortalama Süre",
+    "daysLeft": "Kalan Günler",
+    "achievements": "Başarılar",
+    "firstHour": "İlk Saat",
+    "halfway": "Yarı Yol",
+    "master": "Usta",
+    "minutes": "dk",
+    "collectingData": "Veri toplanıyor...",
+    "completed": "Tamamlandı!"
+  },
+  "history": {
+    "title": "Sürüş Geçmişi",
+    "category": "Kategori",
+    "noSessions": "Henüz sürüş seansı yok",
+    "edit": "Düzenle",
+    "delete": "Sil",
+    "editSession": "Seansı Düzenle",
+    "date": "Tarih",
+    "duration": "Süre",
+    "hours": "Saat",
+    "minutes": "Dakika",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "deleteConfirm": "Bu sürüş seansını sil?",
+    "confirmDelete": "Bu seansı silmek istediğinizden emin misiniz?"
+  },
+  "modal": {
+    "addSession": "Seans Ekle",
+    "hours": "Saat",
+    "minutes": "Dakika",
+    "add": "Ekle",
+    "cancel": "İptal",
+    "selectDate": "Tarih Seç"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "appearance": "Görünüm",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem",
+    "categories": "Ehliyet kategorileri",
+    "selectCategory": "Kategoriler",
+    "close": "Kapat",
+    "addCategory": "Kategori Ekle",
+    "newCategory": "Yeni Kategori",
+    "editCategory": "Kategoriyi Düzenle",
+    "categoryName": "Kategori Adı",
+    "requiredHours": "Gerekli Saatler",
+    "cannotDelete": "Silinemiyor",
+    "mustHaveOne": "En az bir kategoriniz olmalı.",
+    "deleteCategory": "Kategoriyi Sil",
+    "deleteCategoryConfirm": "\"{{name}}\" kategorisini silmek istediğinizden emin misiniz? Bu sadece kategoriyi silecek, seansları silmeyecek.",
+    "privacyPolicy": "Gizlilik Politikası ve Hizmet Şartları",
+    "contact": "Bize Ulaşın",
+    "privacyTitle": "Gizlilik Politikası",
+    "privacyIntro": "Hexagon Studio, mobil uygulamalarının kullanıcılarının gizliliğine saygı duyar.",
+    "privacySection1Title": "1. Veri Toplama",
+    "privacySection1Text": "Hexagon Studio, uygulamalarının kullanıcılarından herhangi bir kişisel veri toplamaz, saklamaz veya işlemez.",
+    "privacySection2Title": "2. Yerel Veri Depolama",
+    "privacySection2Text": "Uygulamalar içinde oluşturulan herhangi bir veri (kullanıcı tarafından oluşturulan içerik veya ilerleme gibi) kullanıcının cihazında yerel olarak saklanır ve harici sunuculara iletilmez.",
+    "privacySection3Title": "3. İzinler",
+    "privacySection3Text": "Hexagon Studio uygulamaları, yalnızca uygulamaların temel işlevselliği için gerekli izinleri ister.",
+    "privacySection4Title": "4. Veri Paylaşımı",
+    "privacySection4Text": "Hexagon Studio, kullanıcı verilerini üçüncü taraflarla satmaz, kiralamaz veya paylaşmaz.",
+    "privacySection5Title": "5. Üçüncü Taraf Hizmetleri",
+    "privacySection5Text": "Şu anda Hexagon Studio uygulamaları, kullanıcı verilerini toplayan üçüncü taraf hizmetleri kullanmamaktadır.",
+    "privacySection6Title": "6. Güvenlik",
+    "privacySection6Text": "Hexagon Studio, uygulamaların internet üzerinden kullanıcı verilerini iletmemesini sağlamak için makul önlemler alır.",
+    "privacySection7Title": "7. Bu Politikadaki Değişiklikler",
+    "privacySection7Text": "Bu gizlilik politikası, Hexagon Studio uygulamalarının işlevselliği değişirse güncellenebilir. Herhangi bir güncelleme bu sayfada yansıtılacaktır.",
+    "privacySection8Title": "8. İletişim",
+    "privacySection8Text": "Bu gizlilik politikası hakkında herhangi bir sorunuz varsa, lütfen iletişime geçin:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Ana Sayfa",
+    "stats": "İstatistikler",
+    "history": "Geçmiş"
+  },
+  "days": {
+    "short": {
+      "sun": "Paz",
+      "mon": "Pzt",
+      "tue": "Sal",
+      "wed": "Çar",
+      "thu": "Per",
+      "fri": "Cum",
+      "sat": "Cmt"
+    }
+  }
+}
+

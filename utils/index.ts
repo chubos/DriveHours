@@ -4,3 +4,4 @@
 
 export * from './calculations';
 export * from './colors';
+export * from './rtl';

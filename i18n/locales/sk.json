@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Pokrok pri Vedení",
+    "completed": "dokončené",
+    "remaining": "zostáva",
+    "addSession": "Pridať Sedenie",
+    "category": "Kategória"
+  },
+  "stats": {
+    "title": "Analýza",
+    "category": "Kategória",
+    "weeklyActivity": "Týždenná Aktivita",
+    "totalSessions": "Celkový Počet Sedení",
+    "averageDuration": "Priemerné Trvanie",
+    "daysLeft": "Zostávajúce Dni",
+    "achievements": "Úspechy",
+    "firstHour": "Prvá Hodina",
+    "halfway": "Na Polceste",
+    "master": "Majster",
+    "minutes": "min",
+    "collectingData": "Zhromažďujú sa údaje...",
+    "completed": "Dokončené!"
+  },
+  "history": {
+    "title": "História Vedenia",
+    "category": "Kategória",
+    "noSessions": "Zatiaľ žiadne sedenia vedenia",
+    "edit": "Upraviť",
+    "delete": "Odstrániť",
+    "editSession": "Upraviť Sedenie",
+    "date": "Dátum",
+    "duration": "Trvanie",
+    "hours": "Hodiny",
+    "minutes": "Minúty",
+    "save": "Uložiť",
+    "cancel": "Zrušiť",
+    "deleteConfirm": "Odstrániť toto sedenie vedenia?",
+    "confirmDelete": "Ste si istý, že chcete odstrániť toto sedenie?"
+  },
+  "modal": {
+    "addSession": "Pridať Sedenie",
+    "hours": "Hodiny",
+    "minutes": "Minúty",
+    "add": "Pridať",
+    "cancel": "Zrušiť",
+    "selectDate": "Vybrať Dátum"
+  },
+  "settings": {
+    "title": "Nastavenia",
+    "appearance": "Vzhľad",
+    "light": "Svetlý",
+    "dark": "Tmavý",
+    "system": "Systém",
+    "categories": "Kategórie vodičského preukazu",
+    "selectCategory": "Kategórie",
+    "close": "Zavrieť",
+    "addCategory": "Pridať Kategóriu",
+    "newCategory": "Nová Kategória",
+    "editCategory": "Upraviť Kategóriu",
+    "categoryName": "Názov Kategórie",
+    "requiredHours": "Požadované Hodiny",
+    "cannotDelete": "Nie je Možné Odstrániť",
+    "mustHaveOne": "Musíte mať aspoň jednu kategóriu.",
+    "deleteCategory": "Odstrániť Kategóriu",
+    "deleteCategoryConfirm": "Ste si istý, že chcete odstrániť kategóriu \"{{name}}\"? Tým sa odstráni len kategória, nie sedenia.",
+    "privacyPolicy": "Zásady Ochrany Súkromia a Podmienky Služby",
+    "contact": "Kontaktujte nás",
+    "privacyTitle": "Zásady Ochrany Súkromia",
+    "privacyIntro": "Hexagon Studio rešpektuje súkromie používateľov svojich mobilných aplikácií.",
+    "privacySection1Title": "1. Zhromažďovanie Údajov",
+    "privacySection1Text": "Hexagon Studio nezhromažďuje, neukladá ani nespracúva osobné údaje používateľov svojich aplikácií.",
+    "privacySection2Title": "2. Miestne Ukladanie Údajov",
+    "privacySection2Text": "Všetky údaje vytvorené v aplikáciách (ako je obsah generovaný používateľom alebo pokrok) sú uložené lokálne v zariadení používateľa a nie sú prenášané na externe servery.",
+    "privacySection3Title": "3. Povolenia",
+    "privacySection3Text": "Aplikácie Hexagon Studio požadujú iba povolenia potrebné pre základnú funkčnosť aplikácií.",
+    "privacySection4Title": "4. Zdieľanie Údajov",
+    "privacySection4Text": "Hexagon Studio nepredáva, neprenajíma ani nezdieľa údaje používateľov s tretími stranami.",
+    "privacySection5Title": "5. Služby Tretích Strán",
+    "privacySection5Text": "V súčasnosti aplikácie Hexagon Studio nepoužívajú služby tretích strán, ktoré zhromažďujú údaje používateľov.",
+    "privacySection6Title": "6. Bezpečnosť",
+    "privacySection6Text": "Hexagon Studio prijíma primerané opatrenia na zabezpečenie toho, aby aplikácie neprenášali údaje používateľov cez internet.",
+    "privacySection7Title": "7. Zmeny Týchto Zásad",
+    "privacySection7Text": "Tieto zásady ochrany súkromia môžu byť aktualizované v prípade zmeny funkčnosti aplikácií Hexagon Studio. Všetky aktualizácie sa zobrazia na tejto stránke.",
+    "privacySection8Title": "8. Kontakt",
+    "privacySection8Text": "Ak máte akékoľvek otázky ohľadom týchto zásad ochrany súkromia, kontaktujte:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Domov",
+    "stats": "Štatistiky",
+    "history": "História"
+  },
+  "days": {
+    "short": {
+      "sun": "Ne",
+      "mon": "Po",
+      "tue": "Ut",
+      "wed": "St",
+      "thu": "Št",
+      "fri": "Pi",
+      "sat": "So"
+    }
+  }
+}
+

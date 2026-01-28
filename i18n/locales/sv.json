@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Körningsframsteg",
+    "completed": "slutförd",
+    "remaining": "kvar",
+    "addSession": "Lägg till Pass",
+    "category": "Kategori"
+  },
+  "stats": {
+    "title": "Analys",
+    "category": "Kategori",
+    "weeklyActivity": "Veckoaktivitet",
+    "totalSessions": "Totalt Antal Pass",
+    "averageDuration": "Genomsnittlig Varaktighet",
+    "daysLeft": "Dagar Kvar",
+    "achievements": "Prestationer",
+    "firstHour": "Första Timmen",
+    "halfway": "Halvvägs",
+    "master": "Mästare",
+    "minutes": "min",
+    "collectingData": "Samlar in data...",
+    "completed": "Slutförd!"
+  },
+  "history": {
+    "title": "Körhistorik",
+    "category": "Kategori",
+    "noSessions": "Inga körpass ännu",
+    "edit": "Redigera",
+    "delete": "Ta bort",
+    "editSession": "Redigera Pass",
+    "date": "Datum",
+    "duration": "Varaktighet",
+    "hours": "Timmar",
+    "minutes": "Minuter",
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "deleteConfirm": "Ta bort detta körpass?",
+    "confirmDelete": "Är du säker på att du vill ta bort detta pass?"
+  },
+  "modal": {
+    "addSession": "Lägg till Pass",
+    "hours": "Timmar",
+    "minutes": "Minuter",
+    "add": "Lägg till",
+    "cancel": "Avbryt",
+    "selectDate": "Välj Datum"
+  },
+  "settings": {
+    "title": "Inställningar",
+    "appearance": "Utseende",
+    "light": "Ljust",
+    "dark": "Mörkt",
+    "system": "System",
+    "categories": "Körkortskategorier",
+    "selectCategory": "Kategorier",
+    "close": "Stäng",
+    "addCategory": "Lägg till Kategori",
+    "newCategory": "Ny Kategori",
+    "editCategory": "Redigera Kategori",
+    "categoryName": "Kategorinamn",
+    "requiredHours": "Nödvändiga Timmar",
+    "cannotDelete": "Kan Inte Tas Bort",
+    "mustHaveOne": "Du måste ha minst en kategori.",
+    "deleteCategory": "Ta bort Kategori",
+    "deleteCategoryConfirm": "Är du säker på att du vill ta bort kategorin \"{{name}}\"? Detta kommer bara ta bort kategorin, inte passen.",
+    "privacyPolicy": "Integritetspolicy och Användarvillkor",
+    "contact": "Kontakta oss",
+    "privacyTitle": "Integritetspolicy",
+    "privacyIntro": "Hexagon Studio respekterar integriteten för användare av sina mobilapplikationer.",
+    "privacySection1Title": "1. Datainsamling",
+    "privacySection1Text": "Hexagon Studio samlar inte in, lagrar eller bearbetar personuppgifter från användare av sina applikationer.",
+    "privacySection2Title": "2. Lokal Datalagring",
+    "privacySection2Text": "All data som skapas i applikationerna (såsom användargenererat innehåll eller framsteg) lagras lokalt på användarens enhet och överförs inte till externa servrar.",
+    "privacySection3Title": "3. Behörigheter",
+    "privacySection3Text": "Hexagon Studio-applikationer begär endast de behörigheter som är nödvändiga för applikationernas kärnfunktionalitet.",
+    "privacySection4Title": "4. Datadelning",
+    "privacySection4Text": "Hexagon Studio säljer, hyr ut eller delar inte användardata med tredje part.",
+    "privacySection5Title": "5. Tredjepartstjänster",
+    "privacySection5Text": "För närvarande använder Hexagon Studio-applikationer inte tredjepartstjänster som samlar in användardata.",
+    "privacySection6Title": "6. Säkerhet",
+    "privacySection6Text": "Hexagon Studio vidtar rimliga åtgärder för att säkerställa att applikationer inte överför användardata över internet.",
+    "privacySection7Title": "7. Ändringar av Denna Policy",
+    "privacySection7Text": "Denna integritetspolicy kan uppdateras om funktionaliteten hos Hexagon Studio-applikationer ändras. Eventuella uppdateringar kommer att återspeglas på denna sida.",
+    "privacySection8Title": "8. Kontakt",
+    "privacySection8Text": "Om du har några frågor om denna integritetspolicy, vänligen kontakta:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Hem",
+    "stats": "Statistik",
+    "history": "Historik"
+  },
+  "days": {
+    "short": {
+      "sun": "Sön",
+      "mon": "Mån",
+      "tue": "Tis",
+      "wed": "Ons",
+      "thu": "Tor",
+      "fri": "Fre",
+      "sat": "Lör"
+    }
+  }
+}
+

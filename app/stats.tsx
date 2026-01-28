@@ -12,9 +12,9 @@ import { useDrivingSessions } from '@/hooks';
 import {
     getColors,
     calculateTotalMinutes,
+    getSelectedCategory,
     calculatePrediction,
     getWeeklyChartData,
-    getSelectedCategory,
 } from '@/utils';
 
 export default function StatsPage() {

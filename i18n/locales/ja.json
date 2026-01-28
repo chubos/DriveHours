@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "運転進捗",
+    "completed": "完了",
+    "remaining": "残り",
+    "addSession": "セッションを追加",
+    "category": "カテゴリー"
+  },
+  "stats": {
+    "title": "分析",
+    "category": "カテゴリー",
+    "weeklyActivity": "週間アクティビティ",
+    "totalSessions": "総セッション数",
+    "averageDuration": "平均時間",
+    "daysLeft": "残り日数",
+    "achievements": "実績",
+    "firstHour": "最初の1時間",
+    "halfway": "半分",
+    "master": "マスター",
+    "minutes": "分",
+    "collectingData": "データを収集中...",
+    "completed": "完了しました！"
+  },
+  "history": {
+    "title": "運転履歴",
+    "category": "カテゴリー",
+    "noSessions": "運転セッションはまだありません",
+    "edit": "編集",
+    "delete": "削除",
+    "editSession": "セッションを編集",
+    "date": "日付",
+    "duration": "期間",
+    "hours": "時間",
+    "minutes": "分",
+    "save": "保存",
+    "cancel": "キャンセル",
+    "deleteConfirm": "この運転セッションを削除しますか？",
+    "confirmDelete": "このセッションを削除してもよろしいですか？"
+  },
+  "modal": {
+    "addSession": "セッションを追加",
+    "hours": "時間",
+    "minutes": "分",
+    "add": "追加",
+    "cancel": "キャンセル",
+    "selectDate": "日付を選択"
+  },
+  "settings": {
+    "title": "設定",
+    "appearance": "外観",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム",
+    "categories": "運転免許カテゴリー",
+    "selectCategory": "カテゴリー",
+    "close": "閉じる",
+    "addCategory": "カテゴリーを追加",
+    "newCategory": "新しいカテゴリー",
+    "editCategory": "カテゴリーを編集",
+    "categoryName": "カテゴリー名",
+    "requiredHours": "必要時間",
+    "cannotDelete": "削除できません",
+    "mustHaveOne": "少なくとも1つのカテゴリーが必要です。",
+    "deleteCategory": "カテゴリーを削除",
+    "deleteCategoryConfirm": "カテゴリー「{{name}}」を削除してもよろしいですか？これはカテゴリーのみを削除し、セッションは削除されません。",
+    "privacyPolicy": "プライバシーポリシーと利用規約",
+    "contact": "お問い合わせ",
+    "privacyTitle": "プライバシーポリシー",
+    "privacyIntro": "Hexagon Studioは、モバイルアプリケーションのユーザーのプライバシーを尊重します。",
+    "privacySection1Title": "1. データ収集",
+    "privacySection1Text": "Hexagon Studioは、アプリケーションのユーザーから個人データを収集、保存、または処理しません。",
+    "privacySection2Title": "2. ローカルデータストレージ",
+    "privacySection2Text": "アプリケーション内で作成されたデータ（ユーザー生成コンテンツや進捗など）は、ユーザーのデバイスにローカルに保存され、外部サーバーに送信されません。",
+    "privacySection3Title": "3. 権限",
+    "privacySection3Text": "Hexagon Studioアプリケーションは、アプリケーションのコア機能に必要な権限のみをリクエストします。",
+    "privacySection4Title": "4. データ共有",
+    "privacySection4Text": "Hexagon Studioは、ユーザーデータを第三者に販売、レンタル、または共有しません。",
+    "privacySection5Title": "5. サードパーティサービス",
+    "privacySection5Text": "現時点では、Hexagon Studioアプリケーションは、ユーザーデータを収集するサードパーティサービスを使用していません。",
+    "privacySection6Title": "6. セキュリティ",
+    "privacySection6Text": "Hexagon Studioは、アプリケーションがインターネット経由でユーザーデータを送信しないように合理的な措置を講じています。",
+    "privacySection7Title": "7. このポリシーの変更",
+    "privacySection7Text": "このプライバシーポリシーは、Hexagon Studioアプリケーションの機能が変更された場合に更新される可能性があります。更新はこのページに反映されます。",
+    "privacySection8Title": "8. お問い合わせ",
+    "privacySection8Text": "このプライバシーポリシーについてご質問がある場合は、お問い合わせください：",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "ホーム",
+    "stats": "統計",
+    "history": "履歴"
+  },
+  "days": {
+    "short": {
+      "sun": "日",
+      "mon": "月",
+      "tue": "火",
+      "wed": "水",
+      "thu": "木",
+      "fri": "金",
+      "sat": "土"
+    }
+  }
+}
+

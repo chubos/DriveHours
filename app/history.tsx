@@ -108,7 +108,7 @@ export default function HistoryPage() {
             clearTimeout(dateChangeTimeoutRef.current);
         }
 
-        // On Android: always close picker after interaction
+        // On Android: always close the picker after interaction
         if (Platform.OS === 'android') {
             // If a user canceled, don't update the date
             if (event.type === 'dismissed') {

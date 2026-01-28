@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Rijvoortgang",
+    "completed": "voltooid",
+    "remaining": "resterend",
+    "addSession": "Sessie Toevoegen",
+    "category": "Categorie"
+  },
+  "stats": {
+    "title": "Analyse",
+    "category": "Categorie",
+    "weeklyActivity": "Wekelijkse Activiteit",
+    "totalSessions": "Totaal Aantal Sessies",
+    "averageDuration": "Gemiddelde Duur",
+    "daysLeft": "Resterende Dagen",
+    "achievements": "Prestaties",
+    "firstHour": "Eerste Uur",
+    "halfway": "Halverwege",
+    "master": "Meester",
+    "minutes": "min",
+    "collectingData": "Gegevens verzamelen...",
+    "completed": "Voltooid!"
+  },
+  "history": {
+    "title": "Rijgeschiedenis",
+    "category": "Categorie",
+    "noSessions": "Nog geen rijsessies",
+    "edit": "Bewerken",
+    "delete": "Verwijderen",
+    "editSession": "Sessie Bewerken",
+    "date": "Datum",
+    "duration": "Duur",
+    "hours": "Uren",
+    "minutes": "Minuten",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "deleteConfirm": "Deze rijsessie verwijderen?",
+    "confirmDelete": "Weet je zeker dat je deze sessie wilt verwijderen?"
+  },
+  "modal": {
+    "addSession": "Sessie Toevoegen",
+    "hours": "Uren",
+    "minutes": "Minuten",
+    "add": "Toevoegen",
+    "cancel": "Annuleren",
+    "selectDate": "Datum Selecteren"
+  },
+  "settings": {
+    "title": "Instellingen",
+    "appearance": "Uiterlijk",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem",
+    "categories": "Rijbewijscategorieën",
+    "selectCategory": "Categorieën",
+    "close": "Sluiten",
+    "addCategory": "Categorie Toevoegen",
+    "newCategory": "Nieuwe Categorie",
+    "editCategory": "Categorie Bewerken",
+    "categoryName": "Categorienaam",
+    "requiredHours": "Vereiste Uren",
+    "cannotDelete": "Kan Niet Verwijderen",
+    "mustHaveOne": "Je moet minimaal één categorie hebben.",
+    "deleteCategory": "Categorie Verwijderen",
+    "deleteCategoryConfirm": "Weet je zeker dat je categorie \"{{name}}\" wilt verwijderen? Dit verwijdert alleen de categorie, niet de sessies.",
+    "privacyPolicy": "Privacybeleid en Servicevoorwaarden",
+    "contact": "Neem contact op",
+    "privacyTitle": "Privacybeleid",
+    "privacyIntro": "Hexagon Studio respecteert de privacy van gebruikers van zijn mobiele applicaties.",
+    "privacySection1Title": "1. Gegevensverzameling",
+    "privacySection1Text": "Hexagon Studio verzamelt, bewaart of verwerkt geen persoonlijke gegevens van gebruikers van zijn applicaties.",
+    "privacySection2Title": "2. Lokale Gegevensopslag",
+    "privacySection2Text": "Alle gegevens die binnen de applicaties worden gemaakt (zoals door de gebruiker gegenereerde inhoud of voortgang) worden lokaal op het apparaat van de gebruiker opgeslagen en worden niet verzonden naar externe servers.",
+    "privacySection3Title": "3. Machtigingen",
+    "privacySection3Text": "Hexagon Studio-applicaties vragen alleen om machtigingen die nodig zijn voor de kernfunctionaliteit van de apps.",
+    "privacySection4Title": "4. Gegevensdeling",
+    "privacySection4Text": "Hexagon Studio verkoopt, verhuurt of deelt geen gebruikersgegevens met derden.",
+    "privacySection5Title": "5. Diensten van Derden",
+    "privacySection5Text": "Op dit moment gebruiken Hexagon Studio-applicaties geen diensten van derden die gebruikersgegevens verzamelen.",
+    "privacySection6Title": "6. Beveiliging",
+    "privacySection6Text": "Hexagon Studio neemt redelijke maatregelen om ervoor te zorgen dat applicaties geen gebruikersgegevens via internet verzenden.",
+    "privacySection7Title": "7. Wijzigingen in Dit Beleid",
+    "privacySection7Text": "Dit privacybeleid kan worden bijgewerkt als de functionaliteit van Hexagon Studio-applicaties verandert. Eventuele updates worden op deze pagina weergegeven.",
+    "privacySection8Title": "8. Contact",
+    "privacySection8Text": "Als je vragen hebt over dit privacybeleid, neem dan contact op:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Home",
+    "stats": "Statistieken",
+    "history": "Geschiedenis"
+  },
+  "days": {
+    "short": {
+      "sun": "Zo",
+      "mon": "Ma",
+      "tue": "Di",
+      "wed": "Wo",
+      "thu": "Do",
+      "fri": "Vr",
+      "sat": "Za"
+    }
+  }
+}
+

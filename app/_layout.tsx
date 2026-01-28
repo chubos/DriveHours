@@ -6,6 +6,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { I18nManager, Platform } from 'react-native';
+import { useEffect } from 'react';
 import "../global.css";
 import '../i18n/config';
 import { SettingsProvider, useSettings } from '@/components';
@@ -13,13 +15,30 @@ import { DrivingSessionsProvider } from '@/hooks';
 
 function TabsLayout() {
     const settings = useSettings();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const isDark = settings.isDark;
     const insets = useSafeAreaInsets();
 
+    // RTL support for Arabic and Hebrew
+    useEffect(() => {
+        const isRTLLanguage = i18n.language === 'ar' || i18n.language === 'he';
+
+        // Only update if there's a change
+        if (I18nManager.isRTL !== isRTLLanguage) {
+            I18nManager.forceRTL(isRTLLanguage);
+
+            // On Android, we need to restart the app for RTL to take effect
+            if (Platform.OS === 'android') {
+                // Note: In production, you might want to show a dialog asking a user to restart.
+                // For now, we'll just set it, and it will apply on the next app start
+            }
+        }
+    }, [i18n.language]);
+
+
     return (
         <>
-            <StatusBar style={isDark ? 'light' : 'dark'} backgroundColor={isDark ? '#1f2937' : '#ffffff'} />
+            <StatusBar style={isDark ? 'light' : 'dark'} />
             <Tabs
             key={settings.themeMode} // Force re-render when the theme changes
             screenOptions={{

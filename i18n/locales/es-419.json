@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Progreso de Conducción",
+    "completed": "completado",
+    "remaining": "restante",
+    "addSession": "Agregar Sesión",
+    "category": "Categoría"
+  },
+  "stats": {
+    "title": "Análisis",
+    "category": "Categoría",
+    "weeklyActivity": "Actividad Semanal",
+    "totalSessions": "Total de Sesiones",
+    "averageDuration": "Duración Promedio",
+    "daysLeft": "Días Restantes",
+    "achievements": "Logros",
+    "firstHour": "Primera Hora",
+    "halfway": "A Mitad de Camino",
+    "master": "Maestro",
+    "minutes": "min",
+    "collectingData": "Recopilando datos...",
+    "completed": "¡Completado!"
+  },
+  "history": {
+    "title": "Historial de Conducción",
+    "category": "Categoría",
+    "noSessions": "Aún no hay sesiones de conducción",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "editSession": "Editar Sesión",
+    "date": "Fecha",
+    "duration": "Duración",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "deleteConfirm": "¿Eliminar esta sesión de conducción?",
+    "confirmDelete": "¿Estás seguro de que deseas eliminar esta sesión?"
+  },
+  "modal": {
+    "addSession": "Agregar Sesión",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "add": "Agregar",
+    "cancel": "Cancelar",
+    "selectDate": "Seleccionar Fecha"
+  },
+  "settings": {
+    "title": "Configuración",
+    "appearance": "Apariencia",
+    "light": "Claro",
+    "dark": "Oscuro",
+    "system": "Sistema",
+    "categories": "Categorías de licencia de conducir",
+    "selectCategory": "Categorías",
+    "close": "Cerrar",
+    "addCategory": "Agregar Categoría",
+    "newCategory": "Nueva Categoría",
+    "editCategory": "Editar Categoría",
+    "categoryName": "Nombre de Categoría",
+    "requiredHours": "Horas Requeridas",
+    "cannotDelete": "No se Puede Eliminar",
+    "mustHaveOne": "Debes tener al menos una categoría.",
+    "deleteCategory": "Eliminar Categoría",
+    "deleteCategoryConfirm": "¿Estás seguro de que deseas eliminar la categoría \"{{name}}\"? Esto eliminará solo la categoría, no las sesiones.",
+    "privacyPolicy": "Política de Privacidad y Términos de Servicio",
+    "contact": "Contáctanos",
+    "privacyTitle": "Política de Privacidad",
+    "privacyIntro": "Hexagon Studio respeta la privacidad de los usuarios de sus aplicaciones móviles.",
+    "privacySection1Title": "1. Recopilación de Datos",
+    "privacySection1Text": "Hexagon Studio no recopila, almacena ni procesa datos personales de los usuarios de sus aplicaciones.",
+    "privacySection2Title": "2. Almacenamiento Local de Datos",
+    "privacySection2Text": "Cualquier dato creado dentro de las aplicaciones (como contenido generado por el usuario o progreso) se almacena localmente en el dispositivo del usuario y no se transmite a servidores externos.",
+    "privacySection3Title": "3. Permisos",
+    "privacySection3Text": "Las aplicaciones de Hexagon Studio solicitan solo los permisos necesarios para la funcionalidad principal de las aplicaciones.",
+    "privacySection4Title": "4. Compartir Datos",
+    "privacySection4Text": "Hexagon Studio no vende, alquila ni comparte datos de usuario con terceros.",
+    "privacySection5Title": "5. Servicios de Terceros",
+    "privacySection5Text": "En este momento, las aplicaciones de Hexagon Studio no utilizan servicios de terceros que recopilen datos de usuario.",
+    "privacySection6Title": "6. Seguridad",
+    "privacySection6Text": "Hexagon Studio toma medidas razonables para garantizar que las aplicaciones no transmitan datos de usuario a través de Internet.",
+    "privacySection7Title": "7. Cambios en Esta Política",
+    "privacySection7Text": "Esta política de privacidad puede actualizarse si cambia la funcionalidad de las aplicaciones de Hexagon Studio. Cualquier actualización se reflejará en esta página.",
+    "privacySection8Title": "8. Contacto",
+    "privacySection8Text": "Si tienes alguna pregunta sobre esta política de privacidad, comunícate con:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Inicio",
+    "stats": "Estadísticas",
+    "history": "Historial"
+  },
+  "days": {
+    "short": {
+      "sun": "Dom",
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mié",
+      "thu": "Jue",
+      "fri": "Vie",
+      "sat": "Sáb"
+    }
+  }
+}
+

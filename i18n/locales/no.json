@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Kjøreframgang",
+    "completed": "fullført",
+    "remaining": "gjenstår",
+    "addSession": "Legg til Økt",
+    "category": "Kategori"
+  },
+  "stats": {
+    "title": "Analyse",
+    "category": "Kategori",
+    "weeklyActivity": "Ukentlig Aktivitet",
+    "totalSessions": "Totalt Antall Økter",
+    "averageDuration": "Gjennomsnittlig Varighet",
+    "daysLeft": "Dager Igjen",
+    "achievements": "Prestasjoner",
+    "firstHour": "Første Time",
+    "halfway": "Halvveis",
+    "master": "Mester",
+    "minutes": "min",
+    "collectingData": "Samler inn data...",
+    "completed": "Fullført!"
+  },
+  "history": {
+    "title": "Kjørehistorikk",
+    "category": "Kategori",
+    "noSessions": "Ingen kjøreøkter ennå",
+    "edit": "Rediger",
+    "delete": "Slett",
+    "editSession": "Rediger Økt",
+    "date": "Dato",
+    "duration": "Varighet",
+    "hours": "Timer",
+    "minutes": "Minutter",
+    "save": "Lagre",
+    "cancel": "Avbryt",
+    "deleteConfirm": "Slette denne kjøreøkten?",
+    "confirmDelete": "Er du sikker på at du vil slette denne økten?"
+  },
+  "modal": {
+    "addSession": "Legg til Økt",
+    "hours": "Timer",
+    "minutes": "Minutter",
+    "add": "Legg til",
+    "cancel": "Avbryt",
+    "selectDate": "Velg Dato"
+  },
+  "settings": {
+    "title": "Innstillinger",
+    "appearance": "Utseende",
+    "light": "Lys",
+    "dark": "Mørk",
+    "system": "System",
+    "categories": "Førerkortskategorier",
+    "selectCategory": "Kategorier",
+    "close": "Lukk",
+    "addCategory": "Legg til Kategori",
+    "newCategory": "Ny Kategori",
+    "editCategory": "Rediger Kategori",
+    "categoryName": "Kategorinavn",
+    "requiredHours": "Nødvendige Timer",
+    "cannotDelete": "Kan Ikke Slettes",
+    "mustHaveOne": "Du må ha minst én kategori.",
+    "deleteCategory": "Slett Kategori",
+    "deleteCategoryConfirm": "Er du sikker på at du vil slette kategorien \"{{name}}\"? Dette vil bare fjerne kategorien, ikke øktene.",
+    "privacyPolicy": "Personvernregler og Tjenestevilkår",
+    "contact": "Kontakt oss",
+    "privacyTitle": "Personvernregler",
+    "privacyIntro": "Hexagon Studio respekterer personvernet til brukere av sine mobilapplikasjoner.",
+    "privacySection1Title": "1. Datainnsamling",
+    "privacySection1Text": "Hexagon Studio samler ikke inn, lagrer eller behandler personopplysninger fra brukere av sine applikasjoner.",
+    "privacySection2Title": "2. Lokal Datalagring",
+    "privacySection2Text": "All data som opprettes i applikasjonene (som brukergenerert innhold eller fremgang) lagres lokalt på brukerens enhet og overføres ikke til eksterne servere.",
+    "privacySection3Title": "3. Tillatelser",
+    "privacySection3Text": "Hexagon Studio-applikasjoner ber kun om tillatelser som er nødvendige for applikasjonenes kjernefunksjonalitet.",
+    "privacySection4Title": "4. Datadeling",
+    "privacySection4Text": "Hexagon Studio selger, leier ut eller deler ikke brukerdata med tredjeparter.",
+    "privacySection5Title": "5. Tredjepartstjenester",
+    "privacySection5Text": "For øyeblikket bruker ikke Hexagon Studio-applikasjoner tredjepartstjenester som samler inn brukerdata.",
+    "privacySection6Title": "6. Sikkerhet",
+    "privacySection6Text": "Hexagon Studio tar rimelige tiltak for å sikre at applikasjoner ikke overfører brukerdata over internett.",
+    "privacySection7Title": "7. Endringer i Denne Policyen",
+    "privacySection7Text": "Disse personvernreglene kan oppdateres hvis funksjonaliteten til Hexagon Studio-applikasjoner endres. Eventuelle oppdateringer vil bli reflektert på denne siden.",
+    "privacySection8Title": "8. Kontakt",
+    "privacySection8Text": "Hvis du har spørsmål om disse personvernreglene, vennligst kontakt:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Hjem",
+    "stats": "Statistikk",
+    "history": "Historikk"
+  },
+  "days": {
+    "short": {
+      "sun": "Søn",
+      "mon": "Man",
+      "tue": "Tir",
+      "wed": "Ons",
+      "thu": "Tor",
+      "fri": "Fre",
+      "sat": "Lør"
+    }
+  }
+}
+

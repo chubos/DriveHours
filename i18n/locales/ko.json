@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "운전 진행",
+    "completed": "완료",
+    "remaining": "남음",
+    "addSession": "세션 추가",
+    "category": "카테고리"
+  },
+  "stats": {
+    "title": "분석",
+    "category": "카테고리",
+    "weeklyActivity": "주간 활동",
+    "totalSessions": "총 세션",
+    "averageDuration": "평균 시간",
+    "daysLeft": "남은 일수",
+    "achievements": "성과",
+    "firstHour": "첫 시간",
+    "halfway": "중간",
+    "master": "마스터",
+    "minutes": "분",
+    "collectingData": "데이터 수집 중...",
+    "completed": "완료!"
+  },
+  "history": {
+    "title": "운전 기록",
+    "category": "카테고리",
+    "noSessions": "아직 운전 세션이 없습니다",
+    "edit": "편집",
+    "delete": "삭제",
+    "editSession": "세션 편집",
+    "date": "날짜",
+    "duration": "시간",
+    "hours": "시간",
+    "minutes": "분",
+    "save": "저장",
+    "cancel": "취소",
+    "deleteConfirm": "이 운전 세션을 삭제하시겠습니까?",
+    "confirmDelete": "이 세션을 삭제하시겠습니까?"
+  },
+  "modal": {
+    "addSession": "세션 추가",
+    "hours": "시간",
+    "minutes": "분",
+    "add": "추가",
+    "cancel": "취소",
+    "selectDate": "날짜 선택"
+  },
+  "settings": {
+    "title": "설정",
+    "appearance": "외관",
+    "light": "밝음",
+    "dark": "어두움",
+    "system": "시스템",
+    "categories": "운전 면허 카테고리",
+    "selectCategory": "카테고리",
+    "close": "닫기",
+    "addCategory": "카테고리 추가",
+    "newCategory": "새 카테고리",
+    "editCategory": "카테고리 편집",
+    "categoryName": "카테고리 이름",
+    "requiredHours": "필요 시간",
+    "cannotDelete": "삭제할 수 없음",
+    "mustHaveOne": "최소 하나의 카테고리가 있어야 합니다.",
+    "deleteCategory": "카테고리 삭제",
+    "deleteCategoryConfirm": "카테고리 \"{{name}}\"을(를) 삭제하시겠습니까? 카테고리만 삭제되며 세션은 삭제되지 않습니다.",
+    "privacyPolicy": "개인정보 보호정책 및 서비스 약관",
+    "contact": "문의하기",
+    "privacyTitle": "개인정보 보호정책",
+    "privacyIntro": "Hexagon Studio는 모바일 애플리케이션 사용자의 개인정보를 존중합니다.",
+    "privacySection1Title": "1. 데이터 수집",
+    "privacySection1Text": "Hexagon Studio는 애플리케이션 사용자로부터 개인 데이터를 수집, 저장 또는 처리하지 않습니다.",
+    "privacySection2Title": "2. 로컬 데이터 저장",
+    "privacySection2Text": "애플리케이션 내에서 생성된 모든 데이터(사용자 생성 콘텐츠 또는 진행 상황 등)는 사용자 기기에 로컬로 저장되며 외부 서버로 전송되지 않습니다.",
+    "privacySection3Title": "3. 권한",
+    "privacySection3Text": "Hexagon Studio 애플리케이션은 앱의 핵심 기능에 필요한 권한만 요청합니다.",
+    "privacySection4Title": "4. 데이터 공유",
+    "privacySection4Text": "Hexagon Studio는 사용자 데이터를 제3자에게 판매, 임대 또는 공유하지 않습니다.",
+    "privacySection5Title": "5. 타사 서비스",
+    "privacySection5Text": "현재 Hexagon Studio 애플리케이션은 사용자 데이터를 수집하는 타사 서비스를 사용하지 않습니다.",
+    "privacySection6Title": "6. 보안",
+    "privacySection6Text": "Hexagon Studio는 애플리케이션이 인터넷을 통해 사용자 데이터를 전송하지 않도록 합리적인 조치를 취합니다.",
+    "privacySection7Title": "7. 정책 변경",
+    "privacySection7Text": "이 개인정보 보호정책은 Hexagon Studio 애플리케이션의 기능이 변경되면 업데이트될 수 있습니다. 모든 업데이트는 이 페이지에 반영됩니다.",
+    "privacySection8Title": "8. 문의",
+    "privacySection8Text": "이 개인정보 보호정책에 대해 질문이 있으시면 다음으로 문의하십시오:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "홈",
+    "stats": "통계",
+    "history": "기록"
+  },
+  "days": {
+    "short": {
+      "sun": "일",
+      "mon": "월",
+      "tue": "화",
+      "wed": "수",
+      "thu": "목",
+      "fri": "금",
+      "sat": "토"
+    }
+  }
+}
+

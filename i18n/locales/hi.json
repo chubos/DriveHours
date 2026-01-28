@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "ड्राइविंग प्रगति",
+    "completed": "पूर्ण",
+    "remaining": "शेष",
+    "addSession": "सत्र जोड़ें",
+    "category": "श्रेणी"
+  },
+  "stats": {
+    "title": "विश्लेषण",
+    "category": "श्रेणी",
+    "weeklyActivity": "साप्ताहिक गतिविधि",
+    "totalSessions": "कुल सत्र",
+    "averageDuration": "औसत अवधि",
+    "daysLeft": "शेष दिन",
+    "achievements": "उपलब्धियां",
+    "firstHour": "पहला घंटा",
+    "halfway": "आधा रास्ता",
+    "master": "मास्टर",
+    "minutes": "मिनट",
+    "collectingData": "डेटा एकत्र किया जा रहा है...",
+    "completed": "पूर्ण!"
+  },
+  "history": {
+    "title": "ड्राइविंग इतिहास",
+    "category": "श्रेणी",
+    "noSessions": "अभी तक कोई ड्राइविंग सत्र नहीं",
+    "edit": "संपादित करें",
+    "delete": "हटाएं",
+    "editSession": "सत्र संपादित करें",
+    "date": "तारीख",
+    "duration": "अवधि",
+    "hours": "घंटे",
+    "minutes": "मिनट",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "deleteConfirm": "इस ड्राइविंग सत्र को हटाएं?",
+    "confirmDelete": "क्या आप वाकई इस सत्र को हटाना चाहते हैं?"
+  },
+  "modal": {
+    "addSession": "सत्र जोड़ें",
+    "hours": "घंटे",
+    "minutes": "मिनट",
+    "add": "जोड़ें",
+    "cancel": "रद्द करें",
+    "selectDate": "तारीख चुनें"
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "appearance": "उपस्थिति",
+    "light": "हल्का",
+    "dark": "गहरा",
+    "system": "सिस्टम",
+    "categories": "ड्राइविंग लाइसेंस श्रेणियां",
+    "selectCategory": "श्रेणियां",
+    "close": "बंद करें",
+    "addCategory": "श्रेणी जोड़ें",
+    "newCategory": "नई श्रेणी",
+    "editCategory": "श्रेणी संपादित करें",
+    "categoryName": "श्रेणी का नाम",
+    "requiredHours": "आवश्यक घंटे",
+    "cannotDelete": "हटाया नहीं जा सकता",
+    "mustHaveOne": "आपके पास कम से कम एक श्रेणी होनी चाहिए।",
+    "deleteCategory": "श्रेणी हटाएं",
+    "deleteCategoryConfirm": "क्या आप वाकई श्रेणी \"{{name}}\" को हटाना चाहते हैं? इससे केवल श्रेणी हटेगी, सत्र नहीं।",
+    "privacyPolicy": "गोपनीयता नीति और सेवा की शर्तें",
+    "contact": "हमसे संपर्क करें",
+    "privacyTitle": "गोपनीयता नीति",
+    "privacyIntro": "Hexagon Studio अपने मोबाइल एप्लिकेशन के उपयोगकर्ताओं की गोपनीयता का सम्मान करता है।",
+    "privacySection1Title": "1. डेटा संग्रह",
+    "privacySection1Text": "Hexagon Studio अपने एप्लिकेशन के उपयोगकर्ताओं से कोई व्यक्तिगत डेटा एकत्र, संग्रहीत या संसाधित नहीं करता है।",
+    "privacySection2Title": "2. स्थानीय डेटा संग्रहण",
+    "privacySection2Text": "एप्लिकेशन के भीतर बनाया गया कोई भी डेटा (जैसे उपयोगकर्ता द्वारा उत्पन्न सामग्री या प्रगति) उपयोगकर्ता के डिवाइस पर स्थानीय रूप से संग्रहीत किया जाता है और बाहरी सर्वर पर प्रेषित नहीं किया जाता है।",
+    "privacySection3Title": "3. अनुमतियां",
+    "privacySection3Text": "Hexagon Studio एप्लिकेशन केवल एप्लिकेशन की मुख्य कार्यक्षमता के लिए आवश्यक अनुमतियों का अनुरोध करते हैं।",
+    "privacySection4Title": "4. डेटा साझाकरण",
+    "privacySection4Text": "Hexagon Studio तीसरे पक्ष के साथ उपयोगकर्ता डेटा बेचता, किराए पर देता या साझा नहीं करता है।",
+    "privacySection5Title": "5. तृतीय-पक्ष सेवाएं",
+    "privacySection5Text": "इस समय, Hexagon Studio एप्लिकेशन तृतीय-पक्ष सेवाओं का उपयोग नहीं करते हैं जो उपयोगकर्ता डेटा एकत्र करती हैं।",
+    "privacySection6Title": "6. सुरक्षा",
+    "privacySection6Text": "Hexagon Studio यह सुनिश्चित करने के लिए उचित उपाय करता है कि एप्लिकेशन इंटरनेट पर उपयोगकर्ता डेटा संचारित नहीं करते हैं।",
+    "privacySection7Title": "7. इस नीति में परिवर्तन",
+    "privacySection7Text": "यदि Hexagon Studio एप्लिकेशन की कार्यक्षमता बदलती है तो इस गोपनीयता नीति को अपडेट किया जा सकता है। कोई भी अपडेट इस पृष्ठ पर प्रतिबिंबित होगा।",
+    "privacySection8Title": "8. संपर्क",
+    "privacySection8Text": "यदि इस गोपनीयता नीति के बारे में आपके कोई प्रश्न हैं, तो कृपया संपर्क करें:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "होम",
+    "stats": "सांख्यिकी",
+    "history": "इतिहास"
+  },
+  "days": {
+    "short": {
+      "sun": "रवि",
+      "mon": "सोम",
+      "tue": "मंगल",
+      "wed": "बुध",
+      "thu": "गुरु",
+      "fri": "शुक्र",
+      "sat": "शनि"
+    }
+  }
+}
+

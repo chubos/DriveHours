@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "התקדמות בנהיגה",
+    "completed": "הושלם",
+    "remaining": "נותר",
+    "addSession": "הוסף שיעור",
+    "category": "קטגוריה"
+  },
+  "stats": {
+    "title": "ניתוח",
+    "category": "קטגוריה",
+    "weeklyActivity": "פעילות שבועית",
+    "totalSessions": "סך השיעורים",
+    "averageDuration": "משך ממוצע",
+    "daysLeft": "ימים שנותרו",
+    "achievements": "הישגים",
+    "firstHour": "השעה הראשונה",
+    "halfway": "באמצע הדרך",
+    "master": "מאסטר",
+    "minutes": "דק'",
+    "collectingData": "אוסף נתונים...",
+    "completed": "הושלם!"
+  },
+  "history": {
+    "title": "היסטוריית נהיגה",
+    "category": "קטגוריה",
+    "noSessions": "אין שיעורי נהיגה עדיין",
+    "edit": "ערוך",
+    "delete": "מחק",
+    "editSession": "ערוך שיעור",
+    "date": "תאריך",
+    "duration": "משך",
+    "hours": "שעות",
+    "minutes": "דקות",
+    "save": "שמור",
+    "cancel": "ביטול",
+    "deleteConfirm": "למחוק את שיעור הנהיגה הזה?",
+    "confirmDelete": "האם אתה בטוח שברצונך למחוק שיעור זה?"
+  },
+  "modal": {
+    "addSession": "הוסף שיעור",
+    "hours": "שעות",
+    "minutes": "דקות",
+    "add": "הוסף",
+    "cancel": "ביטול",
+    "selectDate": "בחר תאריך"
+  },
+  "settings": {
+    "title": "הגדרות",
+    "appearance": "מראה",
+    "light": "בהיר",
+    "dark": "כהה",
+    "system": "מערכת",
+    "categories": "קטגוריות רישיון נהיגה",
+    "selectCategory": "קטגוריות",
+    "close": "סגור",
+    "addCategory": "הוסף קטגוריה",
+    "newCategory": "קטגוריה חדשה",
+    "editCategory": "ערוך קטגוריה",
+    "categoryName": "שם הקטגוריה",
+    "requiredHours": "שעות נדרשות",
+    "cannotDelete": "לא ניתן למחוק",
+    "mustHaveOne": "חייבת להיות לך לפחות קטגוריה אחת.",
+    "deleteCategory": "מחק קטגוריה",
+    "deleteCategoryConfirm": "האם אתה בטוח שברצונך למחוק את הקטגוריה \"{{name}}\"? פעולה זו תסיר רק את הקטגוריה, לא את השיעורים.",
+    "privacyPolicy": "מדיניות פרטיות ותנאי שירות",
+    "contact": "צור קשר",
+    "privacyTitle": "מדיניות פרטיות",
+    "privacyIntro": "Hexagon Studio מכבדת את הפרטיות של משתמשי אפליקציות הנייד שלה.",
+    "privacySection1Title": "1. איסוף נתונים",
+    "privacySection1Text": "Hexagon Studio לא אוספת, מאחסנת או מעבדת כל נתון אישי ממשתמשי האפליקציות שלה.",
+    "privacySection2Title": "2. אחסון נתונים מקומי",
+    "privacySection2Text": "כל נתון שנוצר באפליקציות (כגון תוכן שנוצר על ידי משתמש או התקדמות) מאוחסן באופן מקומי במכשיר המשתמש ואינו מועבר לשרתים חיצוניים.",
+    "privacySection3Title": "3. הרשאות",
+    "privacySection3Text": "אפליקציות Hexagon Studio מבקשות רק את ההרשאות הנחוצות לתפקוד הליבה של האפליקציות.",
+    "privacySection4Title": "4. שיתוף נתונים",
+    "privacySection4Text": "Hexagon Studio לא מוכרת, משכירה או משתפת נתוני משתמש עם צדדים שלישיים.",
+    "privacySection5Title": "5. שירותי צד שלישי",
+    "privacySection5Text": "נכון לעכשיו, אפליקציות Hexagon Studio אינן משתמשות בשירותי צד שלישי שאוספים נתוני משתמש.",
+    "privacySection6Title": "6. אבטחה",
+    "privacySection6Text": "Hexagon Studio נוקטת באמצעים סבירים כדי להבטיח שהאפליקציות לא מעבירות נתוני משתמש דרך האינטרנט.",
+    "privacySection7Title": "7. שינויים במדיניות זו",
+    "privacySection7Text": "מדיניות פרטיות זו עשויה להתעדכן אם התפקוד של אפליקציות Hexagon Studio משתנה. כל עדכון ישתקף בדף זה.",
+    "privacySection8Title": "8. יצירת קשר",
+    "privacySection8Text": "אם יש לך שאלות כלשהן לגבי מדיניות פרטיות זו, אנא צור קשר:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "בית",
+    "stats": "סטטיסטיקות",
+    "history": "היסטוריה"
+  },
+  "days": {
+    "short": {
+      "sun": "א'",
+      "mon": "ב'",
+      "tue": "ג'",
+      "wed": "ד'",
+      "thu": "ה'",
+      "fri": "ו'",
+      "sat": "ש'"
+    }
+  }
+}
+

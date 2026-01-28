@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Pokrok v řízení",
+    "completed": "dokončeno",
+    "remaining": "zbývá",
+    "addSession": "Přidat jízdu",
+    "category": "Kategorie"
+  },
+  "stats": {
+    "title": "Analytika",
+    "category": "Kategorie",
+    "weeklyActivity": "Týdenní aktivita",
+    "totalSessions": "Celkový počet jízd",
+    "averageDuration": "Průměrná délka",
+    "daysLeft": "Zbývající dny",
+    "achievements": "Úspěchy",
+    "firstHour": "První hodina",
+    "halfway": "V polovině",
+    "master": "Mistr",
+    "minutes": "min",
+    "collectingData": "Shromažďování dat...",
+    "completed": "Dokončeno!"
+  },
+  "history": {
+    "title": "Historie jízd",
+    "category": "Kategorie",
+    "noSessions": "Zatím žádné jízdy",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "editSession": "Upravit jízdu",
+    "date": "Datum",
+    "duration": "Trvání",
+    "hours": "Hodiny",
+    "minutes": "Minuty",
+    "save": "Uložit",
+    "cancel": "Zrušit",
+    "deleteConfirm": "Smazat tuto jízdu?",
+    "confirmDelete": "Opravdu chcete smazat tuto jízdu?"
+  },
+  "modal": {
+    "addSession": "Přidat jízdu",
+    "hours": "Hodiny",
+    "minutes": "Minuty",
+    "add": "Přidat",
+    "cancel": "Zrušit",
+    "selectDate": "Vybrat datum"
+  },
+  "settings": {
+    "title": "Nastavení",
+    "appearance": "Vzhled",
+    "light": "Světlý",
+    "dark": "Tmavý",
+    "system": "Systémový",
+    "categories": "Kategorie řidičského průkazu",
+    "selectCategory": "Kategorie",
+    "close": "Zavřít",
+    "addCategory": "Přidat kategorii",
+    "newCategory": "Nová kategorie",
+    "editCategory": "Upravit kategorii",
+    "categoryName": "Název kategorie",
+    "requiredHours": "Požadované hodiny",
+    "cannotDelete": "Nelze smazat",
+    "mustHaveOne": "Musíte mít alespoň jednu kategorii.",
+    "deleteCategory": "Smazat kategorii",
+    "deleteCategoryConfirm": "Opravdu chcete smazat kategorii \"{{name}}\"? Odstraní se pouze kategorie, nikoli jízdy.",
+    "privacyPolicy": "Zásady ochrany osobních údajů a podmínky služby",
+    "contact": "Kontaktujte nás",
+    "privacyTitle": "Zásady ochrany osobních údajů",
+    "privacyIntro": "Hexagon Studio respektuje soukromí uživatelů svých mobilních aplikací.",
+    "privacySection1Title": "1. Shromažďování dat",
+    "privacySection1Text": "Hexagon Studio neshromažďuje, neukládá ani nezpracovává žádné osobní údaje uživatelů svých aplikací.",
+    "privacySection2Title": "2. Místní ukládání dat",
+    "privacySection2Text": "Veškerá data vytvořená v aplikacích (jako jsou uživatelem vytvořený obsah nebo pokrok) jsou uložena lokálně v zařízení uživatele a nejsou přenášena na externí servery.",
+    "privacySection3Title": "3. Oprávnění",
+    "privacySection3Text": "Aplikace Hexagon Studio vyžadují pouze oprávnění nezbytná pro základní funkčnost aplikací.",
+    "privacySection4Title": "4. Sdílení dat",
+    "privacySection4Text": "Hexagon Studio neprodává, nepronajímá ani nesdílí uživatelská data s třetími stranami.",
+    "privacySection5Title": "5. Služby třetích stran",
+    "privacySection5Text": "V současné době aplikace Hexagon Studio nepoužívají služby třetích stran, které shromažďují uživatelská data.",
+    "privacySection6Title": "6. Zabezpečení",
+    "privacySection6Text": "Hexagon Studio přijímá přiměřená opatření, aby zajistilo, že aplikace nepřenášejí uživatelská data přes internet.",
+    "privacySection7Title": "7. Změny těchto zásad",
+    "privacySection7Text": "Tyto zásady ochrany osobních údajů mohou být aktualizovány v případě změny funkčnosti aplikací Hexagon Studio. Všechny aktualizace budou zohledněny na této stránce.",
+    "privacySection8Title": "8. Kontakt",
+    "privacySection8Text": "Máte-li jakékoli otázky ohledně těchto zásad ochrany osobních údajů, kontaktujte nás:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Domů",
+    "stats": "Statistiky",
+    "history": "Historie"
+  },
+  "days": {
+    "short": {
+      "sun": "Ne",
+      "mon": "Po",
+      "tue": "Út",
+      "wed": "St",
+      "thu": "Čt",
+      "fri": "Pá",
+      "sat": "So"
+    }
+  }
+}
+

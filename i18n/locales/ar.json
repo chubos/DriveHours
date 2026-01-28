@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "تقدم القيادة",
+    "completed": "مكتمل",
+    "remaining": "متبقي",
+    "addSession": "إضافة جلسة",
+    "category": "الفئة"
+  },
+  "stats": {
+    "title": "التحليلات",
+    "category": "الفئة",
+    "weeklyActivity": "النشاط الأسبوعي",
+    "totalSessions": "إجمالي الجلسات",
+    "averageDuration": "متوسط المدة",
+    "daysLeft": "الأيام المتبقية",
+    "achievements": "الإنجازات",
+    "firstHour": "الساعة الأولى",
+    "halfway": "منتصف الطريق",
+    "master": "خبير",
+    "minutes": "دقيقة",
+    "collectingData": "جمع البيانات...",
+    "completed": "مكتمل!"
+  },
+  "history": {
+    "title": "سجل القيادة",
+    "category": "الفئة",
+    "noSessions": "لا توجد جلسات قيادة بعد",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "editSession": "تعديل الجلسة",
+    "date": "التاريخ",
+    "duration": "المدة",
+    "hours": "ساعات",
+    "minutes": "دقائق",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "deleteConfirm": "حذف جلسة القيادة هذه؟",
+    "confirmDelete": "هل أنت متأكد من رغبتك في حذف هذه الجلسة؟"
+  },
+  "modal": {
+    "addSession": "إضافة جلسة",
+    "hours": "ساعات",
+    "minutes": "دقائق",
+    "add": "إضافة",
+    "cancel": "إلغاء",
+    "selectDate": "اختر التاريخ"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "appearance": "المظهر",
+    "light": "فاتح",
+    "dark": "داكن",
+    "system": "النظام",
+    "categories": "فئات رخصة القيادة",
+    "selectCategory": "الفئات",
+    "close": "إغلاق",
+    "addCategory": "إضافة فئة",
+    "newCategory": "فئة جديدة",
+    "editCategory": "تعديل الفئة",
+    "categoryName": "اسم الفئة",
+    "requiredHours": "الساعات المطلوبة",
+    "cannotDelete": "لا يمكن الحذف",
+    "mustHaveOne": "يجب أن يكون لديك فئة واحدة على الأقل.",
+    "deleteCategory": "حذف الفئة",
+    "deleteCategoryConfirm": "هل أنت متأكد من رغبتك في حذف الفئة \"{{name}}\"؟ سيؤدي هذا إلى إزالة الفئة فقط، وليس الجلسات.",
+    "privacyPolicy": "سياسة الخصوصية وشروط الخدمة",
+    "contact": "اتصل بنا",
+    "privacyTitle": "سياسة الخصوصية",
+    "privacyIntro": "تحترم Hexagon Studio خصوصية مستخدمي تطبيقات الهاتف المحمول الخاصة بها.",
+    "privacySection1Title": "1. جمع البيانات",
+    "privacySection1Text": "لا تقوم Hexagon Studio بجمع أو تخزين أو معالجة أي بيانات شخصية من مستخدمي تطبيقاتها.",
+    "privacySection2Title": "2. التخزين المحلي للبيانات",
+    "privacySection2Text": "يتم تخزين أي بيانات تم إنشاؤها داخل التطبيقات (مثل المحتوى الذي ينشئه المستخدم أو التقدم) محليًا على جهاز المستخدم ولا يتم نقلها إلى خوادم خارجية.",
+    "privacySection3Title": "3. الأذونات",
+    "privacySection3Text": "تطلب تطبيقات Hexagon Studio فقط الأذونات الضرورية للوظائف الأساسية للتطبيقات.",
+    "privacySection4Title": "4. مشاركة البيانات",
+    "privacySection4Text": "لا تبيع Hexagon Studio أو تؤجر أو تشارك بيانات المستخدم مع أطراف ثالثة.",
+    "privacySection5Title": "5. خدمات الطرف الثالث",
+    "privacySection5Text": "في الوقت الحالي، لا تستخدم تطبيقات Hexagon Studio خدمات طرف ثالث تجمع بيانات المستخدم.",
+    "privacySection6Title": "6. الأمان",
+    "privacySection6Text": "تتخذ Hexagon Studio تدابير معقولة لضمان أن التطبيقات لا تنقل بيانات المستخدم عبر الإنترنت.",
+    "privacySection7Title": "7. التغييرات على هذه السياسة",
+    "privacySection7Text": "قد يتم تحديث سياسة الخصوصية هذه إذا تغيرت وظائف تطبيقات Hexagon Studio. ستنعكس أي تحديثات على هذه الصفحة.",
+    "privacySection8Title": "8. اتصل",
+    "privacySection8Text": "إذا كانت لديك أي أسئلة حول سياسة الخصوصية هذه، يرجى الاتصال:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "الرئيسية",
+    "stats": "الإحصائيات",
+    "history": "السجل"
+  },
+  "days": {
+    "short": {
+      "sun": "الأحد",
+      "mon": "الإثنين",
+      "tue": "الثلاثاء",
+      "wed": "الأربعاء",
+      "thu": "الخميس",
+      "fri": "الجمعة",
+      "sat": "السبت"
+    }
+  }
+}
+

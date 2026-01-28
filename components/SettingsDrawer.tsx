@@ -280,7 +280,7 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
         }
 
         return () => {
-            // Cleanup: stop animation on unmounting
+            // Cleanup: stop animation from unmounting
             if (animationRef.current) {
                 animationRef.current.stop();
                 animationRef.current = null;
@@ -774,9 +774,9 @@ function SettingsDrawer({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                         shadowRadius: 8,
                         elevation: 8
                     }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-                            <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text }}>{t('settings.privacyPolicy')}</Text>
-                            <TouchableOpacity onPress={() => setPrivacyModalVisible(false)}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16 }}>
+                            <Text style={{ fontSize: 20, fontWeight: '800', color: colors.text, flex: 1 }}>{t('settings.privacyPolicy')}</Text>
+                            <TouchableOpacity onPress={() => setPrivacyModalVisible(false)} style={{ marginRight: -4 }}>
                                 <Ionicons name="close-circle" size={28} color={colors.textSecondary} />
                             </TouchableOpacity>
                         </View>

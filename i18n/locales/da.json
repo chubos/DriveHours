@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Køreundervisning fremskridt",
+    "completed": "gennemført",
+    "remaining": "tilbage",
+    "addSession": "Tilføj køretime",
+    "category": "Kategori"
+  },
+  "stats": {
+    "title": "Analyse",
+    "category": "Kategori",
+    "weeklyActivity": "Ugentlig aktivitet",
+    "totalSessions": "Samlede køretimer",
+    "averageDuration": "Gennemsnitlig varighed",
+    "daysLeft": "Resterende dage",
+    "achievements": "Præstationer",
+    "firstHour": "Første time",
+    "halfway": "Halvvejs",
+    "master": "Mester",
+    "minutes": "min",
+    "collectingData": "Indsamler data...",
+    "completed": "Færdig!"
+  },
+  "history": {
+    "title": "Kørehistorik",
+    "category": "Kategori",
+    "noSessions": "Ingen køretimer endnu",
+    "edit": "Rediger",
+    "delete": "Slet",
+    "editSession": "Rediger køretime",
+    "date": "Dato",
+    "duration": "Varighed",
+    "hours": "Timer",
+    "minutes": "Minutter",
+    "save": "Gem",
+    "cancel": "Annuller",
+    "deleteConfirm": "Slet denne køretime?",
+    "confirmDelete": "Er du sikker på, at du vil slette denne køretime?"
+  },
+  "modal": {
+    "addSession": "Tilføj køretime",
+    "hours": "Timer",
+    "minutes": "Minutter",
+    "add": "Tilføj",
+    "cancel": "Annuller",
+    "selectDate": "Vælg dato"
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "appearance": "Udseende",
+    "light": "Lys",
+    "dark": "Mørk",
+    "system": "System",
+    "categories": "Kørekortskategorier",
+    "selectCategory": "Kategorier",
+    "close": "Luk",
+    "addCategory": "Tilføj kategori",
+    "newCategory": "Ny kategori",
+    "editCategory": "Rediger kategori",
+    "categoryName": "Kategorinavn",
+    "requiredHours": "Påkrævede timer",
+    "cannotDelete": "Kan ikke slette",
+    "mustHaveOne": "Du skal have mindst én kategori.",
+    "deleteCategory": "Slet kategori",
+    "deleteCategoryConfirm": "Er du sikker på, at du vil slette kategorien \"{{name}}\"? Dette vil kun fjerne kategorien, ikke køretimerne.",
+    "privacyPolicy": "Fortrolighedspolitik og servicevilkår",
+    "contact": "Kontakt os",
+    "privacyTitle": "Fortrolighedspolitik",
+    "privacyIntro": "Hexagon Studio respekterer privatlivets fred for brugere af sine mobilapplikationer.",
+    "privacySection1Title": "1. Dataindsamling",
+    "privacySection1Text": "Hexagon Studio indsamler, gemmer eller behandler ikke personlige data fra brugere af sine applikationer.",
+    "privacySection2Title": "2. Lokal datalagring",
+    "privacySection2Text": "Alle data, der oprettes i applikationerne (såsom brugeroprettet indhold eller fremskridt), gemmes lokalt på brugerens enhed og overføres ikke til eksterne servere.",
+    "privacySection3Title": "3. Tilladelser",
+    "privacySection3Text": "Hexagon Studio-applikationer anmoder kun om de tilladelser, der er nødvendige for applikationernes grundlæggende funktionalitet.",
+    "privacySection4Title": "4. Datadeling",
+    "privacySection4Text": "Hexagon Studio sælger, udlejer eller deler ikke brugerdata med tredjeparter.",
+    "privacySection5Title": "5. Tredjepartstjenester",
+    "privacySection5Text": "På nuværende tidspunkt bruger Hexagon Studio-applikationer ikke tredjepartstjenester, der indsamler brugerdata.",
+    "privacySection6Title": "6. Sikkerhed",
+    "privacySection6Text": "Hexagon Studio træffer rimelige foranstaltninger for at sikre, at applikationer ikke overfører brugerdata over internettet.",
+    "privacySection7Title": "7. Ændringer af denne politik",
+    "privacySection7Text": "Denne fortrolighedspolitik kan opdateres, hvis funktionaliteten af Hexagon Studio-applikationer ændres. Eventuelle opdateringer vil blive afspejlet på denne side.",
+    "privacySection8Title": "8. Kontakt",
+    "privacySection8Text": "Hvis du har spørgsmål til denne fortrolighedspolitik, bedes du kontakte:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Hjem",
+    "stats": "Statistik",
+    "history": "Historik"
+  },
+  "days": {
+    "short": {
+      "sun": "Søn",
+      "mon": "Man",
+      "tue": "Tir",
+      "wed": "Ons",
+      "thu": "Tor",
+      "fri": "Fre",
+      "sat": "Lør"
+    }
+  }
+}
+

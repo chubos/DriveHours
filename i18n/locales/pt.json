@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Progresso de Condução",
+    "completed": "concluído",
+    "remaining": "restante",
+    "addSession": "Adicionar Sessão",
+    "category": "Categoria"
+  },
+  "stats": {
+    "title": "Análise",
+    "category": "Categoria",
+    "weeklyActivity": "Atividade Semanal",
+    "totalSessions": "Total de Sessões",
+    "averageDuration": "Duração Média",
+    "daysLeft": "Dias Restantes",
+    "achievements": "Conquistas",
+    "firstHour": "Primeira Hora",
+    "halfway": "A Meio Caminho",
+    "master": "Mestre",
+    "minutes": "min",
+    "collectingData": "Recolhendo dados...",
+    "completed": "Concluído!"
+  },
+  "history": {
+    "title": "Histórico de Condução",
+    "category": "Categoria",
+    "noSessions": "Ainda não há sessões de condução",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "editSession": "Editar Sessão",
+    "date": "Data",
+    "duration": "Duração",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "deleteConfirm": "Eliminar esta sessão de condução?",
+    "confirmDelete": "Tem certeza de que deseja eliminar esta sessão?"
+  },
+  "modal": {
+    "addSession": "Adicionar Sessão",
+    "hours": "Horas",
+    "minutes": "Minutos",
+    "add": "Adicionar",
+    "cancel": "Cancelar",
+    "selectDate": "Selecionar Data"
+  },
+  "settings": {
+    "title": "Definições",
+    "appearance": "Aparência",
+    "light": "Claro",
+    "dark": "Escuro",
+    "system": "Sistema",
+    "categories": "Categorias de carta de condução",
+    "selectCategory": "Categorias",
+    "close": "Fechar",
+    "addCategory": "Adicionar Categoria",
+    "newCategory": "Nova Categoria",
+    "editCategory": "Editar Categoria",
+    "categoryName": "Nome da Categoria",
+    "requiredHours": "Horas Necessárias",
+    "cannotDelete": "Não é Possível Eliminar",
+    "mustHaveOne": "Deve ter pelo menos uma categoria.",
+    "deleteCategory": "Eliminar Categoria",
+    "deleteCategoryConfirm": "Tem certeza de que deseja eliminar a categoria \"{{name}}\"? Isto irá remover apenas a categoria, não as sessões.",
+    "privacyPolicy": "Política de Privacidade e Termos de Serviço",
+    "contact": "Contacte-nos",
+    "privacyTitle": "Política de Privacidade",
+    "privacyIntro": "A Hexagon Studio respeita a privacidade dos utilizadores das suas aplicações móveis.",
+    "privacySection1Title": "1. Recolha de Dados",
+    "privacySection1Text": "A Hexagon Studio não recolhe, armazena ou processa dados pessoais dos utilizadores das suas aplicações.",
+    "privacySection2Title": "2. Armazenamento Local de Dados",
+    "privacySection2Text": "Quaisquer dados criados dentro das aplicações (como conteúdo gerado pelo utilizador ou progresso) são armazenados localmente no dispositivo do utilizador e não são transmitidos para servidores externos.",
+    "privacySection3Title": "3. Permissões",
+    "privacySection3Text": "As aplicações da Hexagon Studio solicitam apenas as permissões necessárias para a funcionalidade principal das aplicações.",
+    "privacySection4Title": "4. Partilha de Dados",
+    "privacySection4Text": "A Hexagon Studio não vende, aluga ou partilha dados de utilizador com terceiros.",
+    "privacySection5Title": "5. Serviços de Terceiros",
+    "privacySection5Text": "Atualmente, as aplicações da Hexagon Studio não utilizam serviços de terceiros que recolham dados de utilizador.",
+    "privacySection6Title": "6. Segurança",
+    "privacySection6Text": "A Hexagon Studio toma medidas razoáveis para garantir que as aplicações não transmitam dados de utilizador através da internet.",
+    "privacySection7Title": "7. Alterações a Esta Política",
+    "privacySection7Text": "Esta política de privacidade pode ser atualizada se a funcionalidade das aplicações da Hexagon Studio mudar. Quaisquer atualizações serão refletidas nesta página.",
+    "privacySection8Title": "8. Contacto",
+    "privacySection8Text": "Se tiver alguma dúvida sobre esta política de privacidade, contacte:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Início",
+    "stats": "Estatísticas",
+    "history": "Histórico"
+  },
+  "days": {
+    "short": {
+      "sun": "Dom",
+      "mon": "Seg",
+      "tue": "Ter",
+      "wed": "Qua",
+      "thu": "Qui",
+      "fri": "Sex",
+      "sat": "Sáb"
+    }
+  }
+}
+

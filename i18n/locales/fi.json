@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Ajo-opetuksen edistyminen",
+    "completed": "suoritettu",
+    "remaining": "jäljellä",
+    "addSession": "Lisää ajotunti",
+    "category": "Kategoria"
+  },
+  "stats": {
+    "title": "Analytiikka",
+    "category": "Kategoria",
+    "weeklyActivity": "Viikkoaktiivisuus",
+    "totalSessions": "Ajotunteja yhteensä",
+    "averageDuration": "Keskimääräinen kesto",
+    "daysLeft": "Päiviä jäljellä",
+    "achievements": "Saavutukset",
+    "firstHour": "Ensimmäinen tunti",
+    "halfway": "Puolivälissä",
+    "master": "Mestari",
+    "minutes": "min",
+    "collectingData": "Kerätään tietoja...",
+    "completed": "Valmis!"
+  },
+  "history": {
+    "title": "Ajohistoria",
+    "category": "Kategoria",
+    "noSessions": "Ei vielä ajotunteja",
+    "edit": "Muokkaa",
+    "delete": "Poista",
+    "editSession": "Muokkaa ajotuntia",
+    "date": "Päivämäärä",
+    "duration": "Kesto",
+    "hours": "Tunnit",
+    "minutes": "Minuutit",
+    "save": "Tallenna",
+    "cancel": "Peruuta",
+    "deleteConfirm": "Poista tämä ajotunti?",
+    "confirmDelete": "Haluatko varmasti poistaa tämän ajotunnin?"
+  },
+  "modal": {
+    "addSession": "Lisää ajotunti",
+    "hours": "Tunnit",
+    "minutes": "Minuutit",
+    "add": "Lisää",
+    "cancel": "Peruuta",
+    "selectDate": "Valitse päivämäärä"
+  },
+  "settings": {
+    "title": "Asetukset",
+    "appearance": "Ulkoasu",
+    "light": "Vaalea",
+    "dark": "Tumma",
+    "system": "Järjestelmä",
+    "categories": "Ajokorttikategoriat",
+    "selectCategory": "Kategoriat",
+    "close": "Sulje",
+    "addCategory": "Lisää kategoria",
+    "newCategory": "Uusi kategoria",
+    "editCategory": "Muokkaa kategoriaa",
+    "categoryName": "Kategorian nimi",
+    "requiredHours": "Vaaditut tunnit",
+    "cannotDelete": "Ei voi poistaa",
+    "mustHaveOne": "Sinulla on oltava vähintään yksi kategoria.",
+    "deleteCategory": "Poista kategoria",
+    "deleteCategoryConfirm": "Haluatko varmasti poistaa kategorian \"{{name}}\"? Tämä poistaa vain kategorian, ei ajotunteja.",
+    "privacyPolicy": "Tietosuojakäytäntö ja käyttöehdot",
+    "contact": "Ota yhteyttä",
+    "privacyTitle": "Tietosuojakäytäntö",
+    "privacyIntro": "Hexagon Studio kunnioittaa mobiilisovellusten käyttäjien yksityisyyttä.",
+    "privacySection1Title": "1. Tietojen kerääminen",
+    "privacySection1Text": "Hexagon Studio ei kerää, tallenna tai käsittele mitään henkilötietoja sovellustensa käyttäjiltä.",
+    "privacySection2Title": "2. Paikallinen tietojen tallennus",
+    "privacySection2Text": "Sovelluksissa luotu tieto (kuten käyttäjän luoma sisältö tai edistyminen) tallennetaan paikallisesti käyttäjän laitteeseen eikä sitä siirretä ulkoisille palvelimille.",
+    "privacySection3Title": "3. Käyttöoikeudet",
+    "privacySection3Text": "Hexagon Studio -sovellukset pyytävät vain ne käyttöoikeudet, jotka ovat välttämättömiä sovellusten ydintoiminnallisuudelle.",
+    "privacySection4Title": "4. Tietojen jakaminen",
+    "privacySection4Text": "Hexagon Studio ei myy, vuokraa tai jaa käyttäjätietoja kolmansille osapuolille.",
+    "privacySection5Title": "5. Kolmannen osapuolen palvelut",
+    "privacySection5Text": "Tällä hetkellä Hexagon Studio -sovellukset eivät käytä kolmannen osapuolen palveluja, jotka keräävät käyttäjätietoja.",
+    "privacySection6Title": "6. Turvallisuus",
+    "privacySection6Text": "Hexagon Studio ryhtyy kohtuullisiin toimenpiteisiin varmistaakseen, että sovellukset eivät siirrä käyttäjätietoja internetin kautta.",
+    "privacySection7Title": "7. Muutokset tähän käytäntöön",
+    "privacySection7Text": "Tätä tietosuojakäytäntöä voidaan päivittää, jos Hexagon Studio -sovellusten toiminnallisuus muuttuu. Kaikki päivitykset näkyvät tällä sivulla.",
+    "privacySection8Title": "8. Yhteystiedot",
+    "privacySection8Text": "Jos sinulla on kysyttävää tästä tietosuojakäytännöstä, ota yhteyttä:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Koti",
+    "stats": "Tilastot",
+    "history": "Historia"
+  },
+  "days": {
+    "short": {
+      "sun": "Su",
+      "mon": "Ma",
+      "tue": "Ti",
+      "wed": "Ke",
+      "thu": "To",
+      "fri": "Pe",
+      "sat": "La"
+    }
+  }
+}
+

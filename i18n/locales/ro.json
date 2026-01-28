@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Progres Conducere",
+    "completed": "finalizat",
+    "remaining": "rămas",
+    "addSession": "Adaugă Sesiune",
+    "category": "Categorie"
+  },
+  "stats": {
+    "title": "Analiză",
+    "category": "Categorie",
+    "weeklyActivity": "Activitate Săptămânală",
+    "totalSessions": "Total Sesiuni",
+    "averageDuration": "Durată Medie",
+    "daysLeft": "Zile Rămase",
+    "achievements": "Realizări",
+    "firstHour": "Prima Oră",
+    "halfway": "La Jumătate",
+    "master": "Maestru",
+    "minutes": "min",
+    "collectingData": "Se colectează date...",
+    "completed": "Finalizat!"
+  },
+  "history": {
+    "title": "Istoric Conducere",
+    "category": "Categorie",
+    "noSessions": "Nu există încă sesiuni de conducere",
+    "edit": "Editează",
+    "delete": "Șterge",
+    "editSession": "Editează Sesiune",
+    "date": "Dată",
+    "duration": "Durată",
+    "hours": "Ore",
+    "minutes": "Minute",
+    "save": "Salvează",
+    "cancel": "Anulează",
+    "deleteConfirm": "Ștergi această sesiune de conducere?",
+    "confirmDelete": "Ești sigur că vrei să ștergi această sesiune?"
+  },
+  "modal": {
+    "addSession": "Adaugă Sesiune",
+    "hours": "Ore",
+    "minutes": "Minute",
+    "add": "Adaugă",
+    "cancel": "Anulează",
+    "selectDate": "Selectează Data"
+  },
+  "settings": {
+    "title": "Setări",
+    "appearance": "Aspect",
+    "light": "Luminos",
+    "dark": "Întunecat",
+    "system": "Sistem",
+    "categories": "Categorii permis de conducere",
+    "selectCategory": "Categorii",
+    "close": "Închide",
+    "addCategory": "Adaugă Categorie",
+    "newCategory": "Categorie Nouă",
+    "editCategory": "Editează Categorie",
+    "categoryName": "Nume Categorie",
+    "requiredHours": "Ore Necesare",
+    "cannotDelete": "Nu Se Poate Șterge",
+    "mustHaveOne": "Trebuie să ai cel puțin o categorie.",
+    "deleteCategory": "Șterge Categorie",
+    "deleteCategoryConfirm": "Ești sigur că vrei să ștergi categoria \"{{name}}\"? Aceasta va elimina doar categoria, nu sesiunile.",
+    "privacyPolicy": "Politică de Confidențialitate și Termeni de Utilizare",
+    "contact": "Contactează-ne",
+    "privacyTitle": "Politică de Confidențialitate",
+    "privacyIntro": "Hexagon Studio respectă confidențialitatea utilizatorilor aplicațiilor sale mobile.",
+    "privacySection1Title": "1. Colectarea Datelor",
+    "privacySection1Text": "Hexagon Studio nu colectează, nu stochează și nu procesează date personale de la utilizatorii aplicațiilor sale.",
+    "privacySection2Title": "2. Stocarea Locală a Datelor",
+    "privacySection2Text": "Orice date create în cadrul aplicațiilor (cum ar fi conținutul generat de utilizator sau progresul) sunt stocate local pe dispozitivul utilizatorului și nu sunt transmise către servere externe.",
+    "privacySection3Title": "3. Permisiuni",
+    "privacySection3Text": "Aplicațiile Hexagon Studio solicită doar permisiunile necesare pentru funcționalitatea de bază a aplicațiilor.",
+    "privacySection4Title": "4. Partajarea Datelor",
+    "privacySection4Text": "Hexagon Studio nu vinde, nu închiriază și nu partajează datele utilizatorilor cu terți.",
+    "privacySection5Title": "5. Servicii Terțe",
+    "privacySection5Text": "În prezent, aplicațiile Hexagon Studio nu utilizează servicii terțe care colectează date ale utilizatorilor.",
+    "privacySection6Title": "6. Securitate",
+    "privacySection6Text": "Hexagon Studio ia măsuri rezonabile pentru a asigura că aplicațiile nu transmit date ale utilizatorilor prin internet.",
+    "privacySection7Title": "7. Modificări ale Acestei Politici",
+    "privacySection7Text": "Această politică de confidențialitate poate fi actualizată dacă funcționalitatea aplicațiilor Hexagon Studio se schimbă. Orice actualizări vor fi reflectate pe această pagină.",
+    "privacySection8Title": "8. Contact",
+    "privacySection8Text": "Dacă aveți întrebări despre această politică de confidențialitate, vă rugăm să contactați:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Acasă",
+    "stats": "Statistici",
+    "history": "Istoric"
+  },
+  "days": {
+    "short": {
+      "sun": "Dum",
+      "mon": "Lun",
+      "tue": "Mar",
+      "wed": "Mie",
+      "thu": "Joi",
+      "fri": "Vin",
+      "sat": "Sâm"
+    }
+  }
+}
+

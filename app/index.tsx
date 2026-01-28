@@ -19,6 +19,8 @@ import {
     calculateRemainingHours,
     getSelectedCategory,
     createDrivingSession,
+    useRTL,
+    getTextAlign,
 } from '@/utils';
 
 export default function HomePage() {
@@ -29,6 +31,7 @@ export default function HomePage() {
     const colors = getColors(settings.isDark);
     const timeoutRefs = useRef<number[]>([]);
     const insets = useSafeAreaInsets();
+    const { isRTL } = useRTL();
 
     // Local state
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -36,7 +39,6 @@ export default function HomePage() {
     const [minutes, setMinutes] = useState(0);
     const [refreshKey, setRefreshKey] = useState(0);
 
-    // Cleanup timeouts on unmount
     useEffect(() => {
         return () => {
             timeoutRefs.current.forEach(id => clearTimeout(id));
@@ -134,7 +136,8 @@ export default function HomePage() {
                         fontSize: 36,
                         fontWeight: 'bold',
                         marginBottom: 24,
-                        marginTop: 4
+                        marginTop: 4,
+                        textAlign: getTextAlign(isRTL),
                     }}>
                         {t('home.category')} {selectedCategory?.name || 'B'}
                     </Text>
@@ -145,7 +148,8 @@ export default function HomePage() {
                         textTransform: 'uppercase',
                         letterSpacing: 2,
                         marginBottom: 20,
-                        fontWeight: '500'
+                        fontWeight: '500',
+                        textAlign: getTextAlign(isRTL),
                     }}>
                         {t('home.title')}
                     </Text>

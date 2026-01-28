@@ -1,0 +1,105 @@
+{
+  "home": {
+    "title": "Kemajuan Mengemudi",
+    "completed": "selesai",
+    "remaining": "tersisa",
+    "addSession": "Tambah Sesi",
+    "category": "Kategori"
+  },
+  "stats": {
+    "title": "Analitik",
+    "category": "Kategori",
+    "weeklyActivity": "Aktivitas Mingguan",
+    "totalSessions": "Total Sesi",
+    "averageDuration": "Durasi Rata-rata",
+    "daysLeft": "Hari Tersisa",
+    "achievements": "Pencapaian",
+    "firstHour": "Jam Pertama",
+    "halfway": "Setengah Jalan",
+    "master": "Master",
+    "minutes": "mnt",
+    "collectingData": "Mengumpulkan data...",
+    "completed": "Selesai!"
+  },
+  "history": {
+    "title": "Riwayat Mengemudi",
+    "category": "Kategori",
+    "noSessions": "Belum ada sesi mengemudi",
+    "edit": "Edit",
+    "delete": "Hapus",
+    "editSession": "Edit Sesi",
+    "date": "Tanggal",
+    "duration": "Durasi",
+    "hours": "Jam",
+    "minutes": "Menit",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "deleteConfirm": "Hapus sesi mengemudi ini?",
+    "confirmDelete": "Apakah Anda yakin ingin menghapus sesi ini?"
+  },
+  "modal": {
+    "addSession": "Tambah Sesi",
+    "hours": "Jam",
+    "minutes": "Menit",
+    "add": "Tambah",
+    "cancel": "Batal",
+    "selectDate": "Pilih Tanggal"
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "appearance": "Tampilan",
+    "light": "Terang",
+    "dark": "Gelap",
+    "system": "Sistem",
+    "categories": "Kategori SIM",
+    "selectCategory": "Kategori",
+    "close": "Tutup",
+    "addCategory": "Tambah Kategori",
+    "newCategory": "Kategori Baru",
+    "editCategory": "Edit Kategori",
+    "categoryName": "Nama Kategori",
+    "requiredHours": "Jam yang Diperlukan",
+    "cannotDelete": "Tidak Dapat Menghapus",
+    "mustHaveOne": "Anda harus memiliki setidaknya satu kategori.",
+    "deleteCategory": "Hapus Kategori",
+    "deleteCategoryConfirm": "Apakah Anda yakin ingin menghapus kategori \"{{name}}\"? Ini hanya akan menghapus kategori, bukan sesi.",
+    "privacyPolicy": "Kebijakan Privasi & Ketentuan Layanan",
+    "contact": "Hubungi kami",
+    "privacyTitle": "Kebijakan Privasi",
+    "privacyIntro": "Hexagon Studio menghormati privasi pengguna aplikasi selulernya.",
+    "privacySection1Title": "1. Pengumpulan Data",
+    "privacySection1Text": "Hexagon Studio tidak mengumpulkan, menyimpan, atau memproses data pribadi dari pengguna aplikasinya.",
+    "privacySection2Title": "2. Penyimpanan Data Lokal",
+    "privacySection2Text": "Data apa pun yang dibuat dalam aplikasi (seperti konten yang dibuat pengguna atau kemajuan) disimpan secara lokal di perangkat pengguna dan tidak dikirimkan ke server eksternal.",
+    "privacySection3Title": "3. Izin",
+    "privacySection3Text": "Aplikasi Hexagon Studio hanya meminta izin yang diperlukan untuk fungsi inti aplikasi.",
+    "privacySection4Title": "4. Berbagi Data",
+    "privacySection4Text": "Hexagon Studio tidak menjual, menyewakan, atau membagikan data pengguna dengan pihak ketiga.",
+    "privacySection5Title": "5. Layanan Pihak Ketiga",
+    "privacySection5Text": "Saat ini, aplikasi Hexagon Studio tidak menggunakan layanan pihak ketiga yang mengumpulkan data pengguna.",
+    "privacySection6Title": "6. Keamanan",
+    "privacySection6Text": "Hexagon Studio mengambil langkah-langkah yang wajar untuk memastikan bahwa aplikasi tidak mengirimkan data pengguna melalui internet.",
+    "privacySection7Title": "7. Perubahan pada Kebijakan Ini",
+    "privacySection7Text": "Kebijakan privasi ini dapat diperbarui jika fungsionalitas aplikasi Hexagon Studio berubah. Pembaruan apa pun akan tercermin di halaman ini.",
+    "privacySection8Title": "8. Kontak",
+    "privacySection8Text": "Jika Anda memiliki pertanyaan tentang kebijakan privasi ini, silakan hubungi:",
+    "privacyCompany": "Hexagon Studio"
+  },
+  "tabs": {
+    "home": "Beranda",
+    "stats": "Statistik",
+    "history": "Riwayat"
+  },
+  "days": {
+    "short": {
+      "sun": "Min",
+      "mon": "Sen",
+      "tue": "Sel",
+      "wed": "Rab",
+      "thu": "Kam",
+      "fri": "Jum",
+      "sat": "Sab"
+    }
+  }
+}
+
