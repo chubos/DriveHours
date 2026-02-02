@@ -58,20 +58,35 @@ const resources = {
   uk: { translation: uk },
 };
 
-// Detect system language; prefer Polish if available, otherwise use device language if supported
-const deviceLanguage = Localization.getLocales()[0]?.languageCode || 'en';
-const supportedLanguages = ['en', 'pl', 'fr', 'cs', 'da', 'fi', 'ar', 'zh-CN', 'zh', 'he', 'hi', 'es-419', 'es-ES', 'es', 'id', 'ja', 'ko', 'nl', 'de', 'no', 'pt', 'ru', 'ro', 'sv', 'sk', 'th', 'tr', 'uk'];
+// List of supported languages (matching resource keys)
+const supportedLanguages = [
+  'en', 'pl', 'fr', 'cs', 'da', 'fi', 'ar', 'zh-CN', 'he', 'hi',
+  'es-419', 'es-ES', 'id', 'ja', 'ko', 'nl', 'de', 'no', 'pt',
+  'ru', 'ro', 'sv', 'sk', 'th', 'tr', 'uk'
+] as const;
 
-// Map 'zh' to 'zh-CN' for simplified Chinese and 'es' to 'es-419' for Latin American Spanish
+// Detect system language
+const deviceLocale = Localization.getLocales()[0];
+const deviceLanguage = deviceLocale?.languageCode || 'en';
+const deviceRegion = deviceLocale?.regionCode;
+
+// Map device language to supported language
 let mappedLanguage = deviceLanguage;
+
+// Handle Chinese variants
 if (deviceLanguage === 'zh') {
-    mappedLanguage = 'zh-CN';
-} else if (deviceLanguage === 'es') {
-    mappedLanguage = 'es-419';
+  mappedLanguage = 'zh-CN'; // Default to simplified Chinese
+}
+// Handle Spanish variants
+else if (deviceLanguage === 'es') {
+  // Use regional Spanish for Spain, Latin American Spanish for others
+  mappedLanguage = (deviceRegion === 'ES') ? 'es-ES' : 'es-419';
 }
 
-const supportedLanguage = supportedLanguages.includes(mappedLanguage) ? mappedLanguage : 'en';
+// Check if mapped language is supported, otherwise fallback to English
+const supportedLanguage = supportedLanguages.includes(mappedLanguage as any) ? mappedLanguage : 'en';
 
+// eslint-disable-next-line import/no-named-as-default-member
 i18n
   .use(initReactI18next)
   .init({
@@ -84,10 +99,14 @@ i18n
     },
   });
 
+// Type for supported languages
+export type SupportedLanguage = typeof supportedLanguages[number];
+
 // Helper for dev/testing: temporarily switch language at runtime
-export function setLanguage(lang: 'en' | 'pl' | 'fr' | 'cs' | 'da' | 'fi' | 'ar' | 'zh-CN' | 'he' | 'hi' | 'es-419' | 'es-ES' | 'id' | 'ja' | 'ko' | 'nl' | 'de' | 'no' | 'pt' | 'ru' | 'ro' | 'sv' | 'sk' | 'th' | 'tr' | 'uk') {
+export function setLanguage(lang: SupportedLanguage): void {
   if (supportedLanguages.includes(lang)) {
-    i18n.changeLanguage(lang);
+    // eslint-disable-next-line import/no-named-as-default-member
+    void i18n.changeLanguage(lang);
   }
 }
 

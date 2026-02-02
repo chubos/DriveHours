@@ -112,7 +112,11 @@ export const SettingsProvider = ({ children }: { children: React.ReactNode }) =>
         saveTimeoutRef.current.theme = newTimeout;
 
         return () => {
-            clearTimeout(newTimeout);
+            // Copy to local variable to avoid stale closure
+            const timeoutToClean = newTimeout;
+            if (timeoutToClean) {
+                clearTimeout(timeoutToClean);
+            }
         };
     }, [themeMode]);
 
