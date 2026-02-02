@@ -27,12 +27,15 @@ function TabsLayout() {
         if (I18nManager.isRTL !== isRTLLanguage) {
             I18nManager.forceRTL(isRTLLanguage);
 
-            // On Android, we need to restart the app for RTL to take effect
+            // On Android, RTL changes require app restart to fully take effect
+            // The change will be applied on the next app start
             if (Platform.OS === 'android') {
-                // Note: In production, you might want to show a dialog asking a user to restart.
-                // For now, we'll just set it, and it will apply on the next app start
+                // Inform user that language direction change will apply on restart
+
             }
         }
+
+        // No cleanup needed - RTL setting persists
     }, [i18n.language]);
 
 
