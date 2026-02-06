@@ -37,7 +37,9 @@ yarn-error.*
 *.tsbuildinfo
 
 app-example
-
+*.xml
+.idea
 # generated native folders
 /ios
 /android
+/assets/mockup
